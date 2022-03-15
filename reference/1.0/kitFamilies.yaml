@@ -1,0 +1,285 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /kitFamilies:
+    post:
+      operationId: kit-families
+      summary: Get Kit Families
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/kitFamilies/kit-family-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+              - type: object
+                properties:
+                  includeProductSystems:
+                    type: boolean
+                    description: 'Yes to include the contents of the kit product systems in the response. Default = No (true = Yes, false = No)'
+                    example: true
+                  includeKitProfiles:
+                    type: boolean
+                    description: 'Yes to include the contents of the kit profile in the response. No will exclude the kitProfile section of the response. Default = No (true = Yes, false = No)'
+                    example: true
+            description: Kit Families
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              kitFamilies:
+                type: array
+                items:
+                  $ref: ../../docs/kitFamilies/kit-family-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /kitFamilies/count:
+    post:
+      operationId: kit_families_count
+      summary: Get total number of kit families per defined parameters. Must be used in conjunction with /kitFamilies
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/kitFamilies/kit-family-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+            description: Kit Families
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: ../../common/responses/count.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /kitFamilies/bulk:
+    post:
+      operationId: kit-families-bulk-post
+      summary: Create Kit Families in Bulk
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/kitFamilies/kit-family-bulk-post-identifiers-1.yaml
+            description: Kit Families
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual kits from the request.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the kit. If an error occurred during save, the ID will not be returned.'
+                      format: int64
+                      example: 123
+                    name:
+                      type: string
+                      description: Kit name
+                      example: ABC Kit
+                      maxLength: 100
+                    erpCode:
+                      type: string
+                      description: 'External ERP Code of the kit family. If no value is provided, a UUID will be automatically generated.'
+                      example: ERP123
+                      maxLength: 50
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - name
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+    put:
+      operationId: kit-families-bulk-put
+      summary: Update Kit Families in Bulk
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/kitFamilies/kit-family-bulk-put-identifiers-1.yaml
+            description: Kit Families
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual kits from the request.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the kit. If an error occurred during save, the ID will not be returned.'
+                      format: int64
+                      example: 123
+                    name:
+                      type: string
+                      description: Kit name
+                      example: ABC Kit
+                      maxLength: 100
+                    erpCode:
+                      type: string
+                      description: 'External ERP Code of the kit family. If no value is provided, a UUID will be automatically generated.'
+                      example: ERP123
+                      maxLength: 50
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - name
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml

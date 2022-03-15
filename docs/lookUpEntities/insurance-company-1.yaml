@@ -1,0 +1,44 @@
+title: Insurance Company
+type: object
+properties:
+  id:
+    type: integer
+    description: Insurance Company ID
+    format: int64
+    example: 12345
+  name:
+    type: string
+    description: Insurance company name
+    example: Insurance company 123
+    maxLength: 100
+  erpCode:
+    type: string
+    description: Insurance company ERP Code
+    example: ERP123
+    maxLength: 50
+  branchId:
+    type: integer
+    description: Insurance company branch ID
+    format: int64
+    example: 9
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  changedBy:
+    type: string
+    description: Name of the user who last changed the insurance company
+    example: John Doe
+  changedDate:
+    type: string
+    description: Insurance company changed date.
+    format: date-time
+    example: '2017-11-05T13:15:30Z'
+required:
+  - id
+  - name
+  - erpCode
+  - active
+  - changedBy
+  - changedDate
+  - branchId

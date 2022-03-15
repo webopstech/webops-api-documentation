@@ -1,0 +1,136 @@
+title: Branch
+type: object
+properties:
+  id:
+    type: integer
+    description: ID of the branch
+    format: int64
+    example: 123
+  name:
+    type: string
+    description: Name of the branch
+    example: Name 123
+    maxLength: 100
+  erpCode:
+    type: string
+    description: External ERP Code of the branch
+    example: ERP123
+    maxLength: 50
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  addressStreet1:
+    type: string
+    description: Branch address street line 1
+    example: Street line 1
+    maxLength: 100
+  addressStreet2:
+    type: string
+    description: Branch address street line 2
+    example: Street line 2
+    maxLength: 100
+  addressCity:
+    type: string
+    description: Branch city
+    example: Atlanta
+    maxLength: 100
+  addressSubDivision:
+    type: string
+    description: Branch state/province/subdivision
+    example: US-GA
+    maxLength: 50
+  addressZipCode:
+    type: string
+    description: Branch zip or postal code
+    example: 30000
+    maxLength: 10
+  phoneNumber:
+    type: string
+    description: Branch phone number (can be defined in multiple formats)
+    example: +1-404-353-2564
+    maxLength: 25
+  faxNumber:
+    type: string
+    description: Branch fax number
+    example: +1-404-353-2564
+    maxLength: 25
+  inventoryLocationId:
+    type: integer
+    description: Blank Warehouse ID
+    format: int64
+    example: 12345
+  advancedExpirationCutoff:
+    type: integer
+    description: Number of days prior to item expiration to stop the item from being sent out
+    example: 30
+  advancedExpirationWarning:
+    type: integer
+    description: Number of days prior to item expiration to warn users users
+    example: 30
+  defaultInventoryLocationId:
+    type: integer
+    description: Default inventory location ID (if no blank warehouse is set up)
+    format: int64
+    example: 12345
+  dueBackDayDefault:
+    type: string
+    description: Default number of days after a surgery kits are due to be returned
+    example: 30
+  loanerBank:
+    type: boolean
+    description: 'The branch''s loaner bank status (true = yes, false = no)'
+    example: true
+  defaultLoanerBankId:
+    type: integer
+    description: The default external loaner bank from which this branch borrows
+    format: int64
+    example: 12345
+  languageCode:
+    type: string
+    description: Branch locale language per ISO 639-1 standard
+    example: en
+    maxLength: 2
+  countryCode:
+    type: string
+    description: Branch locale country code per ISO 3166-1 alpha-2 standard
+    example: US
+    maxLength: 2
+  baseCurrencyCode:
+    type: string
+    description: Branch base currency per ISO 4217 alpha standard
+    example: USD
+    maxLength: 3
+  foreignCurrencyCode:
+    type: string
+    description: Branch foreign currency ISO 4217 alpha standard
+    example: MXN
+    maxLength: 3
+  mobileLoanerBankRequests:
+    type: boolean
+    description: 'Allow mobile loaner bank requests at this branch. (Yes = true, No = false)'
+    example: true
+  timezone:
+    type: string
+    description: Branch time zone
+    example: America/New_York
+    maxLength: 50
+required:
+  - id
+  - name
+  - active
+  - addressStreet1
+  - inventoryLocationId
+  - advancedExpirationCutoff
+  - advancedExpirationWarning
+  - dueBackDayDefault
+  - loanerBank
+  - languageCode
+  - baseCurrencyCode
+  - mobileLoanerBankRequests
+x-internal: true

@@ -1,0 +1,15 @@
+title: Price Discrepancy Code Identifiers
+type: object
+required:
+  - manufacturerId
+  - messageId
+  - timestamp
+properties:
+  manufacturerId:
+    type: integer
+    example: '1234'
+    description: Designated manufacturer ID
+  ids:
+    type: string
+    example: '123, 456, 789, 0123'
+    description: Comma-separated list of price discrepancy code IDs; max length of 100 IDs

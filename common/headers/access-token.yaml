@@ -1,0 +1,6 @@
+name: Access_token
+in: header
+description: '{Access_Token} from token inbound service'
+required: true
+type: string
+x-internal: true

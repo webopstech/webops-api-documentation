@@ -1,0 +1,16 @@
+title: Message Data
+type: object
+required:
+  - messageId
+  - timestamp
+properties:
+  messageId:
+    type: string
+    example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+    description: Message ID of the request
+  timestamp:
+    type: string
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+    description: Current date/time in ISO-8601 Z format
+x-internal: true

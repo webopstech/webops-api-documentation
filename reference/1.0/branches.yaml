@@ -1,0 +1,97 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /branches:
+    post:
+      operationId: branches
+      summary: Get Branches
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/branches/branch-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+            description: Branches
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              branches:
+                type: array
+                items:
+                  $ref: ../../docs/branches/branch-1.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      x-extension-1: null
+  /branches/count:
+    post:
+      operationId: branches_count
+      summary: Get total number of branches per defined parameters. Must be used in conjunction with /branches
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/branches/branch-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+            description: Branches
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: ../../common/responses/count.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml

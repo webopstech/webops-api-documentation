@@ -1,0 +1,47 @@
+title: Kit Item Bulk Post Identifiers
+type: object
+required:
+  - manufacturerId
+  - kitItems
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  userName:
+    type: string
+    description: User name for history records
+    format: string
+    example: John Doe
+    maxLength: 101
+  kitItems:
+    type: array
+    items:
+      type: object
+      required:
+        - branchId
+        - kitId
+        - catalogNumber
+      properties:
+        branchId:
+          type: integer
+          description: ID of the branch associated to the kit
+          format: int64
+          example: 10
+        kitId:
+          type: integer
+          description: ID of the kit to the item will be added to.
+          format: int64
+          example: 10
+        catalogNumber:
+          type: string
+          description: Catalog Number of the item
+          example: 123CAT
+          maxLength: 20
+        lotCode:
+          type: string
+          description: Lot Code of the item
+          example: 123LOT
+          maxLength: 20
+x-internal: true

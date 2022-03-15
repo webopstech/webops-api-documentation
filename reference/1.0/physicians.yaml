@@ -1,0 +1,279 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /physicians:
+    post:
+      operationId: physicians
+      summary: Get Physicians
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/physicians/physician-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+              - type: object
+                properties:
+                  includePreferences:
+                    type: boolean
+                    example: true
+                    description: 'Include usage details in response - Default = false (Yes = true, No = false)'
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              physicians:
+                type: array
+                items:
+                  $ref: ../../docs/physicians/physician-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /physicians/count:
+    post:
+      operationId: physicians_count
+      summary: Get total number of physicians per defined parameters. Must be used in conjunction with /physicians
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/physicians/physician-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: ../../common/responses/count.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /physicians/bulk:
+    post:
+      operationId: physicians_bulk_post
+      summary: Create Physicians in Bulk
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/physicians/physician-bulk-post-identifiers-1.yaml
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual physicians from the request.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the physician. If an error occurred during save, the will not be returned.'
+                      format: int64
+                      example: 123
+                    erpCode:
+                      type: string
+                      description: External ERP Code of the physician
+                      example: ERP123
+                      maxLength: 50
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - erpCode
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+          examples:
+            example-1:
+              messageId: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp: '2018-11-05T13:15:30Z'
+              code: 1010
+              message: Partial Success
+              details:
+                - id: 123
+                  erpCode: ERP123
+                  code: 1010
+                  message: Success
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+    put:
+      operationId: physicians-bulk-put
+      summary: Update Physicians in Bulk
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/physicians/physician-bulk-put-identifiers-1.yaml
+            description: Kit Families
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            description: ''
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual physicians from the request.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the physician
+                      format: int64
+                      example: 123
+                    erpCode:
+                      type: string
+                      description: External ERP Code of the physician
+                      example: ERP123
+                      maxLength: 50
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - erpCode
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml

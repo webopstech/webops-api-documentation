@@ -1,0 +1,13 @@
+title: Paging
+type: object
+properties:
+  limit:
+    type: integer
+    example: 50
+    description: 'Number of returned results (default: 50)(maximum: 500)'
+  page:
+    type: integer
+    example: 1
+    description: 'Page to show (default: 1)'
+description: Limit and page parameters get set to default values if not provided
+x-internal: true

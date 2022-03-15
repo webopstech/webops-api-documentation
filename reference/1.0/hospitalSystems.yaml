@@ -1,0 +1,451 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /hospitalSystems:
+    post:
+      operationId: get_hospital_systems
+      summary: Get Hospital Systems
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitalSystems/hospital-system-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+              - type: object
+                properties:
+                  includeDetails:
+                    type: boolean
+                    description: 'Include hospital system details in response - Default = false (Yes = true, False = false)'
+                    default: false
+                    example: false
+            description: Hospital Systems
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              hospitalSystems:
+                type: array
+                items:
+                  $ref: ../../docs/hospitalSystems/hospital-systems-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /hospitalSystems/count:
+    post:
+      operationId: hospital_systems_count
+      summary: Get total number of inventory locations per defined parameters. Must be used in conjunction with /inventoryLocations
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitalSystems/hospital-system-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+            description: Hospital Systems
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: ../../common/responses/count.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /hospitalSystems/bulk:
+    post:
+      operationId: hospital_systems_bulk_post
+      summary: Create Hospital Systems in Bulk
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitalSystems/hospital-system-bulk-post-identifiers-1.yaml
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            description: ''
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              hospitalSystemDetails:
+                type: array
+                description: Status of individual hospital systems from the request.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the hospital system. If an error occurred during save, the ID will not be returned.'
+                      example: 1001
+                    erpCode:
+                      type: string
+                      description: External ERP Code of the hospital system
+                      example: ERP123
+                      maxLength: 50
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+    put:
+      operationId: hospital_systems_bulk_put
+      summary: Update Hospital Systems in Bulk
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitalSystems/hospital-system-bulk-put-identifiers-1.yaml
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            description: ''
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              hospitalSystemDetails:
+                type: array
+                description: Status of individual hospital systems from the request.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the hospital system. If an error occurred during save, the ID will not be returned.'
+                      example: 1001
+                    erpCode:
+                      type: string
+                      description: External ERP Code of the hospital system
+                      example: ERP123
+                      maxLength: 50
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /hospitalSystems/contractPrice/bulk:
+    post:
+      operationId: hospital_system_cp_bulk_post
+      summary: Create Hospital System Contract Prices in Bulk
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitalSystems/hospital-system-contract-price-bulk-post-identifiers-1.yaml
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            description: ''
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              contractPriceDetails:
+                type: array
+                description: Status of individual item prices from the request.
+                items:
+                  type: object
+                  required:
+                    - id
+                    - hospitalSystemId
+                    - inventoryItemId
+                    - code
+                    - message
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the contract price. If an error occurred during save, the ID will not be returned.'
+                      format: int64
+                      example: 123
+                    hospitalSystemId:
+                      type: integer
+                      description: ID of the hospital system
+                      format: int64
+                      example: 123
+                    inventoryItemId:
+                      type: integer
+                      description: Inventory Item ID
+                      format: int64
+                      example: 100098
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+    put:
+      operationId: hospital_system_cp_bulk_put
+      summary: Update Hospital System Contract Prices in Bulk
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitalSystems/hospital-system-contract-price-bulk-put-identifiers-1.yaml
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            description: ''
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              contractPriceDetails:
+                type: array
+                description: Status of individual item prices from the request.
+                items:
+                  type: object
+                  required:
+                    - id
+                    - hospitalSystemId
+                    - inventoryItemId
+                    - code
+                    - message
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the contract price. If an error occurred during save, the ID will not be returned.'
+                      format: int64
+                      example: 123
+                    hospitalSystemId:
+                      type: integer
+                      description: ID of the hospital system
+                      format: int64
+                      example: 123
+                    inventoryItemId:
+                      type: integer
+                      description: Inventory Item ID
+                      format: int64
+                      example: 100098
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml

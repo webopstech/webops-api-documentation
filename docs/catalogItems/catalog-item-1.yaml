@@ -1,0 +1,158 @@
+title: Catalog Item
+type: object
+required:
+  - inventoryItemId
+  - catalogNumber
+  - description
+  - price
+  - active
+  - obsolete
+  - ignoreLotCode
+  - currencyCode
+properties:
+  inventoryItemId:
+    type: integer
+    description: Item ID
+    format: int64
+    example: 1234
+  catalogNumber:
+    type: string
+    description: Item catalog number
+    example: 10-4567
+    maxLength: 20
+  description:
+    type: string
+    description: Item description
+    example: 10-4567 description
+    maxLength: 150
+  price:
+    type: number
+    format: float
+    description: Item price
+    example: 500.75
+  managementCost:
+    type: number
+    format: float
+    description: Item management cost
+    example: 400.75
+  standardCost:
+    type: number
+    format: float
+    description: Item standard cost
+    example: 400.75
+  listPrice:
+    type: number
+    format: float
+    description: Item list price
+    example: 400.75
+  unitOfMeasure:
+    type: string
+    description: Item unit of measure
+    example: EA
+    maxLength: 2
+  productCategoryType:
+    type: string
+    description: item product type or category
+    example: '10'
+    maxLength: 5
+  productCategoryDescription:
+    type: string
+    description: item product type or category description
+    example: IMPLANTS
+    maxLength: 50
+  active:
+    type: boolean
+    description: Item active or inactive.
+    example: true
+  obsolete:
+    type: boolean
+    description: Item obsolete (true) or still in criculaton (false).
+    example: true
+  productSizeCode:
+    type: string
+    description: Item product size code
+    example: OR
+    maxLength: 2
+  marketDivisionCode:
+    type: string
+    description: Item market division code
+    example: '40'
+    maxLength: 2
+  marketDivisionDescription:
+    type: string
+    description: Item market division description
+    example: KNEES
+    maxLength: 40
+  productLine:
+    type: string
+    description: Item product line
+    example: '017'
+    maxLength: 3
+  productLineDescription:
+    type: string
+    description: Item product line description
+    example: INSTRUMENTS
+    maxLength: 50
+  productSize:
+    type: string
+    description: Item product size
+    example: '150'
+    maxLength: 3
+  productSizeDescription:
+    type: string
+    description: Item product size description
+    example: INSTRUMENTS SIZE
+    maxLength: 50
+  productType2:
+    type: string
+    description: Item product type 2
+    example: INSTRUMENTS-A
+    maxLength: 20
+  productLineCode:
+    type: string
+    description: Item product line code
+    example: ABC
+    maxLength: 10
+  inventoryTypeCode:
+    type: string
+    description: Item inventory type code
+    example: ABC
+    maxLength: 20
+  ignoreLotCode:
+    type: boolean
+    description: 'Item ignores lot code (YES - true). No - False, otherwise.'
+    example: false
+  currencyCode:
+    type: string
+    example: USD
+    description: The  ISO 4217 currency code
+  openField1:
+    type: string
+    maxLength: 10
+  openField2:
+    type: string
+    maxLength: 50
+  openField3:
+    type: integer
+    format: int32
+    example: 1234
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  globalTradeItemNumbers:
+    type: array
+    items:
+      $ref: global-trade-item-numbers-1.yaml
+  companyId:
+    type: integer
+    description: Company ID
+    format: int64
+    example: 1234
+  companyName:
+    type: string
+    description: Company Name
+    maxLength: 50
+    example: Company 123
+x-internal: true

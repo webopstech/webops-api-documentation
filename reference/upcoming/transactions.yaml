@@ -1,0 +1,1371 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WebOps API
+  description: ''
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /transactions:
+    post:
+      operationId: transactions
+      summary: Get Transactions
+      description: "## New Endpoint (8.1.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/transaction-identifiers'
+              - $ref: '#/definitions/updated'
+              - $ref: '#/definitions/transaction-details'
+              - $ref: '#/definitions/paging'
+            description: Hospitals
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              transactions:
+                type: array
+                items:
+                  $ref: '#/definitions/transaction'
+  /transactions/count:
+    post:
+      operationId: transactions_count
+      summary: Get total number of transactions per defined parameters. Must be used in conjunction with /transactions
+      description: "## New Endpoint (8.1.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/transaction-identifiers'
+              - $ref: '#/definitions/updated'
+              - $ref: '#/definitions/transaction-updated-fields'
+            description: Transactions
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/count'
+  /transaction:
+    post:
+      operationId: transaction
+      summary: Create Transaction
+      description: "## New Endpoint (8.1.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/transaction-post'
+            description: Transactions
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              transactions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: WebOps Transaction ID
+                      format: int64
+                      example: 123
+                    transactionDate:
+                      type: string
+                      description: Transaction date in 24 hour format
+                      format: date-time
+                      example: '2018-11-05 13:15'
+                    salesRepId:
+                      type: integer
+                      description: Transaction sales rep ID
+                      format: int64
+                      example: 123
+                    originWarehouseId:
+                      type: integer
+                      description: Transaction origin warehouse ID
+                      format: int64
+                      example: 123
+                    destinationWarehouseId:
+                      type: integer
+                      description: Transaction destination warehouse ID
+                      format: int64
+                      example: 123
+                    transactionType:
+                      type: string
+                      description: Transaction type
+                      enum:
+                        - Demo
+                        - Order
+                        - Return
+                        - Sale
+                        - Sample
+                        - Swap -One-Sided
+                        - Swap -Two-Sided
+                      example: Demo
+                    transactionStatus:
+                      type: string
+                      description: Transaction status
+                      enum:
+                        - New
+                        - Pending
+                        - Closed
+                        - Cancelled
+                        - Modified
+                      example: New
+                    shippingMethodId:
+                      type: integer
+                      description: Transaction shipping method ID
+                      format: int64
+                      example: 1345
+                    active:
+                      type: boolean
+                      description: 'Is transaction active - (Yes = true, No = false)'
+                      example: true
+                    createdBy:
+                      type: string
+                      description: Name of the user who created the transaction
+                      example: John Doe
+                      maxLength: 101
+                    createdDate:
+                      type: string
+                      description: Created date and time in ISO 8601 Z format
+                      format: date-time
+                      example: '2018-11-05T13:15:30Z'
+                    changedBy:
+                      type: string
+                      description: Name of the user who last changed the transaction
+                      example: John Doe
+                      maxLength: 101
+                    changedDate:
+                      type: string
+                      description: Last changed date and time in ISO 8601 Z format
+                      format: date-time
+                      example: '2018-11-05T13:15:30Z'
+                    purchaseOrderNumber:
+                      type: string
+                      description: Transaction purchase order number
+                      example: TXN12346-PO
+                      maxLength: 50
+                    notes:
+                      type: string
+                      description: Transaction notes
+                      example: Additional notes or comments
+                      maxLength: 500
+                    timezone:
+                      type: string
+                      description: Last changed date time zone
+                      example: America/New_York
+                      maxLength: 50
+                  required:
+                    - id
+                    - transactionDate
+                    - salesRepId
+                    - originWarehouseId
+                    - destinationWarehouseId
+                    - transactionType
+                    - transactionStatus
+                    - shippingMethodId
+                    - isActive
+                    - createdBy
+                    - createdDate
+                    - changedBy
+                    - changedDate
+            required:
+              - messageId
+              - timestamp
+  '/transaction/{WebOpsTransactionId}':
+    parameters:
+      - name: WebOpsTransactionId
+        in: path
+        required: true
+        type: string
+    put:
+      operationId: transaction_update
+      summary: Update Transaction
+      description: "## New Endpoint (8.1.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/transaction-update'
+            description: Transaction
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              transactions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: WebOps Transaction ID
+                      format: int64
+                      example: 123
+                    transactionDate:
+                      type: string
+                      description: Transaction date in 24 hour format
+                      format: date-time
+                      example: '2018-11-05 13:15'
+                    salesRepId:
+                      type: integer
+                      description: Transaction sales rep ID
+                      format: int64
+                      example: 123
+                    originWarehouseId:
+                      type: integer
+                      description: Transaction origin warehouse ID
+                      format: int64
+                      example: 123
+                    destinationWarehouseId:
+                      type: integer
+                      description: Transaction destination warehouse ID
+                      format: int64
+                      example: 123
+                    transactionType:
+                      type: string
+                      description: Transaction type
+                      enum:
+                        - Demo
+                        - Order
+                        - Return
+                        - Sale
+                        - Sample
+                        - Swap -One-Sided
+                        - Swap -Two-Sided
+                      example: Demo
+                    transactionStatus:
+                      type: string
+                      description: Transaction status
+                      enum:
+                        - New
+                        - Pending
+                        - Closed
+                        - Cancelled
+                        - Modified
+                      example: New
+                    shippingMethodId:
+                      type: integer
+                      description: Transaction shipping method ID
+                      format: int64
+                      example: 1345
+                    active:
+                      type: boolean
+                      description: 'Is transaction active - (Yes = true, No = false)'
+                      example: true
+                    createdBy:
+                      type: string
+                      description: Name of the user who created the transaction
+                      example: John Doe
+                      maxLength: 101
+                    createdDate:
+                      type: string
+                      description: Created date and time in ISO 8601 Z format
+                      format: date-time
+                      example: '2018-11-05T13:15:30Z'
+                    changedBy:
+                      type: string
+                      description: Name of the user who last changed the transaction
+                      example: John Doe
+                      maxLength: 101
+                    changedDate:
+                      type: string
+                      description: Last changed date and time in ISO 8601 Z format
+                      format: date-time
+                      example: '2018-11-05T13:15:30Z'
+                    purchaseOrderNumber:
+                      type: string
+                      description: Transaction purchase order number
+                      example: TXN12346-PO
+                      maxLength: 50
+                    notes:
+                      type: string
+                      description: Transaction notes
+                      example: Additional notes or comments
+                      maxLength: 500
+                    timezone:
+                      type: string
+                      description: Last changed date time zone
+                      example: America/New_York
+                      maxLength: 50
+                    transactionItems:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          transactionItemId:
+                            type: integer
+                            description: WebOps transaction item ID
+                            format: int64
+                            example: 34088
+                          catalogNumber:
+                            type: string
+                            description: Transaction item catalog number
+                            example: 02-354-TEMP
+                          lotCode:
+                            type: string
+                            description: Transaction item lot code
+                            example: LotCode1
+                          expirationDate:
+                            type: string
+                            format: date-time
+                            example: '2018-01-31'
+                            description: Date the item is set to expire. Must be in YYYY-MM-DD format
+                          unitPrice:
+                            type: integer
+                            format: double
+                            description: Transaction item price
+                            example: 12.89
+                          quantity:
+                            type: integer
+                            description: 'Total quantity of specified transaction item (default: 1)'
+                            example: 1
+                          totalPrice:
+                            type: integer
+                            format: double
+                            description: Transaction item price x quantity
+                            example: 12.89
+                          currencyCode:
+                            type: string
+                            description: Transaction item price currency code - ISO 4217
+                            example: USD
+                          discrepancyCodeId:
+                            type: integer
+                            description: Transaction item price discrepancy code ID
+                            format: int64
+                            example: 34088
+                          sourceWarehouseId:
+                            type: integer
+                            description: Transaction item source warehouse ID
+                            format: int64
+                            example: 123
+                          createdBy:
+                            type: string
+                            description: Name of the user who created the transaction
+                            example: John Doe
+                            maxLength: 101
+                          createdDate:
+                            type: string
+                            description: Created date and time in ISO 8601 Z format
+                            format: date-time
+                            example: '2018-11-05T13:15:30Z'
+                          changedBy:
+                            type: string
+                            description: Name of the user who last changed the transaction
+                            example: John Doe
+                            maxLength: 101
+                          changedDate:
+                            type: string
+                            description: Last changed date and time in ISO 8601 Z format
+                            format: date-time
+                            example: '2018-11-05T13:15:30Z'
+                        required:
+                          - transactionItemId
+                          - catalogNumber
+                          - unitPrice
+                          - quantity
+                          - totalPrice
+                          - currencyCode
+                          - createdBy
+                          - createdDate
+                          - changedBy
+                          - changedDate
+                  required:
+                    - id
+                    - transactionDate
+                    - salesRepId
+                    - originWarehouseId
+                    - destinationWarehouseId
+                    - transactionType
+                    - transactionStatus
+                    - shippingMethodId
+                    - isActive
+                    - createdBy
+                    - createdDate
+                    - changedBy
+                    - changedDate
+            required:
+              - messageId
+              - timestamp
+  '/transaction/{WebOpsTransactionId}/transactionItems':
+    parameters:
+      - name: WebOpsTransactionId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: transaction_items_create
+      summary: Create Transaction items
+      description: "## New Endpoint (8.1.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/transaction-items-post'
+            description: Transaction Items
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  type: object
+                  required:
+                    - transactionItemId
+                    - catalogNumber
+                    - code
+                    - message
+                  properties:
+                    transactionItemId:
+                      type: integer
+                      description: WebOps transaction item ID
+                      format: int64
+                      example: 34088
+                    catalogNumber:
+                      type: string
+                      description: Transaction item catalog number
+                      example: 02-354-TEMP
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+    put:
+      operationId: transaction_items_update
+      summary: Update Transaction Items
+      description: "## New Endpoint (8.1.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/transaction-items-update'
+            description: Transaction Items
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  type: object
+                  required:
+                    - transactionItemId
+                    - catalogNumber
+                    - code
+                    - message
+                  properties:
+                    transactionItemId:
+                      type: integer
+                      description: WebOps transaction item ID
+                      format: int64
+                      example: 34088
+                    catalogNumber:
+                      type: string
+                      description: Transaction item catalog number
+                      example: 02-354-TEMP
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+parameters:
+  'trait:messageHeaders:Authorization':
+    name: Authorization
+    in: header
+    description: 'Base64(UserName:Password)'
+    required: true
+    type: string
+  'trait:messageHeaders:Access_token':
+    name: Access_token
+    in: header
+    description: '{Access_Token} from token inbound service'
+    required: true
+    type: string
+responses:
+  'trait:errorResponses:403':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1105'
+        message:
+          type: string
+          description: Error message description
+          example: Call limit is reached
+  'trait:errorResponses:422':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1020-1040
+        message:
+          type: string
+          description: Error message description
+          example: Invalid parameter
+  'trait:errorResponses:500':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1100'
+        message:
+          type: string
+          description: Error message description
+          example: An unexpected server error occurred while processing the request
+definitions:
+  count:
+    title: Count
+    type: object
+    required:
+      - count
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        format: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+      count:
+        type: integer
+        example: 100
+        description: total number of results that match the requested criteria
+    x-internal: true
+  message-data:
+    title: Message Data
+    type: object
+    required:
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID of the request
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+    x-internal: true
+  paging:
+    title: Paging
+    type: object
+    properties:
+      limit:
+        type: integer
+        example: 50
+        description: 'Number of returned results (default: 50)(maximum: 500)'
+      page:
+        type: integer
+        example: 1
+        description: 'Page to show (default: 1)'
+    description: Limit and page parameters get set to default values if not provided
+    x-internal: true
+  updated:
+    title: Updated
+    type: object
+    required:
+      - manufacturerId
+      - messageId
+      - timestamp
+    properties:
+      updatedAtMin:
+        type: string
+        format: date-time
+        example: '2017-11-05T13:15:30Z'
+        description: Get updated results after this date. All date times must be provided in ISO 8601 Z format
+      updatedAtMax:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Get updated results before this date. All date times must be provided in ISO 8601 Z format
+    x-internal: true
+  transaction:
+    title: Transaction
+    type: object
+    properties:
+      id:
+        type: integer
+        description: WebOps Transaction ID
+        format: int64
+        example: 123
+      transactionDate:
+        type: string
+        description: Transaction date in 24 hour format
+        format: date-time
+        example: '2018-11-05 13:15'
+      salesRepId:
+        type: integer
+        description: Transaction sales rep ID
+        format: int64
+        example: 123
+      originWarehouseId:
+        type: integer
+        description: Transaction origin warehouse ID
+        format: int64
+        example: 123
+      destinationWarehouseId:
+        type: integer
+        description: Transaction destination warehouse ID
+        format: int64
+        example: 123
+      transactionType:
+        type: string
+        description: Transaction type
+        enum:
+          - Demo
+          - Order
+          - Return
+          - Sale
+          - Sample
+          - Swap -One-Sided
+          - Swap -Two-Sided
+        example: Demo
+      transactionStatus:
+        type: string
+        description: Transaction status
+        enum:
+          - New
+          - Pending
+          - Closed
+          - Cancelled
+          - Modified
+        example: New
+      shippingMethodId:
+        type: integer
+        description: Transaction shipping method ID
+        format: int64
+        example: 1345
+      active:
+        type: boolean
+        description: 'Is transaction active - (Yes = true, No = false)'
+        example: true
+      createdBy:
+        type: string
+        description: Name of the user who created the transaction
+        example: John Doe
+        maxLength: 101
+      createdDate:
+        type: string
+        description: Created date and time in ISO 8601 Z format
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+      changedBy:
+        type: string
+        description: Name of the user who last changed the transaction
+        example: John Doe
+        maxLength: 101
+      changedDate:
+        type: string
+        description: Last changed date and time in ISO 8601 Z format
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+      purchaseOrderNumber:
+        type: string
+        description: Transaction purchase order number
+        example: TXN12346-PO
+        maxLength: 50
+      notes:
+        type: string
+        description: Transaction notes
+        example: Additional notes or comments
+        maxLength: 500
+      timezone:
+        type: string
+        description: Last changed date time zone
+        example: America/New_York
+        maxLength: 50
+      transactionItems:
+        type: array
+        items:
+          type: object
+          properties:
+            transactionItemId:
+              type: integer
+              description: WebOps transaction item ID
+              format: int64
+              example: 34088
+            catalogNumber:
+              type: string
+              description: Transaction item catalog number
+              example: 02-354-TEMP
+            lotCode:
+              type: string
+              description: Transaction item lot code
+              example: LotCode1
+            expirationDate:
+              type: string
+              format: date-time
+              example: '2018-01-31'
+              description: Date the item is set to expire. Must be in YYYY-MM-DD format
+            unitPrice:
+              type: integer
+              format: double
+              description: Transaction item price
+              example: 12.89
+            quantity:
+              type: integer
+              description: 'Total quantity of specified transaction item (default: 1)'
+              example: 1
+            totalPrice:
+              type: integer
+              format: double
+              description: Transaction item price x quantity
+              example: 12.89
+            currencyCode:
+              type: string
+              description: Transaction item price currency code - ISO 4217
+              example: USD
+            discrepancyCodeId:
+              type: integer
+              description: Transaction item price discrepancy code ID
+              format: int64
+              example: 34088
+            sourceWarehouseId:
+              type: integer
+              description: Transaction item source warehouse ID
+              format: int64
+              example: 123
+            createdBy:
+              type: string
+              description: Name of the user who created the transaction
+              example: John Doe
+              maxLength: 101
+            createdDate:
+              type: string
+              description: Created date and time in ISO 8601 Z format
+              format: date-time
+              example: '2018-11-05T13:15:30Z'
+            changedBy:
+              type: string
+              description: Name of the user who last changed the transaction
+              example: John Doe
+              maxLength: 101
+            changedDate:
+              type: string
+              description: Last changed date and time in ISO 8601 Z format
+              format: date-time
+              example: '2018-11-05T13:15:30Z'
+          required:
+            - transactionItemId
+            - catalogNumber
+            - unitPrice
+            - quantity
+            - totalPrice
+            - currencyCode
+            - createdBy
+            - createdDate
+            - changedBy
+            - changedDate
+    required:
+      - id
+      - transactionDate
+      - salesRepId
+      - originWarehouseId
+      - destinationWarehouseId
+      - transactionType
+      - transactionStatus
+      - shippingMethodId
+      - active
+      - createdBy
+      - createdDate
+      - changedBy
+      - changedDate
+    x-internal: true
+  transaction-identifiers:
+    title: Transaction Identifiers
+    type: object
+    required:
+      - manufacturerId
+      - messageId
+      - timestamp
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      branchId:
+        type: integer
+        description: Designated branch ID.
+        format: int64
+        example: 9
+      ids:
+        type: string
+        description: Comma-separated list of transaction IDs
+        example: '12346, 45678, 123453'
+        maxLength: 500
+      transactionType:
+        type: string
+        description: Comma-separated list of transaction types
+        enum:
+          - Demo
+          - Order
+          - Return
+          - Sale
+          - Sample
+          - Swap -One-Sided
+          - Swap -Two-Sided
+        example: 'Demo, Order, Return'
+      transactionStatuses:
+        type: string
+        description: Comma-separated list of transaction statuses
+        enum:
+          - New
+          - Pending
+          - Closed
+          - Cancelled
+          - Modified
+        example: 'New, Pending, Closed'
+      purchaseOrderNumber:
+        type: string
+        description: Transaction purchase order number
+        example: TXN12346-PO
+        maxLength: 50
+      originWarehouseId:
+        type: integer
+        description: Transaction origin warehouse ID
+        format: int64
+        example: 1234
+      destinationWarehouseId:
+        type: integer
+        description: Transaction destination warehouse ID
+        format: int64
+        example: 1234
+      salesRepId:
+        type: integer
+        description: Transaction sales rep ID
+        format: int64
+        example: 123
+      isActive:
+        type: boolean
+        description: 'Is transaction active - (Yes = true, No = false)'
+        example: true
+    x-internal: true
+  transaction-details:
+    title: Transaction Details
+    type: object
+    properties:
+      transactionDateMin:
+        type: string
+        description: Get transactions after this transaction date (in 24 hour format)
+        format: date-time
+        example: '2017-11-05 13:15'
+      transactionDateMax:
+        type: string
+        description: Get transactions before this transaction date (in 24 hour format)
+        format: date-time
+        example: '2018-11-05 13:15'
+      includeTransactionItems:
+        type: boolean
+        description: 'Include transaction items in response - (Yes = true, No = false)'
+        default: false
+        example: true
+    x-internal: true
+  transaction-post:
+    title: Transaction - Post
+    type: object
+    required:
+      - messageId
+      - timestamp
+      - manufacturerId
+      - branchId
+      - originWarehouseId
+      - destinationWarehouseId
+      - transactionType
+      - shippingMethodId
+      - salesRepId
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      branchId:
+        type: integer
+        description: Designated branch ID.
+        format: int64
+        example: 9
+      transactionDate:
+        type: string
+        description: Transaction date in 24 hour format
+        format: date-time
+        example: '2018-11-05 13:15'
+      salesRepId:
+        type: integer
+        description: Transaction sales rep ID
+        format: int64
+        example: 123
+      originWarehouseId:
+        type: integer
+        description: Transaction origin warehouse ID
+        format: int64
+        example: 123
+      destinationWarehouseId:
+        type: integer
+        description: Transaction destination warehouse ID
+        format: int64
+        example: 123
+      transactionType:
+        type: string
+        description: Transaction type
+        enum:
+          - Demo
+          - Order
+          - Return
+          - Sale
+          - Sample
+          - Swap -One-Sided
+          - Swap -Two-Sided
+        example: Demo
+      transactionStatus:
+        type: string
+        description: Transaction status
+        enum:
+          - New
+          - Pending
+          - Closed
+          - Cancelled
+          - Modified
+        example: New
+      shippingMethodId:
+        type: integer
+        description: Transaction shipping method ID
+        format: int64
+        example: 1345
+      purchaseOrderNumber:
+        type: string
+        description: Transaction purchase order number
+        example: TXN12346-PO
+        maxLength: 50
+      notes:
+        type: string
+        description: Transaction notes
+        example: Additional notes or comments
+        maxLength: 500
+      userName:
+        type: string
+        description: User name for history records
+        format: string
+        example: John Doe
+    x-internal: true
+  transaction-update:
+    title: Transaction - Update
+    type: object
+    required:
+      - messageId
+      - timestamp
+      - manufacturerId
+      - originWarehouseId
+      - destinationWarehouseId
+      - transactionType
+      - shippingMethodId
+      - salesRepId
+    properties:
+      messageId:
+        type: string
+        description: message ID
+        format: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+      timestamp:
+        type: string
+        description: Current date/time in ISO-8601 Z format
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      transactionDate:
+        type: string
+        description: Transaction date in 24 hour format
+        format: date-time
+        example: '2018-11-05 13:15'
+      salesRepId:
+        type: integer
+        description: Transaction sales rep ID
+        format: int64
+        example: 123
+      originWarehouseId:
+        type: integer
+        description: Transaction origin warehouse ID
+        format: int64
+        example: 123
+      destinationWarehouseId:
+        type: integer
+        description: Transaction destination warehouse ID
+        format: int64
+        example: 123
+      transactionType:
+        type: string
+        description: Transaction type
+        enum:
+          - Demo
+          - Order
+          - Return
+          - Sale
+          - Sample
+          - Swap -One-Sided
+          - Swap -Two-Sided
+        example: Demo
+      transactionStatus:
+        type: string
+        description: Transaction status
+        enum:
+          - New
+          - Pending
+          - Closed
+          - Cancelled
+          - Modified
+        example: New
+      shippingMethodId:
+        type: integer
+        description: Transaction shipping method ID
+        format: int64
+        example: 1345
+      purchaseOrderNumber:
+        type: string
+        description: Transaction purchase order number
+        example: TXN12346-PO
+        maxLength: 50
+      notes:
+        type: string
+        description: Transaction notes
+        example: Additional notes or comments
+        maxLength: 500
+      userName:
+        type: string
+        description: User name for history records
+        format: string
+        example: John Doe
+    x-internal: true
+  transaction-items-post:
+    title: Transaction Items - Post
+    type: object
+    description: ''
+    required:
+      - messageId
+      - timestamp
+      - manufacturerId
+      - transactionItems
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      userName:
+        type: string
+        description: User name for history records
+        format: string
+        example: John Doe
+      transactionItems:
+        type: array
+        items:
+          type: object
+          required:
+            - catalogNumber
+          properties:
+            catalogNumber:
+              type: string
+              description: Transaction item catalog number
+              example: 02-354-TEMP
+            lotCode:
+              type: string
+              description: Transaction item lot code
+              example: LotCode1
+            expirationDate:
+              type: string
+              format: date-time
+              example: '2018-01-31'
+              description: Date the item is set to expire. Must be in YYYY-MM-DD format
+            unitPrice:
+              type: integer
+              format: double
+              description: Transaction item price
+              example: 12.89
+            quantity:
+              type: integer
+              description: 'Total quantity of specified transaction item (default: 1)'
+              example: 1
+            currencyCode:
+              type: string
+              description: Transaction item price currency code - ISO 4217
+              example: USD
+            discrepancyCodeId:
+              type: integer
+              description: Transaction item price discrepancy code ID
+              format: int64
+              example: 34088
+    x-internal: true
+  transaction-items-update:
+    title: Transaction Items - Update
+    type: object
+    description: ''
+    required:
+      - messageId
+      - timestamp
+      - manufacturerId
+      - transactionItems
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      userName:
+        type: string
+        description: User name for history records
+        format: string
+        example: John Doe
+      transactionItems:
+        type: array
+        items:
+          type: object
+          required:
+            - transactionItemId
+          properties:
+            transactionItemId:
+              type: integer
+              description: WebOps transaction item ID
+              format: int64
+              example: 34088
+            lotCode:
+              type: string
+              description: Transaction item lot code
+              example: LotCode1
+            expirationDate:
+              type: string
+              format: date-time
+              example: '2018-01-31'
+              description: Date the item is set to expire. Must be in YYYY-MM-DD format
+            unitPrice:
+              type: integer
+              format: double
+              description: Transaction item price
+              example: 12.89
+            quantity:
+              type: integer
+              description: 'Total quantity of specified transaction item (default: 1)'
+              example: 1
+            currencyCode:
+              type: string
+              description: Transaction item price currency code - ISO 4217
+              example: USD
+            discrepancyCodeId:
+              type: integer
+              description: Transaction item price discrepancy code ID
+              format: int64
+              example: 34088
+    x-internal: true
+  transaction-updated-fields:
+    title: Transaction Updated Fields
+    type: object
+    properties:
+      transactionDateMin:
+        type: string
+        description: Get transactions after this transaction date (in 24 hour format)
+        format: date-time
+        example: '2017-11-05 13:15'
+      transactionDateMax:
+        type: string
+        description: Get transactions before this transaction date (in 24 hour format)
+        format: date-time
+        example: '2018-11-05 13:15'
+    x-internal: true

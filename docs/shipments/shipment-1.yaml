@@ -1,0 +1,266 @@
+title: Shipment
+type: object
+properties:
+  id:
+    type: integer
+    description: Shipment Id
+    format: int64
+    example: 731873281
+  caseId:
+    type: integer
+    description: Case Id
+    format: int64
+    example: 123456
+  shipmentType:
+    type: string
+    enum:
+      - Incoming
+      - Outgoing
+    description: Shipment type.
+    example: Incoming
+  shipmentStatus:
+    type: string
+    description: Shipment status.
+    enum:
+      - Scheduled
+      - Shipped
+      - Received
+      - Canceled
+  originAddress:
+    type: object
+    properties:
+      originAddressId:
+        type: integer
+        format: int64
+        description: Origin Address Id (required for integrated shipping)
+        example: 1133
+      originAddressErpCode:
+        type: string
+        description: Origin Address ERP code
+        example: OA-123
+        maxLength: 50
+      originInventoryLocationErpCode:
+        type: string
+        description: Origin Inventory Location ERP code
+        example: IL-123
+        maxLength: 50
+      originAddressStreet1:
+        type: string
+        description: Origin Address street line 1
+        example: Street line 1
+        maxLength: 50
+      originAddressStreet2:
+        type: string
+        description: Origin Address street line 2
+        example: Street line 2
+        maxLength: 50
+      originAddressCity:
+        type: string
+        description: Origin Address city
+        example: Atlanta
+        maxLength: 50
+      originAddressSubdivision:
+        type: string
+        description: Origin Address state/province/subdivision
+        example: US-GA
+        maxLength: 50
+      originAddressZipCode:
+        type: string
+        description: Origin Address zip or portal code
+        example: 30000
+        maxLength: 50
+      originAddressCountry:
+        type: string
+        description: Origin Address country
+        example: US
+        maxLength: 50
+      originAddressAttention:
+        type: string
+        description: Origin Address attention
+        example: Street line 2 description
+        maxLength: 50
+    required:
+      - originAddressId
+      - originAddressErpCode
+  destinationAddress:
+    type: object
+    properties:
+      destinationAddressId:
+        type: integer
+        format: int64
+        description: Destination Address Id (required for integrated shipping)
+        example: 1133
+      destinationAddressErpCode:
+        type: string
+        description: Destination Address ERP code
+        example: OA-123
+        maxLength: 50
+      destinationInventoryLocationErpCode:
+        type: string
+        description: Destination Inventory Location ERP code
+        example: IL-123
+        maxLength: 50
+      destinationAddressStreet1:
+        type: string
+        description: Destination Address street line 1
+        example: Street line 1
+        maxLength: 50
+      destinationAddressStreet2:
+        type: string
+        description: Destination Address street line 2
+        example: Street line 2
+        maxLength: 50
+      destinationAddressCity:
+        type: string
+        description: Destination Address city
+        example: Atlanta
+        maxLength: 50
+      destinationAddressSubdivision:
+        type: string
+        description: Destination Address state/province/subdivision
+        example: US-GA
+        maxLength: 50
+      destinationAddressZipCode:
+        type: string
+        description: Destination Address zip or portal code
+        example: 30000
+        maxLength: 50
+      destinationAddressCountry:
+        type: string
+        description: Destination Address country
+        example: US
+        maxLength: 50
+      destinationAddressAttention:
+        type: string
+        description: Destination Address attention
+        example: Street line 2 description
+        maxLength: 50
+    required:
+      - destinationAddressId
+      - destinationAddressErpCode
+  recipientPhoneNumber:
+    type: string
+    format: string
+    description: Recipient Phone Number (required for integrated shipping)
+    example: 777-888-9999
+  shippingMethodId:
+    type: integer
+    format: int64
+    description: Shipping method id
+    example: 11453
+  pickUpDate:
+    type: string
+    format: date-time
+    description: Ship date in YYYY-MM-DD format
+    example: '2018-01-01'
+  arrivalDate:
+    type: string
+    description: Arrival date in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-05'
+  dueBackDate:
+    type: string
+    description: Due back date in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-05'
+  cost:
+    type: integer
+    format: int64
+    description: Cost
+    example: 1
+  currencyCode:
+    type: string
+    format: string
+    description: Currency Code
+    example: USD
+  trackingNumber:
+    type: string
+    format: string
+    description: Tracking Number of shipment
+    example: x1478054
+  weight:
+    type: integer
+    format: int64
+    description: Weight of shipment. Default 1 (required for integrated shipping)
+    example: 1
+  weightMeasurementType:
+    type: string
+    enum:
+      - lb
+      - kg
+    description: Weight measurement type.
+    example: lb
+  numberOfPackages:
+    type: integer
+    format: int64
+    description: Number of packages. (required for integrated shipping)
+    example: 1
+  invoiceNumber:
+    type: string
+    format: string
+    description: Invoice Number for shipment
+    example: 123XYZ
+  poNumber:
+    type: string
+    format: string
+    description: PO Number for shipment
+    example: 1122RUU
+  referenceNumber:
+    type: string
+    format: string
+    description: Reference Number for shipment
+    example: 123XYZ
+  instructions:
+    type: string
+    format: string
+    description: Shipment instructions
+    example: This is a sample instructional text
+  saturdayDelivery:
+    type: boolean
+    description: True if allows Saturday Delivery
+    example: true
+  createdDate:
+    type: string
+    description: Last created date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  changedBy:
+    type: string
+    description: Name of the user who last changed the shipment
+    example: John Doe
+  numberOfTubs:
+    type: integer
+    description: Number of tubs in the shipment
+    format: int32
+    example: 5
+  numberOfTrays:
+    type: integer
+    description: Number of trays in the shipment
+    format: int32
+    example: 5
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  shipmentKits:
+    type: array
+    items:
+      $ref: shipment-kits-1.yaml
+required:
+  - id
+  - caseId
+  - shipmentStatus
+  - shippingMethodId
+  - arrivalDate
+  - cost
+  - trackingNumber
+  - createdDate
+  - changedDate
+  - changedBy
+  - numberOfTubs
+  - numberOfTrays

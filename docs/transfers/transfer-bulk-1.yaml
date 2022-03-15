@@ -1,0 +1,29 @@
+title: Transfer Bulk
+type: object
+required:
+  - id
+  - code
+  - message
+  - status
+properties:
+  id:
+    type: integer
+    description: Transfer Id
+    format: int64
+    example: 731873281
+  status:
+    type: string
+    enum:
+      - New
+      - In Transit
+      - Closed
+    description: Status of the transfer.  New=Saved transfer but has not been submitted yet. In Transit=Items have been transfered and waiting for destination to recieve them.  Closed=All items have been recieved at destination.  Manufacturer transfer settings determine whether the status goes to In Transit or Closed on a Submit
+    example: New
+  code:
+    type: integer
+    description: Response code
+    example: 1000
+  message:
+    type: string
+    description: Success/failure message
+    example: Success

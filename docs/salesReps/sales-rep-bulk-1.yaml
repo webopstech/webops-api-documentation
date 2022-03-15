@@ -1,0 +1,32 @@
+title: Sales Rep Bulk
+type: object
+required:
+  - id
+  - userId
+  - repNumber
+  - code
+  - message
+properties:
+  id:
+    type: integer
+    description: ID of the sales representative.
+    format: int64
+    example: 123
+  userId:
+    type: integer
+    description: ID of the sales representative user.
+    format: int64
+    example: 123
+  repNumber:
+    type: string
+    description: Sales Representative number
+    example: '123456'
+    maxLength: 50
+  code:
+    type: integer
+    description: One of the defined response codes
+    example: 1010
+  message:
+    type: string
+    description: Status Message
+    example: Success

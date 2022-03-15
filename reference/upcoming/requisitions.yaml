@@ -1,0 +1,153 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WebOps API
+  description: ''
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /requisitions:
+    post:
+      operationId: requisitions
+      summary: Get Requisitions
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- Added kitName (8.1.0)\r\n- Added kitBarcode (8.1.0)\r\n- Added requisitionItemId (8.1.0)"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml 
+              - $ref: ../../docs/requisitions/requisition-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+            description: Requisitions
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              requisitions:
+                type: array
+                items:
+                  $ref: ../../docs/requisitions/requisition-u.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  '/requisition/{requisitionId}':
+    parameters:
+      - name: requisitionId
+        in: path
+        required: true
+        type: string
+    put:
+      operationId: 'requisition/{requisitionId}'
+      summary: Update Requisition Status
+      description: "## New Endpoint (8.1.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/requisitions/requisition-update-u.yaml
+            description: Requisitions
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              requisitions:
+                type: array
+                items:
+                  $ref: ../../docs/requisitions/requisition-u.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1100'
+        message:
+          type: string
+          description: Error message description
+          example: An unexpected server error occurred while processing the request

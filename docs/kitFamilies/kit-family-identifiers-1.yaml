@@ -1,0 +1,45 @@
+title: Kit Family Identifiers
+type: object
+required:
+  - messageId
+  - manufacturerId
+  - timestamp
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Kit family branch ID
+    format: int64
+    example: 1234
+  ids:
+    type: string
+    description: Comma-separated list of kit family IDs; max length of 100 IDs
+    example: '123, 456, 789, 0123'
+  erpCode:
+    type: string
+    description: Kit family ERP code
+    example: ERP123
+    maxLength: 50
+  name:
+    type: string
+    description: Kit family Name
+    example: ABC Kit Family
+    maxLength: 100
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  updatedAtMin:
+    type: string
+    description: Show updated kit families after this date. All date times must be provided in ISO 8601 Z format
+    format: date-time
+    example: '2017-11-05T13:15:30Z'
+  updatedAtMax:
+    type: string
+    description: Shows updated kit families before this date. All date times must be provided in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'

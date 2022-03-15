@@ -1,0 +1,8 @@
+title: Hospital Details
+type: object
+properties:
+  includeDetails:
+    type: boolean
+    description: 'Include hospital details in response - Default = false (Yes = true, False = false)'
+    example: true
+x-internal: true

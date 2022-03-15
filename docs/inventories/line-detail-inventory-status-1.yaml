@@ -1,0 +1,22 @@
+title: Line Detail Inventory Status
+type: object
+description: Line number and status of any individual insertion.
+properties:
+  id:
+    type: integer
+    description: The inventory item part id
+    format: int64
+    example: 34568908
+  code:
+    type: integer
+    description: One of the defined response codes
+    example: 1010
+  message:
+    type: string
+    description: Success
+    example: Message
+required:
+  - lotId
+  - code
+  - message
+x-internal: true

@@ -1,0 +1,22 @@
+title: Case - Delete Usage
+type: object
+description: ''
+required:
+  - catalogNumber
+  - externalCaseUsageId
+properties:
+  externalCaseUsageId:
+    type: string
+    description: Customer ID of case usage
+    format: string
+    example: EX123
+    maxLength: 32
+  usageItemId:
+    type: integer
+    description: WebOps usage item ID
+    format: int64
+    example: 34088
+  catalogNumber:
+    type: string
+    description: Usage catalog number
+    example: 02-354-TEMP

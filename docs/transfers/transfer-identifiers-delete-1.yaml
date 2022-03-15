@@ -1,0 +1,10 @@
+title: Transfer Identifiers - Delete
+type: object
+required:
+  - transferItemId
+properties:
+  transferItemId:
+    type: integer
+    format: int64
+    description: Transfer Item Id specific to this transfer.  Each item or kit has a unique number.  Use this id when updating a transfer item
+    example: 11242

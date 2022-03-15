@@ -1,0 +1,53 @@
+title: Case - Cancel
+type: object
+required:
+  - messageId
+  - timestamp
+  - manufacturerId
+  - branchId
+  - caseCancellationType
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer Id
+    format: int64
+    example: '1234'
+  branchId:
+    type: integer
+    description: 'Designated branch ID. Either branchId or branchErpCode is required. If both branchId and branchErpCode are provided, branchId will be used.'
+    format: int64
+    example: '9'
+  branchErpCode:
+    type: string
+    description: 'Branch ERP Code. Either branchId or branchErpCode is required. If both branchErpCode and branchId are provided, branchId will be used.'
+    example: ERP123
+    maxLength: 50
+  caseCancellationType:
+    type: string
+    description: Case cancellation type for cases with CANCLLED status
+    enum:
+      - Not Specified
+      - Product Recall
+      - Patient Conditions
+      - Insurance Not Approved
+      - Medical Office Cancel Surgery
+      - Surgery Postponed Without Date
+      - No Usage Registered
+      - Competitors Product Preferred
+      - Used Hospital Inventory
+      - Instruments Not Available
+      - Implants Not Available
+      - Technical Representative Not Available
+      - Customer Credit Block
+      - Delivery Issues
+      - Duplicate Order
+      - Pricing not established
+      - Duplicated Surgery
+      - System Issues
+      - Insufficient Funding
+  userName:
+    type: string
+    description: User name for history records
+    example: John Doe
+    maxLength: 50
+x-internal: true

@@ -1,0 +1,18 @@
+title: Updated
+type: object
+required:
+  - manufacturerId
+  - messageId
+  - timestamp
+properties:
+  updatedAtMin:
+    type: string
+    format: date-time
+    example: '2017-11-05T13:15:30Z'
+    description: Get updated results after this date. All date times must be provided in ISO 8601 Z format
+  updatedAtMax:
+    type: string
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+    description: Get updated results before this date. All date times must be provided in ISO 8601 Z format
+x-internal: true

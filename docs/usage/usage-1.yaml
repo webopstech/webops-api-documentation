@@ -1,0 +1,31 @@
+title: Usage
+type: object
+required:
+  - externalCaseUsageId
+  - catalogNumber
+  - code
+  - message
+properties:
+  externalCaseUsageId:
+    type: string
+    description: Customer ID of case usage
+    format: string
+    example: EX123
+    maxLength: 32
+  usageItemId:
+    type: integer
+    description: WebOps usage item ID
+    format: int64
+    example: 34088
+  catalogNumber:
+    type: string
+    description: Usage catalog number
+    example: 02-354-TEMP
+  code:
+    type: integer
+    description: One of the defined response codes
+    example: 1010
+  message:
+    type: string
+    description: Status Message
+    example: Success

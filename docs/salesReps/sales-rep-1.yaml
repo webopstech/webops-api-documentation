@@ -1,0 +1,119 @@
+title: Sales Rep
+type: object
+required:
+  - branchId
+  - id
+  - firstName
+  - lastName
+  - active
+  - changedDate
+properties:
+  branchId:
+    type: integer
+    description: ID of the branch associated to the sales rep
+    format: int64
+    example: 123
+  id:
+    type: integer
+    description: ID of the sales rep
+    format: int64
+    example: 123
+  erpCode:
+    type: string
+    description: ERP code of the sales rep
+    example: ERP123
+    maxLength: 50
+  firstName:
+    type: string
+    description: First name of the sales rep
+    example: John
+    maxLength: 50
+  lastName:
+    type: string
+    description: Last name of the sales rep
+    example: Doe
+    maxLength: 50
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  emails:
+    type: array
+    items:
+      type: object
+      required:
+        - email
+        - emailType
+      properties:
+        email:
+          type: string
+          description: Sales rep email address
+          example: John.Doe@gmail.com
+          maxLength: 50
+        emailType:
+          type: string
+          description: Email type
+          enum:
+            - Standard
+            - PhoneEmail
+  phoneNumbers:
+    type: array
+    items:
+      type: object
+      required:
+        - phoneNumber
+        - phoneType
+      properties:
+        phoneNumber:
+          type: string
+          description: Sales rep phone number
+          example: 123-456-7890
+          maxLength: 50
+        phoneType:
+          type: string
+          description: Sales rep phone number type
+          enum:
+            - Main
+            - Cellular
+            - Fax
+  inventoryLocations:
+    type: array
+    items:
+      type: object
+      required:
+        - warehouseId
+      properties:
+        inventoryLocationId:
+          type: integer
+          description: Sales rep inventory location
+          format: int64
+          example: 123
+  physicians:
+    type: array
+    items:
+      type: object
+      required:
+        - physicianId
+      properties:
+        physicianId:
+          type: integer
+          description: Sales rep physician
+          format: int64
+          example: 123
+  hospitals:
+    type: array
+    items:
+      type: object
+      required:
+        - hospitalId
+      properties:
+        hospitalId:
+          type: integer
+          description: Sales rep hospital
+          format: int64
+          example: 178987

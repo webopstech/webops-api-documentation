@@ -1,0 +1,50 @@
+title: Replenishment Shipping Method
+type: object
+properties:
+  id:
+    type: integer
+    description: Replenishment shipping method ID
+    format: int64
+    example: 731873281
+  name:
+    type: string
+    description: Replenishment shipping method name
+    example: Replenishment shipping method name
+    maxLength: 50
+  description:
+    type: string
+    description: Replenishment shipping method descriptio
+    example: Default Replenishment Ship Method
+    maxLength: 150
+  erpCode:
+    type: string
+    description: Replenishment shipping method ERP Code
+    example: 03D27262-74FC-4958-930E-F70320A6EA29
+    maxLength: 50
+  default:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  createdDate:
+    type: string
+    description: Created date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+required:
+  - id
+  - name
+  - description
+  - erpCode
+  - default
+  - active
+  - createdDate
+  - changedDate

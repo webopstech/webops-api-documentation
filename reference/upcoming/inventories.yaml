@@ -1,0 +1,577 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WebOps API
+  description: ''
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /inventories:
+    post:
+      operationId: inventories
+      summary: Get Inventories
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added rfidTagIds (8.2.1)\r\n\r\n#### Response\r\n- Added rfidTagId (8.2.1)"
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/inventories/inventory-identifiers-u.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+            description: Inventories
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              itemParts:
+                type: array
+                items:
+                  $ref: ../../docs/inventories/inventories-u.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /inventories/count:
+    post:
+      operationId: inventories_count
+      summary: Get a Count of Inventories
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added rfidTagIds (8.2.1)\r\n\r\n#### Response\r\n- No Changes"
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/inventories/inventory-identifiers-u.yaml
+              - $ref: ../../common/updated.yaml
+            description: Inventories
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: ../../common/responses/count.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /inventories/bulk:
+    post:
+      operationId: inventories_bulk
+      summary: Create Inventory in Bulk
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added processAsTransaction (8.1.0)\r\n- Added rfidTagId (8.2.1)\r\n\r\n#### Response\r\n- Added rfidTagId (8.2.1)"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/inventory-post-u'
+            description: Post Inventory in Bulk
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: '#/definitions/line-detail-inventory-1'
+  /inventories/status:
+    put:
+      operationId: inventories_status
+      summary: Update Inventory Status
+      description: "## New Endpoint\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- Items are now eligible for status update from Damaged, X, and Returned to D01 statuses (7.7.0)\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                description: Designated manufacturer ID
+                format: int64
+                example: 1234
+              itemParts:
+                type: array
+                items:
+                  $ref: '#/definitions/inventory-status-update-u'
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - itemParts
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: '#/definitions/line-detail-inventory-status-1'
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+parameters:
+  'trait:messageHeaders:Authorization':
+    name: Authorization
+    in: header
+    description: 'Base64(UserName:Password)'
+    required: true
+    type: string
+  'trait:messageHeaders:Access_token':
+    name: Access_token
+    in: header
+    description: '{Access_Token} from token inbound service'
+    required: true
+    type: string
+responses:
+  'trait:errorResponses:403':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1105'
+        message:
+          type: string
+          description: Error message description
+          example: Call limit is reached
+  'trait:errorResponses:422':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1020-1040
+        message:
+          type: string
+          description: Error message description
+          example: Invalid parameter
+  'trait:errorResponses:500':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1100'
+        message:
+          type: string
+          description: Error message description
+          example: An unexpected server error occurred while processing the request
+definitions:
+  count:
+    title: Count
+    type: object
+    required:
+      - count
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        format: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+      count:
+        type: integer
+        example: 100
+        description: total number of results that match the requested criteria
+    x-internal: true
+  inventory-item-request-u:
+    title: Inventory Item Request
+    type: object
+    properties:
+      catalogNumber:
+        type: string
+        description: Manufacturer catalog number of an item. The maximum length is 20 characters
+        maxLength: 20
+        example: 10-4567
+      lotCode:
+        type: string
+        description: Manufacturer lot code of an item. Maximum length is 20 characters
+        maxLength: 20
+        example: SADF4564
+      quantity:
+        type: integer
+        description: Number of items in the line
+        example: 1
+      rfidTagId:
+        type: string
+        description: RFID Tag Id
+        example: "1234567890123456789012345678901234567890"
+        maxLength: 40
+    required:
+      - catalogNumber
+      - quantity
+    x-internal: true
+  inventory-post-u:
+    title: Inventory - Post
+    type: object
+    required:
+      - messageId
+      - timestamp
+      - manufacturerId
+      - branchId
+      - inventoryLocationId
+      - itemParts
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      branchId:
+        type: integer
+        description: Branch ID of the inventory location
+        format: int64
+        example: 12
+      branchErpCode:
+        type: string
+        description: 'Inventory location Branch ERP Code. If both branchErpCode and branchId are provided, branchId will be used.'
+        example: ERP123
+        maxLength: 50
+      inventoryLocationId:
+        type: integer
+        description: inventory location ID
+        format: int64
+        example: 12
+      userName:
+        type: string
+        description: User name for history records
+        example: John Doe
+        maxLength: 50
+      processAsTransaction:
+        type: boolean
+        description: 'Process entire request as a single transaction. Default = false (Yes = true, No = false)'
+        example: true
+      itemParts:
+        type: array
+        items:
+          $ref: '#/definitions/inventory-item-request-u'
+    x-internal: true
+  inventory-status-update-u:
+    title: Inventory Status Update
+    type: object
+    required:
+      - id
+      - statusId
+    properties:
+      id:
+        type: integer
+        description: The inventory item part id
+        format: int64
+        example: 34568908
+      statusId:
+        type: integer
+        description: 'The desired inventory item part status. Items can only be changed from Shelf Stock, Damaged, X, or Returned to D01 (id = 1, 6, 9, or 10) to one of the following status ids: 3, 4, 5, 6, 9, 10, 11, or 15. The status associated with these ids can be retrieved from the /inventories/statuses endpoint.'
+        format: int64
+        example: 3
+    x-internal: true
+  line-detail-inventory-1:
+    title: Line Detail Inventory
+    type: object
+    required:
+      - index
+      - id
+      - inventoryItemId
+      - catalogNumber
+      - code
+      - message
+    description: Line number and status of any individual insertion.
+    properties:
+      index:
+        type: integer
+        description: Position of the record in the request body
+        example: 2
+      id:
+        type: integer
+        description: 'If failures, the invetnroy part id is not returned'
+        format: int64
+        example: 34568908
+      inventoryItemId:
+        type: integer
+        description: Item ID
+        format: int64
+        example: 1234
+      catalogNumber:
+        type: string
+        description: Manufacturer catalog number of an item. The maximum length is 20 characters
+        maxLength: 20
+        example: 10-4567
+      lotCode:
+        type: string
+        description: Manufacturer lot code of an item. Maximum length is 20 characters
+        example: SADF4564
+      rfidTagId:
+        type: string
+        description: RFID Tag Id
+        example: "1234567890123456789012345678901234567890"
+        maxLength: 40
+      code:
+        type: integer
+        description: One the defined response codes
+        example: 1010
+      message:
+        type: string
+        description: Success
+        example: Message
+    x-internal: true
+  line-detail-inventory-status-1:
+    title: Line Detail Inventory Status
+    type: object
+    description: Line number and status of any individual insertion.
+    properties:
+      id:
+        type: integer
+        description: The inventory item part id
+        format: int64
+        example: 34568908
+      code:
+        type: integer
+        description: One of the defined response codes
+        example: 1010
+      message:
+        type: string
+        description: Success
+        example: Message
+    required:
+      - lotId
+      - code
+      - message
+    x-internal: true
+  message-data:
+    title: Message Data
+    type: object
+    required:
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID of the request
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+    x-internal: true
+  messageId:
+    title: Message ID
+    type: object
+    required:
+      - messageId
+    properties:
+      messageId:
+        type: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID of the request
+    x-internal: true
+  paging:
+    title: Paging
+    type: object
+    properties:
+      limit:
+        type: integer
+        example: 50
+        description: 'Number of returned results (default: 50)(maximum: 500)'
+      page:
+        type: integer
+        example: 1
+        description: 'Page to show (default: 1)'
+    description: Limit and page parameters get set to default values if not provided
+    x-internal: true
+  timestamp:
+    title: Timestamp
+    type: object
+    required:
+      - timestamp
+    properties:
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+    x-internal: true
+  updated:
+    title: Updated
+    type: object
+    required:
+      - manufacturerId
+      - messageId
+      - timestamp
+    properties:
+      updatedAtMin:
+        type: string
+        format: date-time
+        example: '2017-11-05T13:15:30Z'
+        description: Get updated results after this date. All date times must be provided in ISO 8601 Z format
+      updatedAtMax:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Get updated results before this date. All date times must be provided in ISO 8601 Z format
+    x-internal: true

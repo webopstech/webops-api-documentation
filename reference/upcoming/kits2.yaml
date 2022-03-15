@@ -1,0 +1,452 @@
+swagger: '2.0'
+info:
+  version: '2.0'
+  title: WebOps API
+  description: ''
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /kits:
+    post:
+      operationId: get-kits
+      summary: Get Kits
+      description: "## New Endpoint (7.7.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/kit-identifiers-2'
+              - $ref: '#/definitions/updated'
+              - $ref: '#/definitions/paging'
+              - type: object
+                properties:
+                  includeItemDetails:
+                    type: boolean
+                    example: true
+                    description: 'Include kit details in response - Default = false (Yes = true, No = false)'
+                  includeItemSummary:
+                    type: boolean
+                    description: 'Include kit summary in response - Default = false (Yes = true, False = false)'
+                    example: true
+            description: Kits
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              kits:
+                type: array
+                items:
+                  $ref: '#/definitions/kit-2'
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+parameters:
+  'trait:messageHeaders:Authorization':
+    name: Authorization
+    in: header
+    description: 'Base64(UserName:Password)'
+    required: true
+    type: string
+  'trait:messageHeaders:Access_token':
+    name: Access_token
+    in: header
+    description: '{Access_Token} from token inbound service'
+    required: true
+    type: string
+responses:
+  'trait:errorResponses:403':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1105
+        message:
+          type: string
+          description: Error message description
+          example: Call limit is reached
+  'trait:errorResponses:422':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1020
+        message:
+          type: string
+          description: Error message description
+          example: Invalid parameter
+  'trait:errorResponses:500':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1100
+        message:
+          type: string
+          description: Error message description
+          example: An unexpected server error occurred while processing the request
+definitions:
+  kit-2:
+    title: Kit v2
+    type: object
+    required:
+      - branchId
+      - warehouseId
+      - kitId
+      - kitName
+      - kitFamilyId
+      - locationStatus
+      - active
+      - complete
+      - changedDate
+    properties:
+      branchId:
+        type: integer
+        description: kit branch ID
+        format: int64
+        example: 10
+      warehouseId:
+        type: integer
+        description: Kit warehouse ID
+        format: int64
+        example: 8989
+      kitId:
+        type: integer
+        description: kit ID
+        format: int64
+        example: 123
+      kitBarcode:
+        type: string
+        description: Kit barcode
+        example: ABCDE8901
+        maxLength: 45
+      kitName:
+        type: string
+        description: Kit name
+        example: Kit ABCDE89-01
+        maxLength: 100
+      kitFamilyId:
+        type: integer
+        description: kit family ID
+        format: int64
+        example: 78787
+      kitFamilyType:
+        type: string
+        description: Kit family type
+        enum:
+          - Standard
+          - Temporary
+          - External
+          - Instruments
+        example: Standard
+      locationStatus:
+        type: string
+        description: Kit location status
+        enum:
+          - In Warehouse
+          - In Field
+          - Transferred
+          - Pending Receipt
+        example: In Warehouse
+      processStatus:
+        type: string
+        description: Kit process status
+        enum:
+          - Inspection
+          - Cleaning
+          - Repair
+          - Upgrade
+          - Scrap
+          - Downgrade
+          - Post-Cleaning Inspection
+          - Ready
+        example: Inspection
+      active:
+        type: boolean
+        description: '(Active = true, Inactive = false)'
+        example: true
+      complete:
+        type: boolean
+        description: '(Active = true, Inactive = false)'
+        example: true
+      changedDate:
+        type: string
+        format: date-time
+        description: Last changed date and time in ISO 8601 Z format
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            inventoryItemId:
+              type: integer
+              description: Catalog item ID
+              format: int64
+              example: 187898879
+            inventoryItemPartId:
+              type: integer
+              description: Inventory item part ID
+              format: int64
+              example: 10001
+            catalogNumber:
+              type: string
+              description: inventory item part catalog number
+              example: 01-2432-3333
+              maxLength: 45
+            lotCode:
+              type: string
+              description: inventory item part lot code
+              example: HEBN7890
+              maxLength: 45
+            rfidTagId:
+              type: string
+              description: RFID Tag ID for the item
+              example: '66424028191021217943770276877'
+              maxLength: 40
+      itemSummary:
+        type: array
+        items:
+          type: object
+          properties:
+            inventoryItemId:
+              type: integer
+              description: Catalog item ID
+              format: int64
+              example: 187898879
+            catalogNumber:
+              type: string
+              description: Kit item catalog number
+              example: 01-2432-3333
+              maxLength: 45
+            expectedQty:
+              type: integer
+              description: Expected quantity of the catalog number per kit family profile
+              format: int32
+              example: 6
+            actualQty:
+              type: integer
+              description: Actual quantity of the catalog number in kit
+              format: int32
+              example: 4
+            missingQty:
+              type: integer
+              description: Quantity of the catalog number missing from kit
+              format: int32
+              example: 2
+    x-internal: true
+  kit-identifiers-2:
+    title: Kit Identifiers v2
+    type: object
+    required:
+      - messageId
+      - manufacturerId
+      - timestamp
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      branchId:
+        type: integer
+        description: Kit branch ID
+        example: 10
+      warehouseId:
+        type: integer
+        description: Kit warehouse ID
+        format: int64
+        example: 8989
+      ids:
+        type: string
+        description: Comma separated list of kit IDs; max length of 100 IDs
+        example: '123, 456, 789, 0123'
+      kitName:
+        type: string
+        description: Kit name
+        example: Kit ABCDE89-01
+        maxLength: 100
+      kitBarcode:
+        type: string
+        description: Kit barcode
+        example: ABCDE8901
+        maxLength: 45
+      kitFamilyName:
+        type: string
+        description: Kit family name
+        example: Kit ABCDE89
+        maxLength: 100
+      kitFamilyId:
+        type: integer
+        description: Kit Family ID
+        format: int64
+        example: 12345
+      kitFamilyType:
+        type: string
+        description: Kit family type
+        enum:
+          - Standard
+          - Temporary
+          - External
+          - Instruments
+        example: Standard
+      locationStatus:
+        type: string
+        description: Kit location status
+        enum:
+          - In Warehouse
+          - In Field
+          - Transferred
+          - Pending Receipt
+        example: In Warehouse
+      processStatus:
+        type: string
+        description: Kit process status
+        enum:
+          - Inspection
+          - Cleaning
+          - Repair
+          - Upgrade
+          - Scrap
+          - Downgrade
+          - Post-Cleaning Inspection
+          - Ready
+        example: Inspection
+      complete:
+        type: boolean
+        description: '(Active = true, Inactive = false)'
+        example: true
+      active:
+        type: boolean
+        description: '(Active = true, Inactive = false)'
+        example: true
+    x-internal: true
+  message-data:
+    title: Message Data
+    type: object
+    required:
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID of the request
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+    x-internal: true
+  paging:
+    title: Paging
+    type: object
+    properties:
+      limit:
+        type: integer
+        example: 50
+        description: 'Number of returned results (default: 50)(maximum: 500)'
+      page:
+        type: integer
+        example: 1
+        description: 'Page to show (default: 1)'
+    description: Limit and page parameters get set to default values if not provided
+    x-internal: true
+  updated:
+    title: Updated
+    type: object
+    required:
+      - manufacturerId
+      - messageId
+      - timestamp
+    properties:
+      updatedAtMin:
+        type: string
+        format: date-time
+        example: '2017-11-05T13:15:30Z'
+        description: Get updated results after this date. All date times must be provided in ISO 8601 Z format
+      updatedAtMax:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Get updated results before this date. All date times must be provided in ISO 8601 Z format
+    x-internal: true

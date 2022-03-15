@@ -1,0 +1,21 @@
+title: Inventory Item Request
+type: object
+properties:
+  catalogNumber:
+    type: string
+    description: Manufacturer catalog number of an item. The maximum length is 20 characters
+    maxLength: 20
+    example: 10-4567
+  lotCode:
+    type: string
+    description: Manufacturer lot code of an item. Maximum length is 20 characters
+    maxLength: 20
+    example: SADF4564
+  quantity:
+    type: integer
+    description: Number of items in the line
+    example: 1
+required:
+  - catalogNumber
+  - quantity
+x-internal: true

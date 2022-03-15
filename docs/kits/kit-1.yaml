@@ -1,0 +1,127 @@
+title: Kit
+type: object
+required:
+  - branchId
+  - warehouseId
+  - kitId
+  - kitName
+  - kitFamilyId
+  - locationStatus
+  - active
+  - complete
+  - changedDate
+properties:
+  branchId:
+    type: integer
+    description: kit branch ID
+    format: int64
+    example: 10
+  warehouseId:
+    type: integer
+    description: Kit warehouse ID
+    format: int64
+    example: 8989
+  kitId:
+    type: integer
+    description: kit ID
+    format: int64
+    example: 123
+  kitBarcode:
+    type: string
+    description: Kit barcode
+    example: ABCDE8901
+    maxLength: 45
+  kitName:
+    type: string
+    description: Kit name
+    example: Kit ABCDE89-01
+    maxLength: 100
+  kitFamilyId:
+    type: integer
+    description: kit family ID
+    format: int64
+    example: 78787
+  kitFamilyType:
+    type: string
+    description: Kit family type
+    enum:
+      - Standard
+      - Temporary
+      - External
+      - Instruments
+    example: Standard
+  locationStatus:
+    type: string
+    description: Kit location status
+    enum:
+      - In Warehouse
+      - In Field
+      - Transferred
+      - Pending Receipt
+    example: In Warehouse
+  processStatus:
+    type: string
+    description: Kit process status
+    enum:
+      - Inspection
+      - Cleaning
+      - Repair
+      - Upgrade
+      - Scrap
+      - Downgrade
+      - Post-Cleaning Inspection
+      - Ready
+    example: Inspection
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  complete:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  changedDate:
+    type: string
+    format: date-time
+    description: Last changed date and time in ISO 8601 Z format
+  items:
+    type: array
+    items:
+      type: object
+      properties:
+        inventoryItemId:
+          type: integer
+          description: Catalog item ID
+          format: int64
+          example: 187898879
+        inventoryItemPartId:
+          type: integer
+          description: Inventory item part ID
+          format: int64
+          example: 10001
+        catalogNumber:
+          type: string
+          description: inventory item part catalog number
+          example: 01-2432-3333
+          maxLength: 45
+        lotCode:
+          type: string
+          description: inventory item part lot code
+          example: HEBN7890
+          maxLength: 45
+        actualQty:
+          type: integer
+          description: Actual quantity of the catalog number/lot code combination
+          format: int32
+          example: 6
+        expectedQty:
+          type: integer
+          description: Expected quantity of the catalog number/lot code combination per kit family profile
+          format: int32
+          example: 6
+        rfidTagId:
+          type: string
+          description: RFID Tag ID for the item
+          example: '66424028191021217943770276877'
+          maxLength: 40
+x-internal: true

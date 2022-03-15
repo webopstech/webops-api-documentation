@@ -1,0 +1,181 @@
+title: Hospital
+type: object
+properties:
+  branchId:
+    type: integer
+    description: ID of the branch associated to the hospital
+    format: int64
+    example: 83
+  id:
+    type: integer
+    description: ID of the hospital
+    format: int64
+    example: 123
+  erpCode:
+    type: string
+    description: Hospital ERP code
+    example: ERP123
+    maxLength: 50
+  inventoryLocationErpCode:
+    type: string
+    description: Hospital Inventory Location ERP Code
+    example: ERP123
+    maxLength: 50
+  name:
+    type: string
+    description: Hospital name
+    example: Name 123
+    maxLength: 100
+  hospitalSystemId:
+    type: integer
+    description: Hospital system ID
+    format: int64
+    example: 123
+  inventoryLocationId:
+    type: integer
+    format: int64
+    description: Inventory location associated to the hospital.
+    example: 12345
+  hospitalType:
+    type: string
+    description: Hospital type
+    enum:
+      - State
+      - Private
+    example: State
+  languageCode:
+    type: string
+    description: Hospital locale language per ISO 639-1 standard
+    example: en
+    maxLength: 2
+  countryCode:
+    type: string
+    description: Hospital locale country per ISO 3166-1 alpha-2 standard
+    example: US
+    maxLength: 2
+  baseCurrencyCode:
+    type: string
+    description: Hospital base currency per ISO 4217 alpha standard
+    example: USD
+    maxLength: 3
+  foreignCurrencyCode:
+    type: string
+    description: Hospital foreign currency per ISO 4217 alpha standard
+    example: USD
+    maxLength: 50
+  preference:
+    type: string
+    description: Hospital preference
+    maxLength: 50
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  changedDate:
+    format: date-time
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+  phoneNumbers:
+    type: array
+    items:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          description: Hospital phone number
+          example: 123-456-7890
+          maxLength: 50
+        phoneType:
+          type: string
+          description: Hospital phone number type
+          enum:
+            - Main
+            - Cellular
+            - Fax
+          example: Main
+      required:
+        - phoneNumber
+        - phoneType
+  addresses:
+    type: array
+    items:
+      type: object
+      properties:
+        addressId:
+          type: integer
+          description: hospital address ID
+          format: int64
+          example: 89893
+        addressErpCode:
+          type: string
+          description: Hospital address ERP code
+          example: Street line 1
+          maxLength: 50
+        addressStreet1:
+          type: string
+          description: Hospital address street line 1
+          example: Street line 1
+          maxLength: 50
+        addressStreet2:
+          type: string
+          description: Hospital address street line 2
+          example: Street line 2
+          maxLength: 50
+        addressCity:
+          type: string
+          description: Hospital city
+          example: Atlanta
+          maxLength: 50
+        addressSubdivision:
+          type: string
+          description: Hospital state/province/subdivision
+          example: US-GA
+          maxLength: 50
+        addressZipCode:
+          type: string
+          description: Hospital zip or portal code
+          example: 30000
+          maxLength: 50
+        addressCountry:
+          type: string
+          description: hospital country
+          example: US
+          maxLength: 50
+        description:
+          type: string
+          description: Address description
+          example: Street line 1 description
+          maxLength: 100
+        attention:
+          type: string
+          description: Adress attention
+          example: Street line 2 description
+          maxLength: 50
+        primary:
+          type: boolean
+          description: '(Yes = true, No = false)'
+          example: true
+        category:
+          type: string
+          description: Hospital address category type
+          enum:
+            - Billing
+            - Shipping
+          example: Shipping
+      required:
+        - addressId
+        - addressErpCode
+        - addressStreet1
+        - primary
+        - category
+required:
+  - branchId
+  - id
+  - erpCode
+  - name
+  - languageCode
+  - countryCode
+  - baseCurrencyCode
+  - active
+  - changedDate
+x-internal: true

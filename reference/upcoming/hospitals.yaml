@@ -1,0 +1,245 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /hospitals:
+    post:
+      operationId: hospitals
+      summary: Get Hospitals
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No Changes\r\n\r\n#### Response\r\n- phoneType 'Cellular' changed to 'Mobile' (8.2.0)"
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitals/hospital-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+              - $ref: ../../docs/hospitals/hospital-details-1.yaml
+            description: Hospitals
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              hospitals:
+                type: array
+                items:
+                  $ref: ../../docs/hospitals/hospital-u.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /hospitals/bulk:
+    post:
+      operationId: hospitals_bulk_post
+      summary: Create Hospitals in Bulk
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- phoneType 'Cellular' changed to 'Mobile' (8.2.0)\r\n\r\n#### Response\r\n- No Changes"
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitals/hospital-bulk-post-identifiers-u.yaml
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            description: ''
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual hospitals from the request.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the hospital.
+                      format: int64
+                      example: 123
+                    name:
+                      type: string
+                      description: Hospital name
+                      example: Name 123
+                      maxLength: 100
+                    erpCode:
+                      type: string
+                      description: Hospital ERP code
+                      example: ERP123
+                      maxLength: 50
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - name
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+    put:
+      operationId: hospitals_bulk_put
+      summary: Update Hospitals in Bulk
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- phoneType 'Cellular' changed to 'Mobile' (8.2.0)\r\n\r\n#### Response\r\n- No Changes"
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/hospitals/hospital-bulk-put-identifiers-u.yaml
+            description: Physicians
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            description: ''
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual hospitals from the request.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the hospital.
+                      format: int64
+                      example: 123
+                    name:
+                      type: string
+                      description: Hospital name
+                      example: Name 123
+                      maxLength: 100
+                    erpCode:
+                      type: string
+                      description: Hospital ERP code
+                      example: ERP123
+                      maxLength: 50
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - name
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml

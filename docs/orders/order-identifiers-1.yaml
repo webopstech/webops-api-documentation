@@ -1,0 +1,78 @@
+title: Order Identifiers
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Designated branch ID
+    format: int64
+    example: 9
+  ids:
+    type: string
+    description: Comma-separated list of order IDs; max length of 100 IDs
+    example: '98765,43210,999999'
+  caseIds:
+    type: string
+    description: Comma-separated list of WebOps case IDs
+    example: '12346,45678,123453'
+    maxLength: 500
+  externalCaseIds:
+    type: string
+    description: Comma-separated list of external case IDs
+    example: '12346,45678,123453'
+    maxLength: 500
+  orderStatus:
+    type: string
+    description: Order status
+    enum:
+      - Submitted
+      - Pre-Valid
+      - Errors
+      - BilledOrderNo
+      - ReplenNo
+      - Booked
+      - Invoiced
+    example: Submitted
+  billOrderNumberReceived:
+    type: boolean
+    description: 'Bill order number received (Yes = true, No = false)'
+    example: true
+  replenishmentNumberReceived:
+    type: boolean
+    description: 'Replenishment order number received (Yes = true, No = false)'
+    example: true
+  purchaseOrderNumberReceived:
+    type: boolean
+    description: 'Purchase order number received (Yes = true, No = false)'
+    example: true
+  active:
+    type: boolean
+    description: 'Is order active? (Yes = true, No = false)'
+    default: true
+    example: true
+  salesRepIds:
+    type: string
+    description: Comma-separated list of sales rep IDs
+    example: '12346,45678,123453'
+    maxLength: 500
+  physicianIds:
+    type: string
+    description: Comma-separated list of physician IDs
+    example: '12346,45678,123453'
+    maxLength: 500
+  hospitalIds:
+    type: string
+    description: Comma-separated list of hospital IDs
+    example: '12346,45678,123453'
+    maxLength: 500
+  hospitalSystemIds:
+    type: string
+    description: Comma-separated list of hospital system IDs
+    example: '12346,45678,123453'
+    maxLength: 500
+required:
+  - manufacturerId

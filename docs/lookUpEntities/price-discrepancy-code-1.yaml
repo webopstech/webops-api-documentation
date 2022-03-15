@@ -1,0 +1,28 @@
+title: Price Discrepancy Code
+type: object
+properties:
+  id:
+    type: integer
+    description: Discrepancy code ID
+    format: int64
+    example: 731873281
+  name:
+    type: string
+    description: Discrepancy code name
+    example: Hospital Contract
+    maxLength: 50
+  description:
+    type: string
+    description: Description of the price discrepancy code
+    example: Contractually set pricing
+    maxLength: 50
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+required:
+  - id
+  - name
+  - description
+  - changedDate

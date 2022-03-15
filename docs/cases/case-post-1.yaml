@@ -1,0 +1,197 @@
+title: Case - Post
+type: object
+properties:
+  messageId:
+    type: string
+    description: message ID
+    format: string
+    example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+  timestamp:
+    type: string
+    description: Current date/time in ISO-8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Designated branch ID
+    format: int64
+    example: 9
+  externalCaseId:
+    type: string
+    description: Customer ID of surgical case
+    format: string
+    example: EX123
+    maxLength: 32
+  caseIdentifier:
+    type: string
+    description: String for Rep to differntiate case from other similar cases.
+    format: string
+    example: CS-123
+    maxLength: 100
+  isLoaner:
+    type: boolean
+    description: 'If true, the case will be posted as a loaner case, even with no product systems provided. Providing product systems will ignore this field make the case a loaner case.'
+    example: true
+  caseType:
+    type: string
+    description: Case type
+    enum:
+      - Standard
+      - Add On
+    example: Standard
+  surgeryDate:
+    type: string
+    description: Surgery date in 24 hour format. Must be a local time zone value.
+    format: date-time
+    example: '2018-11-05 13:15'
+  salesRepId:
+    type: integer
+    description: Sales Rep ID of the case
+    format: int64
+    example: 123
+  coverageRepId:
+    type: integer
+    description: Coverage Rep ID of the case
+    format: int64
+    example: 1234
+  physicianId:
+    type: integer
+    description: Physician ID of the case
+    format: int64
+    example: 10011
+  hospitalId:
+    type: integer
+    description: Hospital ID of the case
+    format: int64
+    example: 50010
+  procedureId:
+    type: integer
+    description: Procedure ID of the case
+    format: int64
+    example: 25
+  specialInstructions:
+    type: string
+    description: Special instructions for the case
+    example: Please handle it carefully
+    maxLength: 500
+  notes:
+    type: string
+    description: Case notes
+    example: Additional notes or comments
+    maxLength: 4000
+  patientGender:
+    type: string
+    description: Patient Gender
+    enum:
+      - Male
+      - Female
+    example: Male
+  patientAge:
+    type: integer
+    description: Patient age
+    example: 40
+  revisionSurgery:
+    type: boolean
+    description: 'Is this a revision surgery? (Yes = true, No = false). If revision surgery = true, revision reason id is required.'
+    example: true
+  revisionReasonId:
+    type: integer
+    description: Revision reason ID
+    format: int64
+    example: 123
+  usePhysicianPref:
+    type: boolean
+    description: |-
+      (Yes = true, No = false)
+      ------
+      If preference doesn't exist, preference will be created.
+      If preference exists and product systems are selected, preference will be updated to those product systems.
+      If preference exists and no product systems are selected, the preference will be deleted.
+    example: true
+  userName:
+    type: string
+    description: User name for history records
+    example: John Doe
+    maxLength: 50
+  shippingInstructions:
+    type: array
+    items:
+      type: object
+      properties:
+        shipToAddressId:
+          type: integer
+          description: Shipping instructions address ID
+          format: int64
+          example: 34088
+        shippingMethodId:
+          type: integer
+          description: Shipping instructions shipping method ID
+          format: int64
+          example: 25
+        attention:
+          type: string
+          description: Shipping instructions attention
+          example: Attention field
+          maxLength: 50
+        arriveByDate:
+          type: string
+          description: Shipping instructions arrive by date in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+      required:
+        - shipToAddressId
+        - shippingMethodId
+  productSystems:
+    type: array
+    description: 'If no product systems included and isLoaner is false or not provided, the case will be posted in ''Reconciled'' status.'
+    items:
+      type: object
+      properties:
+        productSystemId:
+          type: integer
+          description: Product system ID
+          format: int64
+          example: 45678
+        additionalSpecifications:
+          type: string
+          description: Product system additional specifications
+          example: Attention field
+          maxLength: 255
+      required:
+        - productSystemId
+  inventoryItems:
+    type: array
+    description: Requested inventory items
+    items:
+      type: object
+      required:
+        - catalogNumber
+        - quantity
+      properties:
+        catalogNumber:
+          type: string
+          description: Catalog Number
+          example: Z01-109-0-008
+        quantity:
+          type: integer
+          description: Inventory Item Quantity
+          format: int64
+          example: '1'
+required:
+  - messageId
+  - timestamp
+  - manufacturerId
+  - branchId
+  - externalCaseId
+  - caseType
+  - surgeryDate
+  - salesRepId
+  - physicianId
+  - hospitalId
+  - procedureId
+x-internal: true

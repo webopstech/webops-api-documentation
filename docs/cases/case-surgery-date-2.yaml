@@ -1,0 +1,14 @@
+title: Case - Surgery Date v2
+type: object
+properties:
+  surgeryDateMin:
+    type: string
+    description: Get cases after this surgery date (in 24 hour format)
+    format: date-time
+    example: '2017-11-05 13:15'
+  surgeryDateMax:
+    type: string
+    description: Get cases before this surgery date (in 24 hour format)
+    format: date-time
+    example: '2017-11-05 13:15'
+x-internal: true

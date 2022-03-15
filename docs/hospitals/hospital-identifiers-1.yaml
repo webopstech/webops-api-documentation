@@ -1,0 +1,36 @@
+title: Hospital Identifiers
+type: object
+required:
+  - manufacturerId
+  - messageId
+  - timestamp
+properties:
+  manufacturerId:
+    type: integer
+    format: int64
+    description: Designated manufacturer ID
+    example: 1234
+  branchId:
+    type: integer
+    format: int64
+    description: Hospital branch ID
+    example: 10
+  ids:
+    type: string
+    example: '123, 456, 789, 0123'
+    description: Comma-separated list of hospital IDs; max length of 100 IDs
+  erpCode:
+    type: string
+    example: ERP123
+    description: Hospital ERP Code
+    maxLength: 50
+  name:
+    type: string
+    example: Name 123
+    description: Hospital name
+    maxLength: 100
+  active:
+    type: boolean
+    description: 'Default = true (Active = true, Inactive = false)'
+    example: true
+x-internal: true

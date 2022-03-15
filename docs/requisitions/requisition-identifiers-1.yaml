@@ -1,0 +1,75 @@
+title: Requisition Identifiers
+type: object
+required:
+  - messageId
+  - timestamp
+  - manufacturerId
+  - branchId
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Designated branch ID
+    format: int64
+    example: 9
+  caseId:
+    type: integer
+    description: Case ID associated with the requisition
+    format: int64
+    example: 12019
+  kitId:
+    type: integer
+    description: Kit instance ID associated with the requisition
+    format: int64
+    example: 12019
+  ids:
+    type: string
+    description: Comma-separated list of requisition IDs; max length of 100 IDs
+    example: '12346, 45678, 123453'
+  type:
+    type: string
+    description: Requisition type
+    enum:
+      - Shelf Stock
+      - Manufacturer
+    example: Shelf Stock
+  status:
+    type: string
+    description: Requisition status
+    enum:
+      - Open
+      - Submitted
+      - Received
+      - Partial
+      - Errors
+      - Closed
+      - Canceled
+    example: Open
+  processed:
+    type: boolean
+    description: 'Requisition processed - (Yes = true, No = false)'
+    example: true
+  createdAtMin:
+    type: string
+    description: Get requisitions created after this date. All date times must be provided in ISO 8601 Z format
+    format: date-time
+    example: '2017-11-05T13:15:30Z'
+  createdAtMax:
+    type: string
+    description: Get requisitions before this date. All date times must be provided in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  updatedAtMin:
+    type: string
+    description: Get requisitions updated after this date. All date times must be provided in ISO 8601 Z format
+    format: date-time
+    example: '2017-11-05T13:15:30Z'
+  updatedAtMax:
+    type: string
+    description: Get requisitions updated before this date. All date times must be provided in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'

@@ -1,0 +1,31 @@
+title: Transfer Identifiers - Item
+type: object
+properties:
+  kitName:
+    type: string
+    description: Kit Name
+    example: Kit 123
+  kitId:
+    type: integer
+    format: int64
+    description: Kit Id of transfer item (requires at least one kit id or inventory item part id)
+    example: 11242
+  catalogNumber:
+    type: string
+    description: Catalog number
+    example: CAT123
+  lotCode:
+    type: string
+    description: Lot Code
+    example: LOT123
+  inventoryItemPartId:
+    type: integer
+    format: int64
+    description: Inventory Item Part Id of transfer item (requires at least one kit id or inventory item part id)
+    example: 11242
+  quantity:
+    type: integer
+    format: int64
+    description: Quantity for the inventory item part.  Kits and RFID enabled parts can only have a quantity of 1.  Default = 1
+    example: 1
+    default: 1

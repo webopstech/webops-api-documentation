@@ -1,0 +1,71 @@
+title: Inventory Identifiers
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Inventory location branch ID
+    format: int64
+    example: 12
+  branchErpCode:
+    type: string
+    description: 'Inventory location Branch ERP Code. If both branchErpCode and branchId are provided, branchId will be used.'
+    example: ERP123
+    maxLength: 50
+  inventoryLocationId:
+    type: integer
+    description: inventory location ID
+    format: int64
+    example: 12
+  ids:
+    type: string
+    description: Comma-separated list of inventory part IDs; max length of 100 IDs
+    example: '123, 456, 789, 0123'
+  description:
+    type: string
+    description: Item description
+    example: 10-4567 description
+    maxLength: 150
+  kitName:
+    type: string
+    description: Kit Name. If Kit Name is provided and Inventory is not in Kitted status, the request will be rejected.
+    example: Kit ABC-01
+    maxLength: 100
+  kitId:
+    type: integer
+    description: Kit ID. If Kit ID is provided and Inventory is not in Kitted status, the request will be rejected.
+    example: 1234
+    format: int64
+  globalTradeItemNumber:
+    type: string
+    description: Catalog Global Trade Item Number (GTIN)
+    example: 12345678901234
+    maxLength: 14
+  status:
+    type: string
+    enum:
+      - Shelf Stock
+      - Kitted
+      - Used
+      - Returned
+      - Not Returned
+      - Damaged
+      - Expired
+      - Transferred
+      - X
+      - Returned to D01
+      - Quarantine
+      - On Transfer Shipment
+      - Pending Receipt
+      - Kitted Pending Receipt
+      - Lost
+    description: Comma-separated list of inventory item part statuses.
+    example: 'Shelf Stock, Kitted, Used'
+required:
+  - manufacturerId
+  - branchId
+x-internal: true

@@ -1,0 +1,82 @@
+title: Inventory
+type: object
+required:
+  - inventoryItemPartId
+  - inventoryLocationId
+  - catalogNumber
+  - status
+properties:
+  inventoryItemId:
+    type: integer
+    description: Item ID
+    format: int64
+    example: 100098
+  inventoryItemPartId:
+    type: integer
+    description: Inventory item part ID
+    format: int64
+    example: 100098
+  inventoryLocationId:
+    type: integer
+    example: 34563456
+    description: Part inventory location ID
+    format: int64
+  catalogNumber:
+    type: string
+    description: Catalog number
+    maxLength: 20
+    example: 10-4567
+  lotCode:
+    type: string
+    description: Lot code
+    example: SADF4564
+  status:
+    type: string
+    enum:
+      - Shelf Stock
+      - Kitted
+      - Used
+      - Returned
+      - Not Returned
+      - Damaged
+      - Expired
+      - Transferred
+      - X
+      - Returned to D01
+      - Quarantine
+      - On Transfer Shipment
+      - Pending Receipt
+      - Kitted Pending Receipt
+      - Lost
+    description: Enumerated list of possible statuses.
+    example: Shelf Stock
+  kitName:
+    type: string
+    description: Kit Name if the status is kitted
+    example: Kit ABC-01
+    maxLength: 100
+  kitId:
+    type: integer
+    description: Kit ID if the status is kitted
+    example: 1234
+    format: int64
+  quantity:
+    type: integer
+    description: Number of items in the line
+    example: 1
+  createdDate:
+    type: string
+    description: date created time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  lostDate:
+    type: string
+    description: date and time when the item was lost (ISO 8601 Z format) if the status is LOST
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+x-internal: true

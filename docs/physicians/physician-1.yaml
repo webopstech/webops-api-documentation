@@ -1,0 +1,100 @@
+title: Physician
+type: object
+properties:
+  branchId:
+    type: integer
+    description: ID of the branch associated to the physician
+    format: int64
+    example: 123
+  id:
+    type: integer
+    description: ID of the physician
+    format: int64
+    example: 123
+  erpCode:
+    type: string
+    description: External ERP Code of the physician
+    example: ERP123
+    maxLength: 50
+  firstName:
+    type: string
+    description: First name of the physician
+    example: John
+    maxLength: 125
+  lastName:
+    type: string
+    description: Last name of the physician
+    example: Doe
+    maxLength: 125
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  manufacturerGlobal:
+    type: boolean
+    description: 'Global = true, Branch = false'
+    example: true
+  preferences:
+    type: array
+    items:
+      type: object
+      properties:
+        procedureId:
+          type: integer
+          description: Physician preferred procedure ID
+          format: int64
+          example: 34088
+        hospitalId:
+          type: string
+          description: Physician preferred hospital ID
+          example: Attention field
+          maxLength: 50
+        changedDate:
+          type: string
+          description: Changed date in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        notes:
+          type: string
+          description: Physician Preference note
+          example: Additional notes or comments
+          maxLength: 4000
+        productSystems:
+          type: array
+          items:
+            type: object
+            properties:
+              productSystemId:
+                type: integer
+                description: Physician preferred product system ID
+                format: int64
+                example: 465498
+            required:
+              - productSystemId
+        inventoryItems:
+          type: array
+          items:
+            type: object
+            properties:
+              inventoryItemId:
+                type: integer
+                description: Physician preferred inventory item ID
+                format: int64
+                example: 34088
+            required:
+              - inventoryItemId
+      required:
+        - procedureId
+required:
+  - branchId
+  - id
+  - erpCode
+  - firstName
+  - lastName
+  - active
+  - changedDate

@@ -1,0 +1,37 @@
+title: Inventory Location Identifiers
+type: object
+required:
+  - messageId
+  - timestamp
+  - manufacturerId
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: ID of the branch associated to the inventory location
+    format: int64
+    example: '1234'
+  ids:
+    type: string
+    description: Comma-separated list of inventory location IDs; max length of 100 IDs
+    example: '123, 456, 789, 0123'
+  name:
+    type: string
+    description: Inventory location name
+    example: Name 123
+    maxLength: 100
+  erpCode:
+    type: string
+    description: Inventory location ERP Code
+    example: ERP123
+    maxLength: 50
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    default: true
+    example: true
+x-internal: true

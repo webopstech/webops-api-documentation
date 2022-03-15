@@ -1,0 +1,368 @@
+{
+  "items": [
+    {
+      "type": "group",
+      "title": "Setup and Help",
+      "items": [
+        {
+            "type": "item",
+            "title": "Authentication",
+            "uri": "docs/setup-and-help/authentication.md"
+        },
+        {
+            "type": "item",
+            "title": "Call Limits",
+            "uri": "docs/setup-and-help/call-limits.md"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "v1",
+      "items": [
+        {
+            "type": "item",
+            "title": "BRANCHES",
+            "uri": "reference/1.0/branches.yaml"
+        },
+        {
+            "type": "item",
+            "title": "CASES",
+            "uri": "reference/1.0/cases.yaml"
+        },
+        {
+            "type": "item",
+            "title": "CATALOG ITEMS",
+            "uri": "reference/1.0/catalogItems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "HOSPITALS",
+            "uri": "reference/1.0/hospitals.yaml"
+        },
+        {
+            "type": "item",
+            "title": "HOSPITAL SYSTEMS",
+            "uri": "reference/1.0/hospitalSystems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "INVENTORIES",
+            "uri": "reference/1.0/inventories.yaml"
+        },
+        {
+            "type": "item",
+            "title": "INVENTORY LOCATIONS",
+            "uri": "reference/1.0/inventoryLocations.yaml"
+        },
+        {
+            "type": "item",
+            "title": "KITS",
+            "uri": "reference/1.0/kits.yaml"
+        },
+        {
+            "type": "item",
+            "title": "KIT ITEMS",
+            "uri": "reference/1.0/kitItems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "KIT FAMILIES",
+            "uri": "reference/1.0/kitFamilies.yaml"
+        },
+        {
+            "type": "item",
+            "title": "LOOK UP ENTITIES",
+            "uri": "reference/1.0/lookUpEntities.yaml"
+        },
+        {
+            "type": "item",
+            "title": "LOT CODES",
+            "uri": "reference/1.0/lotCodes.yaml"
+        },
+        {
+            "type": "item",
+            "title": "ORDERS",
+            "uri": "reference/1.0/orders.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PHYSICIANS",
+            "uri": "reference/1.0/physicians.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PROCEDURES",
+            "uri": "reference/1.0/procedures.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PRODUCT SYSTEMS",
+            "uri": "reference/1.0/productSystems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "REQUISITIONS",
+            "uri": "reference/1.0/requisitions.yaml"
+        },
+        {
+            "type": "item",
+            "title": "SALES REPS",
+            "uri": "reference/1.0/salesReps.yaml"
+        },
+        {
+            "type": "item",
+            "title": "SHIPMENTS",
+            "uri": "reference/1.0/shipments.yaml"
+        },
+        {
+            "type": "item",
+            "title": "TRANSFERS",
+            "uri": "reference/1.0/transfers.yaml"
+        },
+        {
+            "type": "item",
+            "title": "USAGE",
+            "uri": "reference/1.0/usage.yaml"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "v2",
+      "items": [
+        /*{
+            "type": "item",
+            "title": "BRANCHES",
+            "uri": "reference/2.0/branches.yaml"
+        },*/
+        {
+            "type": "item",
+            "title": "CASES",
+            "uri": "reference/2.0/cases.yaml"
+        }/*,
+        {
+            "type": "item",
+            "title": "CATALOG ITEMS",
+            "uri": "reference/2.0/catalogItems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "HOSPITALS",
+            "uri": "reference/2.0/hospitals.yaml"
+        },
+        {
+            "type": "item",
+            "title": "HOSPITAL SYSTEMS",
+            "uri": "reference/2.0/hospitalSystems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "INVENTORIES",
+            "uri": "reference/2.0/inventories.yaml"
+        },
+        {
+            "type": "item",
+            "title": "INVENTORY LOCATIONS",
+            "uri": "reference/2.0/inventoryLocations.yaml"
+        },
+        {
+            "type": "item",
+            "title": "KITS",
+            "uri": "reference/2.0/kits.yaml"
+        },
+        {
+            "type": "item",
+            "title": "KIT ITEMS",
+            "uri": "reference/2.0/kitItems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "KIT FAMILIES",
+            "uri": "reference/2.0/kitFamilies.yaml"
+        },
+        {
+            "type": "item",
+            "title": "LOOK UP ENTITIES",
+            "uri": "reference/2.0/lookUpEntities.yaml"
+        },
+        {
+            "type": "item",
+            "title": "LOT CODES",
+            "uri": "reference/2.0/lotCodes.yaml"
+        },
+        {
+            "type": "item",
+            "title": "ORDERS",
+            "uri": "reference/2.0/orders.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PHYSICIANS",
+            "uri": "reference/2.0/physicians.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PROCEDURES",
+            "uri": "reference/2.0/procedures.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PRODUCT SYSTEMS",
+            "uri": "reference/2.0/productSystems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "REQUISITIONS",
+            "uri": "reference/2.0/requisitions.yaml"
+        },
+        {
+            "type": "item",
+            "title": "SALES REPS",
+            "uri": "reference/2.0/salesReps.yaml"
+        },
+        {
+            "type": "item",
+            "title": "SHIPMENTS",
+            "uri": "reference/2.0/shipments.yaml"
+        },
+        {
+            "type": "item",
+            "title": "TRANSFERS",
+            "uri": "reference/2.0/transfers.yaml"
+        },
+        {
+            "type": "item",
+            "title": "USAGE",
+            "uri": "reference/2.0/usage.yaml"
+        }*/
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Upcoming Changes",
+      "items": [
+        /*{
+            "type": "item",
+            "title": "BRANCHES",
+            "uri": "reference/upcoming/branches.yaml"
+        },*/
+        {
+            "type": "item",
+            "title": "CASES (2.0)",
+            "uri": "reference/upcoming/cases.yaml"
+        },
+        /*{
+            "type": "item",
+            "title": "CATALOG ITEMS",
+            "uri": "reference/upcoming/catalogItems.yaml"
+        },*/
+        {
+            "type": "item",
+            "title": "HOSPITALS (1.0)",
+            "uri": "reference/upcoming/hospitals.yaml"
+        },
+        /*{
+            "type": "item",
+            "title": "HOSPITAL SYSTEMS",
+            "uri": "reference/upcoming/hospitalSystems.yaml"
+        },
+        */{
+            "type": "item",
+            "title": "INVENTORIES (1.0)",
+            "uri": "reference/upcoming/inventories.yaml"
+        },
+        /*{
+            "type": "item",
+            "title": "INVENTORY LOCATIONS",
+            "uri": "reference/upcoming/inventoryLocations.yaml"
+        },
+        */{
+            "type": "item",
+            "title": "KITS (1.0)",
+            "uri": "reference/upcoming/kits1.yaml"
+        },
+        {
+            "type": "item",
+            "title": "KITS (2.0)",
+            "uri": "reference/upcoming/kits2.yaml"
+        },
+        /*{
+            "type": "item",
+            "title": "KIT ITEMS",
+            "uri": "reference/upcoming/kitItems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "KIT FAMILIES",
+            "uri": "reference/upcoming/kitFamilies.yaml"
+        },
+        {
+            "type": "item",
+            "title": "LOOK UP ENTITIES",
+            "uri": "reference/upcoming/lookUpEntities.yaml"
+        },
+        {
+            "type": "item",
+            "title": "LOT CODES",
+            "uri": "reference/upcoming/lotCodes.yaml"
+        },*/
+        {
+            "type": "item",
+            "title": "ORDERS (1.0)",
+            "uri": "reference/upcoming/orders.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PHYSICIANS (1.0)",
+            "uri": "reference/upcoming/physicians.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PROCEDURES (1.0)",
+            "uri": "reference/upcoming/procedures.yaml"
+        },
+        {
+            "type": "item",
+            "title": "PRODUCT SYSTEMS (1.0)",
+            "uri": "reference/upcoming/productSystems.yaml"
+        },
+        {
+            "type": "item",
+            "title": "REQUISITIONS (1.0)",
+            "uri": "reference/upcoming/requisitions.yaml"
+        },
+        {
+            "type": "item",
+            "title": "SALES REPS (1.0)",
+            "uri": "reference/upcoming/salesReps.yaml"
+        },
+        {
+            "type": "item",
+            "title": "SHIPMENTS (1.0)",
+            "uri": "reference/upcoming/shipments.yaml"
+        },
+        {
+            "type": "item",
+            "title": "TRANSACTIONS (1.0)",
+            "uri": "reference/upcoming/transactions.yaml"
+        }
+        /*{
+            "type": "item",
+            "title": "TRANSFERS",
+            "uri": "reference/upcoming/transfers.yaml"
+        },
+        {
+            "type": "item",
+            "title": "USAGE",
+            "uri": "reference/upcoming/usage.yaml"
+        }*/
+      ]
+    }
+    /*{
+      "type": "item",
+      "title": "Upcoming Changes",
+      "uri": "reference/Upcoming Changes.yaml"
+    }*/
+    ]
+}

@@ -1,0 +1,172 @@
+title: Transfer Identifiers Bulk
+type: object
+required:
+  - originBranchId
+  - destinationBranchId
+  - destinationInventoryLocationid
+  - originInventoryLocationId
+  - shippingMethodId
+  - pickUpDate
+  - transferAction
+properties:
+  transferAction:
+    type: string
+    enum:
+      - Save
+      - Submit
+    description: 'Save creates transfer, but does not transfer items.  Submit saves and transfers the items. Manufacturer transfer settings determine whether the status goes to In Transit or Closed on a Submit'
+    example: Save
+  transactionId:
+    type: integer
+    format: int64
+    description: WebOps transaction id associated with the transfer.
+    example: 1234
+  originBranchId:
+    type: integer
+    format: int64
+    description: 'Origin Branch Id.  Either originBranchId or originBranchErpCode are required.  If both are provided, originBranchId will be used.'
+    example: 115
+  originBranchErpCode:
+    type: string
+    description: 'Origin Branch ERP Code. Either originBranchId or originBranchErpCode are required.  If both are provided, originBranchId will be used.'
+    example: ERP123
+    maxLength: 50
+  originInventoryLocationId:
+    type: integer
+    format: int64
+    description: 'Origin Inventory Location Id. Either originInventoryLocationId or originInventoryLocationErpCode are required.  If both are provided, originInventoryLocationId will be used.'
+    example: 11453
+  originInventoryLocationErpCode:
+    type: string
+    description: 'Origin Inventory Location ERP Code Either originInventoryLocationId or originInventoryLocationErpCode are required.  If both are provided, originInventoryLocationId will be used.'
+    example: ERP123
+    maxLength: 50
+  originAddressId:
+    type: integer
+    format: int64
+    description: Origin Address Id (required for integrated shipping)
+    example: 1133
+  destinationBranchId:
+    type: integer
+    format: int64
+    description: 'Destination Branch Id. Either destinationBranchId or destinationBranchErpCode are required.  If both are provided, destinationBranchId will be used.'
+    example: 116
+  destinationBranchErpCode:
+    type: string
+    description: 'Destination Branch ERP Code. Either destinationBranchId or destinationBranchErpCode are required.  If both are provided, destinationBranchId will be used.'
+    example: ERP123
+    maxLength: 50
+  destinationInventoryLocationId:
+    type: integer
+    format: int64
+    description: 'Destination Inventory Location Id. Either destinationInventoryLocationId or destinationInventoryLocationErpCode are required.  If both are provided, destinationInventoryLocationId will be used.'
+    example: 11454
+  destinationInventoryLocationErpCode:
+    type: string
+    description: 'Destination Inventory Location ERP Code. Either destinationInventoryLocationId or destinationInventoryLocationErpCode are required.  If both are provided, destinationInventoryLocationId will be used.'
+    example: ERP123
+    maxLength: 50
+  destinationAddressId:
+    type: integer
+    format: int64
+    description: Destination Address Id (required for integrated shipping)
+    example: 1133
+  recipientPhoneNumber:
+    type: string
+    format: string
+    description: Recipient Phone Number (required for integrated shipping)
+    maxLength: 25
+    example: 777-888-9999
+  shippingMethodId:
+    type: integer
+    format: int64
+    description: Shipping method id for transfer
+    example: 11453
+  pickUpDate:
+    type: string
+    format: date-time
+    description: Ship date in YYYY-MM-DD format
+    example: '2018-01-01'
+  arrivalDate:
+    type: string
+    description: Arrival date in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-05'
+  cost:
+    type: integer
+    format: int64
+    description: Cost
+    example: 1
+  currencyCode:
+    type: string
+    format: string
+    description: Currency Code
+    maxLength: 3
+    example: USD
+  trackingNumber:
+    type: string
+    format: string
+    description: Tracking Number of transfer
+    maxLength: 200
+    example: x1478054
+  weight:
+    type: integer
+    format: int64
+    description: Weight of transfer. Default 1 (required for integrated shipping)
+    example: 1
+  weightMeasurementType:
+    type: string
+    enum:
+      - lb
+      - kg
+    description: Weight measurement type. Default is lb
+    example: lb
+  numberOfPackages:
+    type: integer
+    format: int64
+    description: Number of packages. Default = 1 (required for integrated shipping)
+    example: 1
+  invoiceNumber:
+    type: string
+    format: string
+    description: Invoice Number for transfer
+    maxLength: 40
+    example: 123XYZ
+  poNumber:
+    type: string
+    format: string
+    description: PO Number for transfer
+    maxLength: 40
+    example: 1122RUU
+  referenceNumber:
+    type: string
+    format: string
+    description: Reference Number for transfer
+    maxLength: 40
+    example: 123XYZ
+  instructions:
+    type: string
+    format: string
+    description: Transfer instructions
+    maxLength: 2000
+    example: This is a sample instructional text
+  rma:
+    type: boolean
+    description: True if it is a return transfer. Default = false
+    example: false
+  rmaNumber:
+    type: string
+    description: RMA number
+    format: string
+    maxLength: 200
+    example: RMA text
+  receivedBy:
+    type: string
+    format: string
+    description: 'User that received transfer in First Name, Last Name format'
+    maxLength: 101
+    example: Test User
+  saturdayDelivery:
+    type: boolean
+    description: True if allows Saturday Delivery
+    example: true

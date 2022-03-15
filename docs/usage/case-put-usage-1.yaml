@@ -1,0 +1,66 @@
+title: Case - Put Usage
+type: object
+description: ''
+required:
+  - catalogNumber
+  - externalCaseUsageId
+properties:
+  externalCaseUsageId:
+    type: string
+    description: Customer ID of case usage
+    format: string
+    example: EX123
+    maxLength: 32
+  usageItemId:
+    type: integer
+    description: WebOps usage item ID
+    format: int64
+    example: 34088
+  catalogNumber:
+    type: string
+    description: Usage catalog number
+    example: 02-354-TEMP
+  price:
+    type: integer
+    format: double
+    description: Usage price
+    example: 12.89
+  priceCurrency:
+    type: string
+    description: Usage price currency code - ISO 4217
+    example: USD
+  priceDiscrepancyCodeId:
+    type: integer
+    description: Usage price discrepancy code ID
+    format: int64
+    example: 34088
+  shipToAddressId:
+    type: integer
+    description: Address ID where item part will be shipped to
+    format: int64
+    example: 1289
+  replenToAddressId:
+    type: integer
+    description: Replenishment shipment address ID
+    format: int64
+    example: 1345
+  replenishmentShippingMethodId:
+    type: integer
+    description: Usage replenishment shipping method ID
+    format: int64
+    example: 1345
+  pricelistName:
+    type: string
+    description: Order item price list name
+    example: 001-PriceList
+    maxLength: 100
+  quoteReasonId:
+    type: integer
+    description: Order quote reason code id
+    format: int64
+    example: 1289
+  quoteReasonRationale:
+    type: string
+    description: Order quote reason rationale
+    example: Honoring discounted pricing provided by the rep.
+    maxLength: 240

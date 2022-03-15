@@ -1,0 +1,28 @@
+title: Case - Additional Entities v2
+type: object
+properties:
+  includeUsage:
+    type: boolean
+    description: 'Include usage details in response - Default = false (Yes = true, False = false)'
+    example: true
+  includeProductSystems:
+    type: boolean
+    description: 'Include product system details in response- Default = false (Yes = true, False = false)'
+    example: true
+  includeRemovedProductSystems:
+    type: boolean
+    description: 'Include product system details that have been removed from the case in the response- Default = false (Yes = true, No = false)'
+    example: true
+  includeUnAssignedKitFamilies:
+    type: boolean
+    description: 'Include unassigned kits in response - Default = false (Yes = true, False = false)'
+    example: true
+  includePickLists:
+    type: boolean
+    description: 'Include pick lists in response - Default = false (Yes = true, No = false)'
+    example: true
+  includeCustomKits:
+    type: boolean
+    description: 'Include custom kits in response - Default = false (Yes = true, No = false)'
+    example: true
+x-internal: true

@@ -1,0 +1,30 @@
+title: Lot Code - Post
+type: object
+required:
+  - id
+  - catalogNumber
+properties:
+  catalogNumber:
+    type: string
+    description: Catalog number
+    maxLength: 20
+    example: 10-4567
+  lotCode:
+    type: string
+    description: Item lot code
+    example: SADF4564
+    maxLength: 20
+  serialized:
+    type: boolean
+    example: false
+    description: 'Yes = true, No = false'
+  manufacturerDate:
+    type: string
+    format: date-time
+    example: '2018-01-31'
+    description: Date the item was released from manufacturing. Must be in YYYY-MM-DD format.
+  expirationDate:
+    type: string
+    format: date-time
+    example: '2018-01-31'
+    description: Date the item is set to expire. Must be in YYYY-MM-DD format

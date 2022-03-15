@@ -1,0 +1,31 @@
+title: Line Detail Lot
+type: object
+description: Line number and status of any individual insertion.
+required:
+  - index
+  - catalogNumber
+  - code
+  - message
+properties:
+  index:
+    type: integer
+    description: Position of the record in the request body
+    example: 2
+  lotId:
+    type: integer
+    description: 'If failures, the lot ID is not returned'
+    format: int64
+    example: 1108979
+  catalogNumber:
+    type: string
+    description: Manufacturer catalog number of an item
+    maxLength: 20
+    example: 10-4567
+  code:
+    type: integer
+    description: One of the defined response codes
+    example: 1010
+  message:
+    type: string
+    description: Success
+    example: Message

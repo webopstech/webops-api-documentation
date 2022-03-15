@@ -1,0 +1,25 @@
+title: Shipment Kit Items
+type: object
+properties:
+  kitInstanceItemId:
+    type: integer
+    description: Shipment kit item ID
+    format: int64
+    example: 12345
+  inventoryItemPartId:
+    type: integer
+    description: Inventory item part ID of the shipment kit item
+    format: int64
+    example: 34088
+  catalogNumber:
+    type: string
+    description: Shipment kit item catalog number
+    example: 02-354-TEMP
+  lotCode:
+    type: string
+    description: Shipment kit item lot code
+    example: LotCode1
+required:
+  - kitInstanceItemId
+  - inventoryItemPartId
+  - catalogNumber

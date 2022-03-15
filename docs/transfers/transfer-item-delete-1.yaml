@@ -1,0 +1,20 @@
+title: Transfer Item - Delete
+type: object
+required:
+  - transferItemId
+  - code
+  - message
+properties:
+  transferItemId:
+    type: integer
+    format: int64
+    description: Transfer Item Id specific to this transfer.  Each item or kit has a unique number.  Use this id when updating a transfer item
+    example: 11242
+  code:
+    type: integer
+    description: One of the defined response codes
+    example: 1010
+  message:
+    type: string
+    description: Status Message
+    example: Success

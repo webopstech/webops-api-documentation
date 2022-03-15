@@ -1,0 +1,31 @@
+title: Branch Identifiers
+type: object
+required:
+  - manufacturerId
+  - messageId
+  - timestamp
+properties:
+  manufacturerId:
+    type: integer
+    format: int64
+    example: 1234
+    description: Designated manufacturer ID
+  ids:
+    type: string
+    example: '123, 456, 789, 0123'
+    description: Comma-separated list of branch IDs; max length of 100 IDs
+  name:
+    type: string
+    example: Name 123
+    description: Branch name
+    maxLength: 100
+  erpCode:
+    type: string
+    example: ERP123
+    description: Branch ERP Code
+    maxLength: 50
+  active:
+    type: boolean
+    example: true
+    description: 'Default = true (Active = true, Inactive = false)'
+x-internal: true

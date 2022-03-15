@@ -1,0 +1,164 @@
+title: Hospital Bulk Post Identifiers
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  hospitals:
+    type: array
+    items:
+      type: object
+      properties:
+        branchId:
+          type: integer
+          description: The unique identifier for an existing branch within the manufacturer.
+          format: int64
+          example: 85
+        erpCode:
+          type: string
+          description: Hospital ERP code
+          example: ERP123
+          maxLength: 50
+        inventoryLocationErpCode:
+          type: string
+          description: Hospital Inventory Location ERP Code
+          example: ERP123
+          maxLength: 50
+        name:
+          type: string
+          description: Hospital name
+          example: Name 123
+          maxLength: 100
+        hospitalSystemId:
+          type: integer
+          description: Hospital system ID
+          example: 123
+        inventoryLocationId:
+          type: integer
+          description: Inventory location associated to the hospital.
+          example: 12345
+        hospitalType:
+          type: string
+          description: Hospital type
+          enum:
+            - State
+            - Private
+          example: State
+        languageCode:
+          type: string
+          description: Hospital locale language per ISO 639-1 standard
+          example: en
+          maxLength: 2
+        countryCode:
+          type: string
+          description: Hospital locale country per ISO 3166-1 alpha-2 standard
+          example: US
+          maxLength: 2
+        baseCurrencyCode:
+          type: string
+          description: Hospital base currency per ISO 4217 alpha standard
+          example: USD
+          maxLength: 3
+        foreignCurrencyCode:
+          type: string
+          description: Hospital foreign currency per ISO 4217 alpha standard
+          example: USD
+          maxLength: 50
+        preference:
+          type: string
+          description: Hospital perference
+          example: 'Name 123 Perfernce '
+          maxLength: 50
+        phoneNumbers:
+          type: array
+          items:
+            type: object
+            properties:
+              phoneNumber:
+                type: string
+                description: Hospital phone number
+                example: 123-456-7890
+                maxLength: 50
+              phoneType:
+                type: string
+                description: Hospital phone number type
+                enum:
+                  - Main
+                  - Mobile
+                  - Fax
+                example: Main
+            required:
+              - phoneNumber
+              - phoneType
+        addresses:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                description: Address description
+                example: Hospital Main Address
+                maxLength: 100
+              addressErpCode:
+                type: string
+                description: Hospital address ERP code
+                example: IL-123
+                maxLength: 50
+              addressStreet1:
+                type: string
+                description: Hospital address street line 1
+                example: Street line 1
+                maxLength: 50
+              addressStreet2:
+                type: string
+                description: Hospital address street line 2
+                example: Street line 2
+                maxLength: 50
+              addressCity:
+                type: string
+                description: Hospital address city
+                example: Atlanta
+                maxLength: 50
+              addressSubdivision:
+                type: string
+                description: Hospital address state/province/subdivision
+                example: US-GA
+                maxLength: 50
+              addressZipCode:
+                type: string
+                description: Hospital address zip or portal code
+                example: 30000
+                maxLength: 50
+              addressCountry:
+                type: string
+                description: Hospital address country
+                example: US
+                maxLength: 50
+              attention:
+                type: string
+                description: Address attention
+                example: Street line 2 description
+                maxLength: 50
+              primary:
+                type: boolean
+                description: '(Yes = true, No = false)'
+                example: true
+              category:
+                type: string
+                description: Hospital address category type
+                enum:
+                  - Billing
+                  - Shipping
+                example: Shipping
+            required:
+              - addressStreet1
+      required:
+        - branchId
+        - name
+required:
+  - manufacturerId
+  - hospitals
+x-internal: true

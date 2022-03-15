@@ -1,0 +1,25 @@
+type: object
+required:
+  - messageId
+  - timestamp
+  - code
+  - message
+properties:
+  messageId:
+    type: string
+    description: Message ID of the request
+    example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+  timestamp:
+    type: string
+    description: Current date/time in ISO-8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  code:
+    type: integer
+    description: Error code
+    example: '1100'
+  message:
+    type: string
+    description: Error message description
+    example: An unexpected server error occurred while processing the request
+x-internal: true

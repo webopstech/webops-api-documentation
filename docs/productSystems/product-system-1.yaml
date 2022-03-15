@@ -1,0 +1,77 @@
+title: Product System
+type: object
+required:
+  - branchId
+  - id
+  - name
+  - description
+  - active
+  - manufacturerGlobal
+  - changedDate
+  - procedureCategories
+properties:
+  branchId:
+    type: integer
+    description: Product system branch ID
+    example: 10
+  id:
+    type: integer
+    description: Product system ID
+    example: 1234
+  name:
+    type: string
+    description: Product system Name
+    example: proc
+    maxLength: 50
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  manufacturerGlobal:
+    type: boolean
+    description: 'Yes = true, No = false'
+    example: true
+  changedDate:
+    type: string
+    format: date-time
+    description: Last changed date and time in ISO 8601 Z format
+    example: '2018-11-05T13:15:30Z'
+  procedureCategories:
+    type: array
+    items:
+      type: object
+      properties:
+        procedureCategoryId:
+          type: integer
+          description: Procedure Category ID
+          format: int64
+          example: 8989
+        procedures:
+          type: array
+          items:
+            type: object
+            properties:
+              procedureId:
+                type: integer
+                description: Procedure ID
+                format: int64
+                example: 8989
+            required:
+              - procedureId
+      required:
+        - procedureCategoryId
+  kitFamilies:
+    type: array
+    items:
+      type: object
+      properties:
+        kitFamilyId:
+          type: integer
+          description: Kit Family ID
+          example: 6899
+        quantity:
+          type: integer
+          description: Quantity
+          example: 8989
+      required:
+        - kitFamilyId

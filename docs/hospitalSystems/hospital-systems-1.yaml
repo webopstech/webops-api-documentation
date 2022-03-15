@@ -1,0 +1,150 @@
+title: Hospital System
+type: object
+required:
+  - hospitalSystemId
+  - hospitalSystemErpCode
+  - name
+  - branchId
+  - active
+  - changedDate
+properties:
+  id:
+    type: integer
+    description: ID of the hospital system
+    example: 1001
+  erpCode:
+    type: string
+    description: External ERP Code of the hospital system
+    example: ERP123
+    maxLength: 50
+  inventoryLocationErpCode:
+    type: string
+    description: Inventory location ERP Code
+    example: ERP123
+    maxLength: 40
+  name:
+    type: string
+    description: Name of the hospital system
+    example: Name 123
+    maxLength: 100
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  baseCurrencyCode:
+    type: string
+    description: Hospital system base currency per ISO 4217 alpha standard
+    example: USD
+    maxLength: 3
+  foreignCurrencyCode:
+    type: string
+    description: Hospital system foreign currency per ISO 4217 alpha standard
+    example: USD
+    maxLength: 50
+  languageCode:
+    type: string
+    description: Branch locale language per ISO 639-1 standard
+    example: en
+    maxLength: 2
+  countryCode:
+    type: string
+    description: Branch locale country code per ISO 3166-1 alpha-2 standard
+    example: US
+    maxLength: 2
+  createdDate:
+    format: date-time
+    type: string
+    description: Date created and time in ISO 8601 Z format
+    example: '2016-11-05T13:15:30Z'
+  changedDate:
+    format: date-time
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    example: '2017-11-05T13:15:30Z'
+  branches:
+    type: array
+    items:
+      type: object
+      required:
+        - branchId
+      properties:
+        branchId:
+          type: integer
+          description: ID of the branch associated to the hospital system
+          example: 83
+  hospitals:
+    type: array
+    items:
+      type: object
+      required:
+        - branchId
+        - hospitalId
+      properties:
+        branchId:
+          type: integer
+          description: Branch ID of the hospital
+          example: 83
+        hospitalId:
+          type: integer
+          description: Hospital ID
+          example: 183
+  addresses:
+    type: array
+    items:
+      type: object
+      required:
+        - addressId
+        - addressErpCode
+        - addressStreet1
+      properties:
+        addressId:
+          type: integer
+          description: hospital system address ID
+          format: int64
+          example: 89893
+        addressErpCode:
+          type: string
+          description: Hospital system address ERP code
+          example: Street line 1
+          maxLength: 50
+        addressStreet1:
+          type: string
+          description: Hospital system address street line 1
+          example: Street line 1
+          maxLength: 50
+        addressStreet2:
+          type: string
+          description: Hospital system address street line 2
+          example: Street line 2
+          maxLength: 50
+        addressCity:
+          type: string
+          description: Hospital system city
+          example: Atlanta
+          maxLength: 50
+        addressSubdivision:
+          type: string
+          description: Hospital system state/province/subdivision
+          example: US-GA
+          maxLength: 50
+        addressZipCode:
+          type: string
+          description: Hospital system zip or portal code
+          example: '30000'
+          maxLength: 50
+        addressCountry:
+          type: string
+          description: hospital system country
+          example: US
+          maxLength: 50
+        description:
+          type: string
+          description: Address description
+          example: Street line 1 description
+          maxLength: 100
+        attention:
+          type: string
+          description: Adress attention
+          example: Street line 2 description
+          maxLength: 50
+x-internal: true

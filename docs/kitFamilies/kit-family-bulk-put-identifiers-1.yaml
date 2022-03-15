@@ -1,0 +1,100 @@
+title: Kit Family Bulk Put Identifiers
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  kitFamilies:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Kit family ID
+          format: int64
+          example: 123
+        name:
+          type: string
+          description: Kit family name
+          example: ABC Kit Family
+          maxLength: 100
+        description:
+          type: string
+          description: Kit family description
+          example: ABC Kit Family description
+          maxLength: 100
+        numberOfTubs:
+          type: integer
+          description: Number of tubs in the kit family
+          format: int32
+          default: 1
+          example: 5
+        erpCode:
+          type: string
+          description: 'External ERP Code of the kit family. If no value is provided, a UUID will be automatically generated.'
+          example: ERP123
+          maxLength: 50
+        branchIds:
+          description: BranchIds can only be modified if the kit family is Manufacturer Global.
+          type: array
+          items:
+            type: object
+            properties:
+              branchId:
+                type: integer
+                description: ID of the branch associated to the kit family.
+                format: int64
+                example: 10
+            required:
+              - branchId
+        productSystems:
+          type: array
+          items:
+            type: object
+            properties:
+              productSystemId:
+                type: integer
+                description: Kit family product system ID
+                format: int64
+                example: 12345
+            required:
+              - productSystemId
+        kitProfile:
+          type: array
+          items:
+            type: object
+            properties:
+              inventoryItemId:
+                type: integer
+                description: Inventory Item ID
+                format: int64
+                example: 56878
+              gtin:
+                type: string
+                description: 'Catalog Global Trade Item Number (GTIN). If both inventoryItemId and gtin are provided, inventoryItemId will be used.'
+                example: 12345678901234
+                maxLength: 14
+              catalogNumber:
+                type: string
+                description: Item catalog number
+                example: 10-4567
+                maxLength: 20
+              expectedQuantity:
+                type: integer
+                description: Expected quantity of the item (Catalog Number)
+                format: int64
+                example: 1
+            required:
+              - inventoryItemId
+              - catalogNumber
+              - expectedQuantity
+      required:
+        - id
+        - name
+        - description
+required:
+  - manufacturerId
+  - kitFamilies

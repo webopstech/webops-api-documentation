@@ -1,0 +1,137 @@
+title: Physician Bulk Put Identifiers
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  physicians:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the physician.
+          format: int64
+          example: 123
+        erpCode:
+          type: string
+          description: External ERP Code of the physician
+          example: ERP123
+          maxLength: 50
+        branchIds:
+          description: 'If the physician is Branch Custom, branchIds cannot be provided in the request.'
+          type: array
+          items:
+            type: object
+            properties:
+              branchId:
+                type: integer
+                description: ID of the branch associated to the physician.
+                format: int64
+                example: 10
+            required:
+              - branchId
+        firstName:
+          type: string
+          description: First name of the physician
+          example: John
+          maxLength: 50
+        lastName:
+          type: string
+          description: Last name of the physician
+          example: Doe
+          maxLength: 50
+        active:
+          type: boolean
+          description: '(Active = true, Inactive = false)'
+          example: true
+        nationalProviderIdentifier:
+          type: string
+          description: National Provider Identifier of the physician
+          example: NPI-123
+          maxLength: 20
+        preferences:
+          type: array
+          items:
+            type: object
+            properties:
+              physicianPreferenceId:
+                type: integer
+                description: 'ID of the preference to edit. If no id provided, a new preference will be created.'
+                format: int64
+                example: 10
+              procedureId:
+                type: integer
+                description: ID of the procedure for this preference. Required if creating new preference.
+                format: int64
+                example: 10
+              hospitalId:
+                type: integer
+                description: ID of the hospital for this preference. Passing a value of 0 will make the preference for 'All Hospitals'
+                format: int64
+                example: 10
+              productSystems:
+                type: array
+                description: Including an empty array will remove all product system records for this preference.
+                items:
+                  type: object
+                  properties:
+                    productSystemId:
+                      type: integer
+                      description: ID of the productSystem for this preference
+                      format: int64
+                      example: 10
+                    includeKits:
+                      type: boolean
+                      description: 'Default = true (Yes = true, No = false)'
+                      example: true
+                    includeInstruments:
+                      type: boolean
+                      description: 'Default = true (Yes = true, No = false)'
+                      example: true
+                  required:
+                    - productSystemId
+              inventoryItems:
+                type: array
+                description: Including an empty array will remove all inventory item records for this preference.
+                items:
+                  type: object
+                  properties:
+                    inventoryItemId:
+                      type: integer
+                      description: ID of the inventory item for this preference
+                      format: int64
+                      example: 10
+                    quantity:
+                      type: integer
+                      description: Quantity of the inventory item for this preference
+                      format: int64
+                      example: 1
+                  required:
+                    - inventoryItemId
+              notes:
+                type: string
+                description: Notes for this physician prefernce
+                example: First Aid Kit
+                maxLength: 4000
+        salesReps:
+          type: array
+          description: Providing values for salesReps will overwrite existing sales reps associated with this physician.
+          items:
+            type: object
+            properties:
+              salesRepId:
+                type: integer
+                description: Sales Rep ID to be associated with the physician
+                format: int64
+                example: 12345
+            required:
+              - salesRepId
+      required:
+        - id
+required:
+  - manufacturerId
+  - physicians

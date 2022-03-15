@@ -1,0 +1,30 @@
+title: Shipment Identifiers
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Case branch ID for the shipment
+    example: 1234
+  caseIds:
+    type: string
+    description: Comma separated list of Case IDs.
+    example: '12345, 23456, 34567, 45678'
+  ids:
+    type: string
+    description: Comma-separated list of shipment IDs
+    example: '123, 456, 789'
+  shipmentStatuses:
+    type: string
+    description: Comma separated list of shipment statuses.
+    enum:
+      - Scheduled
+      - Shipped
+      - Received
+      - Canceled
+required:
+  - manufacturerId

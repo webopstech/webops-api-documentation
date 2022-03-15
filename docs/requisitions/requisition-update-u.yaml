@@ -1,0 +1,57 @@
+title: Requisition - Update
+type: object
+required:
+  - messageId
+  - timestamp
+  - manufacturerId
+properties:
+  messageId:
+    type: string
+    description: Message ID
+    format: string
+    example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+  timestamp:
+    type: string
+    description: Current date/time in ISO-8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  status:
+    type: string
+    description: Desired Requisition status
+    enum:
+      - Open
+      - Submitted
+      - Received
+      - Partial
+      - Errors
+      - Closed
+      - Canceled
+    example: Open
+  items:
+    type: array
+    items:
+      type: object
+      required:
+        - requisitionItemId
+      properties:
+        requisitionItemId:
+          type: integer
+          description: WebOps ID of the Requisition Item
+          format: int64
+          example: 1234
+        status:
+          type: string
+          description: Desired Requisition item status
+          enum:
+            - DNR
+            - Open
+            - Submitted
+            - Errors
+            - Closed
+            - Canceled
+          example: DNR

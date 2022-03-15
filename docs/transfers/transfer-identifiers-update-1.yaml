@@ -1,0 +1,150 @@
+title: Transfer Identifiers - Update
+type: object
+properties:
+  transferAction:
+    type: string
+    enum:
+      - Save
+      - Submit
+    description: 'Save updates the transfer, but does not transfer items.  Submit updates and transfers the items.  Manufacturer transfer settings determine whether the status goes to In Transit or Closed on a Submit'
+    example: Save
+  originBranchId:
+    type: integer
+    format: int64
+    description: Origin Branch Id
+    example: 115
+  originInventoryLocationId:
+    type: integer
+    format: int64
+    description: Origin Inventory Location Id
+    example: 11453
+  originAddressId:
+    type: integer
+    format: int64
+    description: Origin Address Id (required for integrated shipping)
+    example: 1133
+  destinationBranchId:
+    type: integer
+    format: int64
+    description: Destination Branch Id
+    example: 116
+  destinationInventoryLocationId:
+    type: integer
+    format: int64
+    description: Destination Inventory Location Id
+    example: 11454
+  destinationAddressId:
+    type: integer
+    format: int64
+    description: Destination Address Id (required for integrated shipping)
+    example: 1133
+  recipientPhoneNumber:
+    type: string
+    format: string
+    description: Recipient Phone Number (required for integrated shipping)
+    maxLength: 25
+    example: 7778889999
+  shippingMethodId:
+    type: integer
+    format: int64
+    description: Shipping method id for transfer
+    example: 11453
+  shipDate:
+    type: string
+    format: date-time
+    description: Ship date in YYYY-MM-DD format
+    example: '2018-01-01'
+  arrivalDate:
+    type: string
+    description: Arrival date in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-05'
+  cost:
+    type: integer
+    format: int64
+    description: Cost
+    example: 1
+  currencyCode:
+    type: string
+    format: string
+    description: Currency Code
+    maxLength: 3
+    example: USD
+  trackingNumber:
+    type: string
+    format: string
+    description: Tracking Number of transfer
+    maxLength: 200
+    example: x1478054
+  weight:
+    type: integer
+    format: int64
+    description: Weight of transfer. Default 1 (required for integrated shipping)
+    example: 1
+  weightMeasurementType:
+    type: string
+    enum:
+      - lb
+      - kg
+    description: Weight measurement type. Default is lb
+    example: lb
+  numberOfPackages:
+    type: integer
+    format: int64
+    description: Number of packages. Default = 1 (required for integrated shipping)
+    example: 1
+  invoiceNumber:
+    type: string
+    format: string
+    description: Invoice Number for transfer
+    maxLength: 40
+    example: 123XYZ
+  poNumber:
+    type: string
+    format: string
+    description: PO Number for transfer
+    maxLength: 40
+    example: 1122RUU
+  referenceNumber:
+    type: string
+    format: string
+    description: Reference Number for transfer
+    maxLength: 40
+    example: 123XYZ
+  instructions:
+    type: string
+    format: string
+    description: Transfer instructions
+    maxLength: 2000
+    example: This is a sample instructional text
+  rma:
+    type: boolean
+    description: True if it is a return transfer. Default = false
+    example: false
+  rmaNumber:
+    type: string
+    description: RMA number
+    format: string
+    maxLength: 200
+    example: RMA text
+  receivedBy:
+    type: string
+    format: string
+    description: 'User that received transfer in First Name, Last Name format'
+    maxLength: 101
+    example: Test User
+  saturdayDelivery:
+    type: boolean
+    description: True if allows Saturday Delivery
+    example: true
+  transferMethod:
+    type: string
+    enum:
+      - Default
+      - Immediate
+      - On Receipt
+    description: 'Determines whether the status goes to In Transit or Closed on submit. Default will follow existing manufacturer transfer settings, Immediate will change to Closed, and On Receipt will change to In Transit.'
+    example: Default
+    default: Default
+required:
+  - transferAction

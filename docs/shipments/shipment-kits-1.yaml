@@ -1,0 +1,19 @@
+title: Shipment Kits
+type: object
+properties:
+  kitInstanceId:
+    type: integer
+    description: Shipment kit instance ID
+    format: int64
+    example: 12345
+  kitInstanceName:
+    type: string
+    description: Shipment kit instance name
+    example: Kit 123
+  shipmentKitItems:
+    type: array
+    items:
+      $ref: shipment-kit-items-1.yaml
+required:
+  - kitInstanceId
+  - kitInstanceName

@@ -1,0 +1,204 @@
+title: Sales Rep Bulk Post Identifiers
+type: object
+description: Post new Sales Rep in bulk
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  salesReps:
+    type: array
+    items:
+      type: object
+      properties:
+        repNumber:
+          type: string
+          description: Representative Number
+          maxLength: 50
+        user:
+          type: object
+          required:
+            - firstName
+            - lastName
+            - username
+            - password
+            - emails
+            - phoneNumbers
+            - branchIds
+          properties:
+            firstName:
+              type: string
+              description: First name of the sales rep
+              example: John
+              maxLength: 50
+            lastName:
+              type: string
+              description: Last name of the sales rep
+              example: Doe
+              maxLength: 50
+            username:
+              type: string
+              description: Username of the sales rep user account
+              example: john.doe
+              maxLength: 255
+            password:
+              type: string
+              description: Password of the sales rep user account
+              example: 94mWlst4g5QONKwmwq5VG7EnrcYOw402afENolRVDSM=
+              maxLength: 255
+            emails:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: Sales rep email address
+                    example: John.Doe@gmail.com
+                    maxLength: 50
+                  emailType:
+                    type: string
+                    description: Email type
+                    enum:
+                      - Standard
+                      - PhoneEmail
+                required:
+                  - email
+                  - emailType
+            phoneNumbers:
+              type: array
+              items:
+                type: object
+                properties:
+                  phoneNumber:
+                    type: string
+                    description: Sales rep phone number
+                    example: 123-456-7890
+                    maxLength: 50
+                  phoneType:
+                    type: string
+                    description: Sales rep phone number type
+                    enum:
+                      - Main
+                      - Cellular
+                      - Fax
+                required:
+                  - phoneNumber
+                  - phoneType
+            branchIds:
+              type: array
+              items:
+                type: object
+                properties:
+                  branchId:
+                    type: integer
+                    description: Branch ID associated with the sales rep
+                    format: int64
+                  isPrimary:
+                    type: boolean
+                    description: 'Flag for whether the branch id is primary or not, only one branch id can be flagged as primary'
+                required:
+                  - branchId
+                  - isPrimary
+            languageCode:
+              type: string
+              description: Sales rep user language code - default to primary branch languague code value if not provided
+              example: en
+              maxLength: 2
+            countryCode:
+              type: string
+              description: Sales rep user country code - default to primary branch country code value if not provided
+              example: US
+              maxLength: 2
+            timeZone:
+              type: string
+              description: Sales rep user time zone - default to primary branch time zone value if not provided
+              example: America/New_York
+              maxLength: 50
+        monthlyQuota:
+          type: integer
+          format: int64
+          example: 100
+        techReps:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: integer
+                description: Tech representative user id
+                format: int64
+            required:
+              - userId
+        inventoryLocations:
+          type: array
+          items:
+            type: object
+            properties:
+              inventoryLocationId:
+                type: integer
+                description: Id of Inventory Location
+                format: int64
+            required:
+              - inventoryLocationId
+        physicians:
+          type: array
+          items:
+            type: object
+            properties:
+              physicianId:
+                type: integer
+                description: Id of Phisician
+                format: int64
+            required:
+              - physicianId
+        hospitals:
+          type: array
+          items:
+            type: object
+            properties:
+              hospitalId:
+                type: integer
+                description: Id of Hospital
+                format: int64
+            required:
+              - hospitalId
+        procedures:
+          type: array
+          items:
+            type: object
+            properties:
+              procedureId:
+                type: integer
+                description: Id of Procedure
+                format: int64
+            required:
+              - procedureId
+        productSystems:
+          type: array
+          items:
+            type: object
+            properties:
+              productSystemId:
+                type: integer
+                description: Id of Product System
+                format: int64
+            required:
+              - productSystemId
+        shippingAccounts:
+          type: array
+          items:
+            type: object
+            properties:
+              accountId:
+                type: integer
+                description: Id of Account
+                format: int64
+            required:
+              - accountId
+      required:
+        - user
+required:
+  - manufacturerId
+  - salesReps

@@ -1,0 +1,105 @@
+title: Case Identifiers (Upcoming)
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: 'Designated branch ID. If both branchId and branchErpCode are provided, branchId will be used.'
+    format: int64
+    example: 9
+  branchErpCode:
+    type: string
+    description: 'Branch ERP Code. If both branchErpCode and branchId are provided, branchId will be used.'
+    example: ERP123
+    maxLength: 50
+  ids:
+    type: string
+    description: Comma-separated list of case IDs; max length of 100 IDs
+    example: '12346, 45678, 123453'
+  externalCaseIds:
+    type: string
+    description: Comma-separated list of external case IDs
+    example: '12346, 45678, 123453'
+    maxLength: 500
+  caseType:
+    type: string
+    description: Case type
+    enum:
+      - Standard
+      - Add On
+    example: Standard
+  caseStatuses:
+    type: string
+    description: Case status
+    enum:
+      - New
+      - Kits Assigned
+      - Assembled
+      - Shipped
+      - Returned
+      - Checked-In
+      - Reconciled
+      - Closed
+      - Cancelled
+    example: New
+  purchaseOrderReceived:
+    type: boolean
+    description: 'Case purchase order received -  (Yes = true, False = false)'
+    example: true
+  confirmed:
+    type: boolean
+    description: 'Case confirmed - (Yes = true, False = false)'
+    example: true
+  approved:
+    type: boolean
+    description: 'Case approved - (Yes = true, False = false)'
+    example: true
+  billed:
+    type: boolean
+    description: 'Case billed - (Yes = true, False = false)'
+    example: true
+  purchaseOrderNumber:
+    type: string
+    description: Case purchase order number
+    example: Case12346-PO
+    maxLength: 50
+  billingOrderNumber:
+    type: string
+    description: Case billing order number
+    example: Case12346-BO
+    maxLength: 50
+  replenishmentOrderNumber:
+    type: string
+    description: Case replenishment order number
+    example: Case12346-RO
+    maxLength: 50
+  usageReceived:
+    type: boolean
+    description: 'Case usage received - (Yes = true, False = false)'
+    example: true
+  usageCompleted:
+    type: boolean
+    description: 'Case usage completed - (Yes = true, False = false)'
+    example: true
+  hospitalType:
+    type: string
+    description: Case status
+    enum:
+      - All
+      - State
+      - Private
+    example: All
+  companyId:
+    type: integer
+    description: 'Company ID linked to Procedure, Hospital, Physician, Product Systems, or Usage Items'
+    format: int64
+    example: 9
+  orderHold:
+    type: boolean
+    description: 'Order hold for this case? (Yes = true, No = false)'
+    example: true
+x-internal: true

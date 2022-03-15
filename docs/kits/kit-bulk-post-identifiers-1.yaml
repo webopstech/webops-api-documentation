@@ -1,0 +1,66 @@
+title: Kit Bulk Post Identifiers
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  userName:
+    type: string
+  kits:
+    type: array
+    items:
+      type: object
+      properties:
+        branchId:
+          type: integer
+          description: ID of the branch associated with the kit.
+          format: int64
+          example: 10
+        name:
+          type: string
+          description: Kit name
+          example: ABC Kit
+          maxLength: 100
+        kitFamilyId:
+          type: integer
+          description: Kit family ID associated with the kit
+          format: int64
+          example: 12345
+        barcode:
+          type: string
+          description: Kit barcode
+          example: ABCKitBarcode
+          maxLength: 100
+        warehouseId:
+          type: integer
+          description: Warehouse ID associated with the kit
+          format: int64
+          example: 12345
+        binLocation:
+          type: string
+          description: Kit bin location
+          example: 012.345.678.910
+          maxLength: 15
+        processStatus:
+          type: string
+          description: Kit process status
+          enum:
+            - Inspection
+            - Cleaning
+            - Repair
+            - Upgrade
+            - Scrap
+            - Downgrade
+            - Post-Cleaning Inspection
+            - Ready
+          example: Inspection
+      required:
+        - branchId
+        - name
+        - kitFamilyId
+required:
+  - manufacturerId
+  - kits
+x-internal: true

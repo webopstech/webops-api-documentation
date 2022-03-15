@@ -1,0 +1,40 @@
+title: Hospital System Contract Price Bulk Post Identifiers
+type: object
+required:
+  - manufacturerId
+  - hospitalSystemContractPrices
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  hospitalSystemContractPrices:
+    type: array
+    items:
+      type: object
+      required:
+        - hospitalSystemId
+        - inventoryItemId
+        - price
+      properties:
+        hospitalSystemId:
+          type: integer
+          description: ID of the hospital system
+          format: int64
+          example: 123
+        inventoryItemId:
+          type: integer
+          description: Inventory Item ID
+          format: int64
+          example: 100098
+        price:
+          type: number
+          format: float
+          description: Contract price
+          example: '100.00'
+        currencyCode:
+          type: string
+          description: Contract price currency code - ISO 4217
+          example: USD
+x-internal: true

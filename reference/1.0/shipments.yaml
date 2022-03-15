@@ -1,0 +1,180 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /shipments:
+    post:
+      operationId: get-shipments
+      summary: Get Shipments
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/shipments/shipment-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+              - type: object
+                properties:
+                  includeKitDetails:
+                    type: boolean
+                    description: 'Yes to include shipment kit details in the response. Default = No (true = Yes, false = No)'
+                    example: true
+                  includeAddressDetails:
+                    type: boolean
+                    description: 'Yes to include full address details in the response. Default = No (true = Yes, false = No)'
+                    example: true
+            description: Shipments
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              shipments:
+                type: array
+                items:
+                  $ref: ../../docs/shipments/shipment-1.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  /shipments/count:
+    post:
+      operationId: shipments_count
+      summary: Get total number of shipments per defined parameters. Must be used in conjunction with /shipments.
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/shipments/shipment-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+            description: Sales Reps
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: ../../common/responses/count.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  '/shipment/{WebopsShipmentId}':
+    parameters:
+      - name: WebopsShipmentId
+        in: path
+        required: true
+        type: string
+    put:
+      operationId: update-shipment
+      summary: Update Shipment
+      
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - type: object
+                properties:
+                  manufacturerId:
+                    type: integer
+                    description: Designated manufacturer ID
+                    format: int64
+                    example: 1234
+                  shipmentStatus:
+                    type: string
+                    enum:
+                      - Scheduled
+                      - Shipped
+                      - Received
+                      - Canceled
+                    description: Shipment status
+                    example: Scheduled
+                  trackingNumber:
+                    type: string
+                    description: Tracking Number of shipment
+                    example: x1478054
+                    maxLength: 200
+                required:
+                  - manufacturerId
+            description: Update Shipment
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              shipment:
+                $ref: ../../docs/shipments/shipment-1.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml

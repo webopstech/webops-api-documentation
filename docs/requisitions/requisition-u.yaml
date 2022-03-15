@@ -1,0 +1,135 @@
+title: Requisition (Upcoming)
+type: object
+required:
+  - branchId
+  - id
+  - type
+  - status
+  - createdDate
+  - updatedDate
+properties:
+  branchId:
+    type: integer
+    description: Branch ID
+    format: int64
+    example: 123
+  id:
+    type: integer
+    description: Requisition ID
+    format: int64
+    example: 123
+  caseId:
+    type: integer
+    description: Case ID associated with the requisition
+    format: int64
+    example: 12019
+  kitId:
+    type: integer
+    description: Kit instance ID associated with the requisition
+    format: int64
+    example: 12019
+  kitName:
+    type: string
+    description: Kit name
+    example: Kit ABCDE89-01
+    maxLength: 100
+  kitBarcode:
+    type: string
+    description: Kit barcode
+    example: ABCDE8901
+    maxLength: 45
+  type:
+    type: string
+    description: Requisition type
+    enum:
+      - Shelf Stock
+      - Manufacturer
+    example: Shelf Stock
+  status:
+    type: string
+    description: Requisition status
+    enum:
+      - Open
+      - Submitted
+      - Received
+      - Partial
+      - Errors
+      - Closed
+      - Canceled
+    example: Open
+  processed:
+    type: boolean
+    description: 'Requisition processed - (Yes = true, No = false); requisition is marked '
+    example: true
+  processedDate:
+    type: string
+    description: Requisition processed date in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  createdDate:
+    type: string
+    description: Requisition created date in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  updatedDate:
+    type: string
+    description: Requisition updated date in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  items:
+    type: array
+    items:
+      type: object
+      required:
+        - inventoryItemId
+        - catalogNumber
+        - status
+        - source
+        - createdDate
+        - updatedDate
+      properties:
+        requisitionItemId:
+          type: integer
+          description: WebOps ID of the Requisition Item
+          format: int64
+          example: 1234
+        inventoryItemId:
+          type: integer
+          description: Inventory Item ID
+          format: int64
+          example: 34088
+        catalogNumber:
+          type: string
+          description: Catalog number
+          maxLength: 20
+          example: 10-4567
+        status:
+          type: string
+          description: Requisition item status
+          enum:
+            - DNR
+            - Open
+            - Submitted
+            - Errors
+            - Closed
+            - Canceled
+        source:
+          type: string
+          description: Requisition item source
+          enum:
+            - Kitted
+            - Shelf Stock
+            - Used
+            - Missing
+            - Lost
+        createdDate:
+          type: string
+          description: Requisition created date in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        updatedDate:
+          type: string
+          description: Requisition updated date in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+x-internal: true

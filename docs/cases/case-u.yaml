@@ -1,0 +1,838 @@
+title: Case
+type: object
+properties:
+  branchId:
+    type: integer
+    description: ID of the branch
+    format: int64
+    example: 123
+  branchErpCode:
+    type: string
+    description: Branch ERP Code
+    example: ERP123
+    maxLength: 50
+  id:
+    type: integer
+    description: WebOps Case ID
+    format: int64
+    example: 123
+  encryptedWebOpsCaseId:
+    type: string
+    description: Encrypted WebOps Case ID
+    format: string
+    example: ei9T7TW1ZRx6syq4cjNQbA%3D%3D
+  externalCaseId:
+    type: string
+    description: Customer ID of surgical case
+    format: string
+    example: EX123
+    maxLength: 32
+  surgeryDate:
+    type: string
+    description: Surgery date in 24 hour format. Must be a local time zone value.
+    format: date-time
+    example: '2018-11-05 13:15'
+  caseType:
+    type: string
+    description: Type of the case
+    enum:
+      - Standard
+      - Add On
+    example: Standard
+  caseIdentifier:
+    type: string
+    description: String for Rep to differentiate case from other similar cases.
+    format: string
+    example: CS-123
+  salesRepId:
+    type: integer
+    description: Case sales rep ID
+    format: int64
+    example: 123
+  salesRepErpCode:
+    type: string
+    description: Sales rep ERP code
+    example: ERP123SR
+    maxLength: 50
+  coverageRepId:
+    type: integer
+    description: Case coverage rep ID
+    format: int64
+    example: 1234
+  coverageRepErpCode:
+    type: string
+    description: Coverage rep ERP code
+    example: ERP123CR
+    maxLength: 50
+  physicianId:
+    type: integer
+    description: Case physician ID
+    format: int64
+    example: 10011
+  physicianErpCode:
+    type: string
+    description: Physician ERP code
+    example: ERP123-PHY
+    maxLength: 50
+  hospitalId:
+    type: integer
+    description: Case hospital ID
+    format: int64
+    example: 50010
+  hospitalErpCode:
+    type: string
+    description: 'Hospital ERP Code (Bill To or Account #)'
+    example: ERP123-HOS
+    maxLength: 50
+  procedureId:
+    type: integer
+    description: Case procedure ID
+    format: int64
+    example: 25
+  procedureCompanyId:
+    type: integer
+    description: Company ID linked to Procedure
+    format: int64
+    example: 9
+  caseStatus:
+    type: string
+    description: Case status
+    enum:
+      - New
+      - Kits Assigned
+      - Assembled
+      - Shipped
+      - Returned
+      - Checked-In
+      - Reconciled
+      - Closed
+      - Cancelled
+    example: New
+  purchaseOrderNumber:
+    type: string
+    description: Case purchase order
+    example: PONumber123
+    maxLength: 50
+  confirmed:
+    type: boolean
+    description: 'Has the case been confirmed? (Yes = true, No = false)'
+    example: true
+  assembled:
+    type: boolean
+    description: 'Has the case been assembled? (Yes = true, No = false)'
+    example: true
+  freight:
+    type: number
+    format: float
+    description: Case freight value
+    example: 100
+  billingOrderNumber:
+    type: string
+    description: Case billing order number
+    example: 12345-BO
+    maxLength: 50
+  replenishmentOrderNumber:
+    type: string
+    description: 'Case replenishment order number '
+    example: 12345-RO
+    maxLength: 50
+  usageReceived:
+    type: boolean
+    description: 'Has the case usage been received? (Yes = true, No = false)'
+    example: true
+  usageReordered:
+    type: boolean
+    description: 'Has the case usage been reordered? (Yes = true, No = false)'
+    example: true
+  usageCompleted:
+    type: boolean
+    description: 'Has the case usage been completed? (Yes = true, No = false)'
+    example: true
+  patientGender:
+    type: string
+    description: Patient Gender
+    enum:
+      - Male
+      - Female
+    example: Male
+  patientAge:
+    type: integer
+    description: Patient age
+    example: 40
+  caseBilled:
+    type: boolean
+    description: 'Has the case been billed? (Yes = true, No = false)'
+    example: true
+  revisionSurgery:
+    type: boolean
+    description: 'Is this a revision surgery? (Yes = true, No = false)'
+    example: true
+  revisionReasonId:
+    type: integer
+    description: Revision reasonsing Id
+    format: int64
+    example: 123
+  primaryInvoiceType:
+    type: string
+    description: Case primary invoice type
+    enum:
+      - Hospital
+      - Insurance
+      - COD
+    example: Hospital
+  caseApprovalType:
+    type: string
+    description: Case approval type
+    enum:
+      - Approved
+      - Pending
+    example: Pending
+  insuranceCompanyId:
+    type: integer
+    format: int64
+    description: Case Insurance Company Id
+    example: 123
+  cashOnDeliveryNumber:
+    type: string
+    description: Cash On delivery Number for the case
+    example: COD 5890
+    maxLength: 150
+  specialInstructions:
+    type: string
+    description: Case special instructions
+    example: Please handle it carefully
+    maxLength: 500
+  caseNotes:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: WebOps Case Note ID
+          format: int64
+          example: 123
+        note:
+          type: string
+          description: Case note text
+          example: Additional notes or comments
+          maxLength: 4000
+        changedDate:
+          type: string
+          description: Last changed date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+  surgeryEntryFormComments:
+    type: string
+    description: Case surgery entry form comments
+    example: SEF comments
+    maxLength: 100
+  salesOrderFormComments:
+    type: string
+    description: Case sales order form comments
+    example: SOF comments
+    maxLength: 150
+  pickStatusType:
+    type: string
+    description: Case pick status type
+    enum:
+      - None
+      - One or more
+      - All
+    example: None
+  pickPackingNotes:
+    type: string
+    description: Case sales order form comments
+    example: Pick packing notes
+    maxLength: 100
+  caseCancellationType:
+    type: string
+    description: Case cancellation type for cases with CANCELLED status
+    enum:
+      - Not Specified
+      - Product Recall
+      - Patient Conditions
+      - Insurance Not Approved
+      - Medical Office Cancel Surgery
+      - Surgery Postponed Without Date
+      - No Usage Registered
+      - Competitors Product Preferred
+      - Used Hospital Inventory
+      - Instruments Not Available
+      - Implants Not Available
+      - Technical Representative Not Available
+      - Customer Credit Block
+      - Delivery Issues
+      - Duplicate Order
+      - Pricing not established
+      - Duplicated Surgery
+      - System Issues
+      - Insufficient Funding
+    example: Duplicated Surgery
+  createdDate:
+    type: string
+    description: Created date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  changedBy:
+    type: string
+    description: Name of the user who last changed the case
+    example: John Doe
+    maxLength: 101
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  timezone:
+    type: string
+    description: Last changed date time zone
+    example: America/New_York
+    maxLength: 50
+  shippingInstructions:
+    type: array
+    items:
+      type: object
+      properties:
+        shipToAddressId:
+          type: integer
+          description: Shipping instructions address ID
+          format: int64
+          example: 34088
+        shippingMethodId:
+          type: integer
+          description: Shipping instructions shipping method ID
+          format: int64
+          example: 25
+        attention:
+          type: string
+          description: Shipping instructions attention
+          example: Attention field
+          maxLength: 50
+        arriveByDate:
+          type: string
+          description: Shipping instructions arrive by date in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+  productSystems:
+    type: array
+    items:
+      type: object
+      properties:
+        productSystemId:
+          type: integer
+          description: Product system ID
+          format: int64
+          example: 45678
+        companyId:
+          type: integer
+          description: Company ID linked to Product System
+          format: int64
+          example: 9
+        additionalSpecifications:
+          type: string
+          description: Product system additional specifications
+          example: Additional specifications
+          maxLength: 255
+        kitFamilies:
+          type: array
+          items:
+            type: object
+            properties:
+              kitFamilyId:
+                type: integer
+                description: kit family ID
+                format: int64
+                example: 45678
+              kitId:
+                type: integer
+                description: Kit ID
+                format: int64
+                example: 45678
+              kitComplete:
+                type: boolean
+                description: '(Yes = true, No = false)'
+                example: true
+              kitStatus:
+                type: string
+                description: kit status
+                enum:
+                  - In Warehouse
+                  - In Field
+                  - Transferred
+                  - Pending Receipt
+                  - Quarantine
+                example: In Warehouse
+              caseKitStatus:
+                type: string
+                description: case kit status
+                enum:
+                  - Not Assigned
+                  - Assigned
+                  - Outbound
+                  - At Location
+                  - Inbound
+                  - Returned
+                  - Checked In
+                  - Reconciled
+                example: Not Assigned
+              kitProcessStatus:
+                type: string
+                description: Kit process status
+                enum:
+                  - Inspection
+                  - Cleaning
+                  - Repair
+                  - Upgrade
+                  - Scrap
+                  - Downgrade
+                  - Post-Cleaning Inspection
+                  - Ready
+                example: Inspection
+            required:
+              - kitFamilyId
+              - caseKitStatus
+      required:
+        - productSystemId
+  inventoryItems:
+    type: array
+    items:
+      type: object
+      properties:
+        inventoryItemId:
+          type: integer
+          description: Inventory Item Id
+          format: int64
+          example: 1696799083
+        catalogNumber:
+          type: string
+          description: Catalog Number
+          example: Z01-109-0-008
+        quantity:
+          type: integer
+          description: Inventory Item Quantity
+          format: int64
+          example: 1
+      required:
+        - inventoryItemId
+        - catalogNumber
+        - quantity
+  removedProductSystems:
+    type: array
+    items:
+      type: object
+      properties:
+        productSystemId:
+          type: integer
+          description: Product system ID
+          format: int64
+          example: 45678
+      required:
+        - productSystemId
+  loanerUsage:
+    type: array
+    items:
+      type: object
+      properties:
+        usageItemId:
+          type: integer
+          description: WebOps usage item ID
+          format: int64
+          example: 34088
+        externalCaseUsageId:
+          type: string
+          description: Customer ID of case usage
+          format: string
+          example: EX123
+          maxLength: 32
+        kitId:
+          type: integer
+          description: Kit ID against which the loaner usage was recorded
+          format: int64
+          example: 34088
+        inventoryItemPartId:
+          type: integer
+          description: Inventory item part ID against which the loaner usage was recorded
+          format: int64
+          example: 34088
+        catalogNumber:
+          type: string
+          description: Usage catalog number
+          example: 02-354-TEMP
+        lotCode:
+          type: string
+          description: Usage lot code
+          example: LotCode1
+        companyId:
+          type: integer
+          description: Company ID linked to the Usage Item
+          format: int64
+          example: 9
+        kitInventoryLocationId:
+          type: integer
+          description: Kit inventory location ID
+          format: int64
+          example: 1289
+        price:
+          type: number
+          format: double
+          description: Usage price
+          example: 12.89
+        priceCurrency:
+          type: string
+          description: Usage price currency code - ISO 4217
+          example: USD
+        priceDiscrepancyCodeId:
+          type: integer
+          description: Usage price discrepancy code ID
+          format: int64
+          example: 34088
+        shipToAddressId:
+          type: integer
+          description: Address Id where item part will be shipped to
+          format: int64
+          example: 1289
+        replenToAddressId:
+          type: integer
+          description: Replenishment shipment address ID
+          format: int64
+          example: 1345
+        replenishmentShippingMethodId:
+          type: integer
+          description: Usage replenishment shipping method ID
+          format: int64
+          example: 1345
+        createdDate:
+          type: string
+          description: Created date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        changedDate:
+          type: string
+          description: Last changed date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        timezone:
+          type: string
+          description: Last changed date time zone
+          example: America/New_York
+          maxLength: 50
+      required:
+        - usageItemId
+        - kitId
+        - inventoryItemPartId
+        - catalogNumber
+  consignmentUsage:
+    type: array
+    items:
+      type: object
+      properties:
+        usageItemId:
+          type: integer
+          description: WebOps usage item ID
+          format: int64
+          example: 34088
+        externalCaseUsageId:
+          type: string
+          description: Customer ID of case usage
+          format: string
+          example: EX123
+          maxLength: 32
+        kitId:
+          type: integer
+          description: Kit ID against which the consignment usage was recorded
+          format: int64
+          example: 34088
+        kitInventoryLocationId:
+          type: integer
+          description: Kit inventory location ID
+          format: int64
+          example: 1289
+        inventoryItemPartId:
+          type: integer
+          description: Inventory item part ID against which the consignment usage was recorded
+          format: int64
+          example: 34088
+        catalogNumber:
+          type: string
+          description: Usage catalog number
+          example: 02-354-TEMP
+        lotCode:
+          type: string
+          description: Usage lot code
+          example: LotCode1
+        companyId:
+          type: integer
+          description: Company ID linked to the Usage Item
+          format: int64
+          example: 9
+        inventoryLocationId:
+          type: integer
+          description: Inventory location ID for the item part used
+          format: int64
+          example: 1289
+        price:
+          format: double
+          description: Usage price
+          example: 12.89
+          type: number
+        priceCurrency:
+          type: string
+          description: Usage price currency code - ISO 4217
+          example: USD
+        priceDiscrepancyCodeId:
+          type: integer
+          description: Usage price discrepancy code ID
+          format: int64
+          example: 34088
+        shipToAddressId:
+          type: integer
+          description: Address ID where item part will be shipped to
+          format: int64
+          example: 1289
+        replenToAddressId:
+          type: integer
+          description: Replenishment shipment address ID
+          format: int64
+          example: 1289
+        replenishmentShippingMethodId:
+          type: integer
+          description: Usage replenishment shipping method ID
+          format: int64
+          example: 1345
+        createdDate:
+          type: string
+          description: Created date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        changedDate:
+          type: string
+          description: Last changed date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        timezone:
+          type: string
+          description: Last changed date time zone
+          example: America/New_York
+          maxLength: 50
+      required:
+        - usageItemId
+        - kitId
+        - inventoryItemPartId
+        - catalogNumber
+  externalUsage:
+    type: array
+    items:
+      type: object
+      properties:
+        usageItemId:
+          type: integer
+          description: WebOps usage item ID
+          format: int64
+          example: 34088
+        externalCaseUsageId:
+          type: string
+          description: Customer ID of case usage
+          format: string
+          example: EX123
+          maxLength: 32
+        catalogNumber:
+          type: string
+          description: Usage catalog number
+          example: 02-354-TEMP
+        lotCode:
+          type: string
+          description: Usage lot code
+          example: LotCode1
+        price:
+          format: double
+          description: Usage price
+          example: 12.89
+          type: number
+        priceCurrency:
+          type: string
+          description: Usage price currency code - ISO 4217
+          example: USD
+        priceDiscrepancyCodeId:
+          type: integer
+          description: Usage price discrepancy code ID
+          format: int64
+          example: 34088
+        shipToAddressId:
+          type: integer
+          description: Address Id where item part will be shipped to
+          format: int64
+          example: 1289
+        replenToAddressId:
+          type: integer
+          description: Replenishment shipment address ID
+          format: int64
+          example: 1345
+        replenishmentShippingMethodId:
+          type: integer
+          description: Usage replenishment shipping method ID
+          format: int64
+          example: 1345
+        createdDate:
+          type: string
+          description: Created date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        changedDate:
+          type: string
+          description: Last changed date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        timezone:
+          type: string
+          description: Last changed date time zone
+          example: America/New_York
+          maxLength: 50
+      required:
+        - usageItemId
+        - catalogNumber
+  pickList:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: ID of the pick list
+        format: int64
+        example: 123
+      changedBy:
+        type: string
+        description: Name of the user who last changed the pick list
+        example: John Doe
+        maxLength: 101
+      changedDate:
+        type: string
+        description: Last changed date and time in ISO 8601 Z format
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            itemId:
+              type: integer
+              description: ID of the pick list item
+              format: int64
+              example: 123
+            scanned:
+              type: boolean
+              description: 'Item scanned - (Yes = true, No = false)'
+              example: true
+            caseUsageItemId:
+              type: integer
+              description: WebOps usage item ID
+              format: int64
+              example: 34088
+            changedBy:
+              type: string
+              description: Name of the user who last changed the pick list
+              example: John Doe
+              maxLength: 101
+            changedDate:
+              type: string
+              description: Last changed date and time in ISO 8601 Z format
+              format: date-time
+              example: '2018-11-05T13:15:30Z'
+            catalogNumber:
+              type: string
+              description: Usage catalog number
+              maxLength: 20
+              example: 02-354-TEMP
+            lotCode:
+              type: string
+              description: Usage lot code
+              maxLength: 20
+              example: LotCode1
+            inventoryItemPartId:
+              type: integer
+              description: Inventory item part ID against which the usage was recorded
+              format: int64
+              example: 34088
+          required:
+            - itemId
+            - changedBy
+            - changedDate
+    required:
+      - id
+      - changedBy
+      - changedDate
+  customKits:
+    type: array
+    items:
+      type: object
+      properties:
+        kitFamilyId:
+          type: integer
+          description: kit family ID
+          format: int64
+          example: 45678
+        kitId:
+          type: integer
+          description: Kit ID
+          format: int64
+          example: 45678
+        kitStatus:
+          type: string
+          description: kit status
+          enum:
+            - In Warehouse
+            - In Field
+            - Transferred
+            - Pending Receipt
+            - Quarantine
+          example: In Warehouse
+        caseKitStatus:
+          type: string
+          description: case kit status
+          enum:
+            - Not Assigned
+            - Assigned
+            - Outbound
+            - At Location
+            - Inbound
+            - Returned
+            - Checked In
+            - Reconciled
+          example: Not Assigned
+        kitProcessStatus:
+          type: string
+          description: Kit process status
+          enum:
+            - Inspection
+            - Cleaning
+            - Repair
+            - Upgrade
+            - Scrap
+            - Downgrade
+            - Post-Cleaning Inspection
+            - Ready
+          example: Inspection
+      required:
+        - kitFamilyId
+        - kitId
+        - caseKitStatus
+  orderHold:
+    type: boolean
+    description: 'Order hold for this case? (Yes = true, No = false)'
+    example: true
+  orderHoldReason:
+    type: string
+    description: Reason for order hold
+    example: Hospital Hold
+    maxLength: 50
+required:
+  - branchId
+  - branchErpCode
+  - id
+  - surgeryDate
+  - caseType
+  - salesRepId
+  - physicianId
+  - hospitalId
+  - procedureId
+x-internal: true

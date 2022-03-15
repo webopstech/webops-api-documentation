@@ -1,0 +1,15 @@
+title: Order Quote Reason Code
+type: object
+properties:
+  id:
+    type: integer
+    description: Order quote reason code ID
+    format: int64
+    example: 12345
+  name:
+    type: string
+    description: Order quote reason code name
+    example: Evaluation Product
+required:
+  - id
+  - name

@@ -1,0 +1,75 @@
+title: Case - Post Loaner Usage (ERP)
+type: object
+description: ''
+required:
+  - catalogNumber
+  - externalCaseUsageId
+properties:
+  externalCaseUsageId:
+    type: string
+    description: Customer ID of case usage
+    format: string
+    example: EX123
+    maxLength: 32
+  catalogNumber:
+    type: string
+    description: Usage catalog number
+    example: 02-354-TEMP
+  lotCode:
+    type: string
+    description: Usage lot code
+    example: LotCode1
+  kitId:
+    type: integer
+    description: Kit ID against which the loaner usage was recorded
+    format: int64
+    example: 34088
+  inventoryItemPartId:
+    type: integer
+    description: Inventory item part ID against which the loaner usage was recorded
+    format: int64
+    example: 34088
+  price:
+    type: integer
+    format: double
+    description: Usage price
+    example: 12.89
+  priceCurrency:
+    type: string
+    description: Usage price currency code - ISO 4217
+    example: USD
+  priceDiscrepancyCodeId:
+    type: integer
+    description: Usage price discrepancy code ID
+    format: int64
+    example: 34088
+  shipToAddressErpCode:
+    type: string
+    description: Address ERP Code where item part will be shipped to
+    format: string
+    example: shipToErpCode123
+  replenToAddressErpCode:
+    type: string
+    description: Replenishment shipment address ERP Code
+    format: string
+    example: replenErpCode123
+  replenishmentShippingMethodId:
+    type: integer
+    description: Usage replenishment shipping method ID
+    format: int64
+    example: 1345
+  pricelistName:
+    type: string
+    description: Order item price list name
+    example: 001-PriceList
+    maxLength: 100
+  quoteReasonId:
+    type: integer
+    description: Order quote reason code id
+    format: int64
+    example: 1289
+  quoteReasonRationale:
+    type: string
+    description: Order quote reason rationale
+    example: Honoring discounted pricing provided by the rep.
+    maxLength: 240

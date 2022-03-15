@@ -1,0 +1,108 @@
+title: Procedure
+type: object
+required:
+  - branchId
+  - id
+  - name
+  - description
+  - active
+  - manufacturerGlobal
+  - changedDate
+  - procedureCategories
+properties:
+  branchId:
+    type: integer
+    description: Procedure branch ID
+    example: 1234
+  branchErp:
+    type: string
+    description: Procedure branch ERP code
+    example: 123-ERP
+    maxLength: 50
+  id:
+    type: integer
+    description: Procedure ID
+    example: 1234
+  name:
+    type: string
+    description: Procedure Name
+    example: proc
+    maxLength: 50
+  description:
+    type: string
+    description: Procedure description
+    example: desc
+    maxLength: 500
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  manufacturerGlobal:
+    type: boolean
+    description: 'Yes = true, No = false'
+    example: true
+  changedDate:
+    type: string
+    format: date-time
+    description: Last changed date and time in ISO 8601 Z format
+    example: '2018-11-05T13:15:30Z'
+  procedureCategories:
+    type: array
+    items:
+      required:
+        - procedureCategoryId
+      properties:
+        procedureCategoryId:
+          type: integer
+          description: Procedure Category ID
+          format: int64
+          example: 5855
+        name:
+          type: string
+          description: Procedure Category Name
+          format: string
+          example: Example Procedure Category
+          maxLength: 50
+        active:
+          type: boolean
+          description: '(Active = true, Inactive = false)'
+          example: true
+        productSystems:
+          type: array
+          items:
+            required:
+              - productSystemId
+              - name
+              - description
+              - active
+              - manufacturerGlobal
+              - changedDate
+            properties:
+              productSystemId:
+                type: integer
+                description: Product System ID
+                format: int64
+                example: 1234
+              name:
+                type: string
+                description: Product system Name
+                example: proc
+                maxLength: 50
+              description:
+                type: string
+                description: Product system description
+                example: desc
+                maxLength: 500
+              active:
+                type: boolean
+                description: '(Active = true, Inactive = false)'
+                example: true
+              manufacturerGlobal:
+                type: boolean
+                description: 'Yes = true, No = false'
+                example: true
+              changedDate:
+                type: string
+                format: date-time
+                description: Last changed date and time in ISO 8601 Z format
+                example: '2018-11-05T13:15:30Z'

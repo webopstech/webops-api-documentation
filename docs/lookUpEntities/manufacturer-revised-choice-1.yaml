@@ -1,0 +1,32 @@
+title: Manufacturer Revised Choice
+type: object
+properties:
+  id:
+    type: integer
+    description: Manufacturer revised choice ID
+    format: int64
+    example: 12345
+  name:
+    type: string
+    description: Manufacturer revised choice name
+    example: Revision 123
+    maxLength: 40
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  changedBy:
+    type: string
+    description: Name of the user who last changed the manufacturer revised choice
+    example: John Doe
+  changedDate:
+    type: string
+    description: Manufacturer revised choice changed date.
+    format: date-time
+    example: '2017-11-05T13:15:30Z'
+required:
+  - id
+  - name
+  - active
+  - changedBy
+  - changedDate

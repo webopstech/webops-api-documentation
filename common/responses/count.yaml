@@ -1,0 +1,22 @@
+title: Count
+type: object
+required:
+  - count
+  - messageId
+  - timestamp
+properties:
+  messageId:
+    type: string
+    format: string
+    example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+    description: Message ID
+  timestamp:
+    type: string
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+    description: Current date/time in ISO-8601 Z format
+  count:
+    type: integer
+    example: 100
+    description: total number of results that match the requested criteria
+x-internal: true

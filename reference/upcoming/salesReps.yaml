@@ -1,0 +1,1017 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WebOps API
+  description: ''
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /salesReps:
+    post:
+      operationId: sales-reps
+      summary: Get Sales Reps
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- Added aliases (8.2.0)"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/sales-rep-identifiers-1'
+              - $ref: '#/definitions/updated'
+              - $ref: '#/definitions/paging'
+            description: Sales Reps
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              salesReps:
+                type: array
+                items:
+                  $ref: '#/definitions/sales-rep-u'
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+      x-internal: false
+  /salesReps/bulk:
+    post:
+      operationId: sales-reps-bulk-post
+      summary: Post new sales reps in bulk
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added aliases (8.2.0)\r\n- Added assignTechRepRole (8.2.0)\r\n- Added requirePasswordReset (8.2.0)\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/sales-rep-bulk-post-identifiers-u'
+            description: Sales Reps
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual hospitals from the request.
+                items:
+                  $ref: '#/definitions/sales-rep-bulk-1'
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+    put:
+      operationId: sales-reps-bulk-put
+      summary: Update sales reps in bulk
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added aliases (8.2.0)\r\n- Added assignTechRepRole (8.2.0)\r\n- Added requirePasswordReset (8.2.0)\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/sales-rep-bulk-put-identifiers-u'
+            description: Sales Reps
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual hospitals from the request.
+                items:
+                  $ref: '#/definitions/sales-rep-bulk-1'
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+parameters:
+  'trait:messageHeaders:Authorization':
+    name: Authorization
+    in: header
+    description: 'Base64(UserName:Password)'
+    required: true
+    type: string
+  'trait:messageHeaders:Access_token':
+    name: Access_token
+    in: header
+    description: '{Access_Token} from token inbound service'
+    required: true
+    type: string
+responses:
+  'trait:errorResponses:403':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1105'
+        message:
+          type: string
+          description: Error message description
+          example: Call limit is reached
+  'trait:errorResponses:422':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1020-1040
+        message:
+          type: string
+          description: Error message description
+          example: Invalid parameter
+  'trait:errorResponses:500':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1100'
+        message:
+          type: string
+          description: Error message description
+          example: An unexpected server error occurred while processing the request
+definitions:
+  message-data:
+    title: Message Data
+    type: object
+    required:
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID of the request
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+    x-internal: true
+  paging:
+    title: Paging
+    type: object
+    properties:
+      limit:
+        type: integer
+        example: 50
+        description: 'Number of returned results (default: 50)(maximum: 500)'
+      page:
+        type: integer
+        example: 1
+        description: 'Page to show (default: 1)'
+    description: Limit and page parameters get set to default values if not provided
+    x-internal: true
+  sales-rep-u:
+    title: Sales Rep
+    type: object
+    required:
+      - branchId
+      - id
+      - firstName
+      - lastName
+      - active
+      - changedDate
+    properties:
+      branchId:
+        type: integer
+        description: ID of the branch associated to the sales rep
+        format: int64
+        example: 123
+      id:
+        type: integer
+        description: ID of the sales rep
+        format: int64
+        example: 123
+      erpCode:
+        type: string
+        description: ERP code of the sales rep
+        example: ERP123
+        maxLength: 50
+      firstName:
+        type: string
+        description: First name of the sales rep
+        example: John
+        maxLength: 50
+      lastName:
+        type: string
+        description: Last name of the sales rep
+        example: Doe
+        maxLength: 50
+      active:
+        type: boolean
+        description: '(Active = true, Inactive = false)'
+        example: true
+      changedDate:
+        type: string
+        description: Last changed date and time in ISO 8601 Z format
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+      emails:
+        type: array
+        items:
+          type: object
+          required:
+            - email
+            - emailType
+          properties:
+            email:
+              type: string
+              description: Sales rep email address
+              example: John.Doe@gmail.com
+              maxLength: 50
+            emailType:
+              type: string
+              description: Email type
+              enum:
+                - Standard
+                - PhoneEmail
+      phoneNumbers:
+        type: array
+        items:
+          type: object
+          required:
+            - phoneNumber
+            - phoneType
+          properties:
+            phoneNumber:
+              type: string
+              description: Sales rep phone number
+              example: 123-456-7890
+              maxLength: 50
+            phoneType:
+              type: string
+              description: Sales rep phone number type
+              enum:
+                - Main
+                - Cellular
+                - Fax
+      inventoryLocations:
+        type: array
+        items:
+          type: object
+          required:
+            - warehouseId
+          properties:
+            inventoryLocationId:
+              type: integer
+              description: Sales rep inventory location
+              format: int64
+              example: 123
+      physicians:
+        type: array
+        items:
+          type: object
+          required:
+            - physicianId
+          properties:
+            physicianId:
+              type: integer
+              description: Sales rep physician
+              format: int64
+              example: 123
+      hospitals:
+        type: array
+        items:
+          type: object
+          required:
+            - hospitalId
+          properties:
+            hospitalId:
+              type: integer
+              description: Sales rep hospital
+              format: int64
+              example: 178987
+      aliases:
+        type: array
+        items:
+          type: object
+          properties:
+            companyId:
+              type: integer
+              description: Company ID associated with the sales rep alias
+              format: int64
+              example: 123
+            firstNameAlias:
+              type: string
+              description: Sales Rep Company specific first name alias
+              example: John
+              maxLength: 50
+            lastNameAlias:
+              type: string
+              description: Sales Rep Company specific last name alias
+              example: Doe
+              maxLength: 50
+            erpCode:
+              type: string
+              description: Sales Rep Company specific erp code
+              example: ID123
+              maxLength: 50
+          required:
+            - companyId
+            - erpCode
+    x-internal: true
+  sales-rep-bulk-1:
+    title: Sales Rep Bulk
+    type: object
+    required:
+      - id
+      - userId
+      - repNumber
+      - code
+      - message
+    properties:
+      id:
+        type: integer
+        description: ID of the sales representative.
+        format: int64
+        example: 123
+      userId:
+        type: integer
+        description: ID of the sales representative user.
+        format: int64
+        example: 123
+      repNumber:
+        type: string
+        description: Sales Representative number
+        example: '123456'
+        maxLength: 50
+      code:
+        type: integer
+        description: One of the defined response codes
+        example: 1010
+      message:
+        type: string
+        description: Status Message
+        example: Success
+    x-internal: true
+  sales-rep-bulk-post-identifiers-u:
+    title: Sales Rep Bulk Post Identifiers
+    type: object
+    description: Post new Sales Rep in bulk
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      salesReps:
+        type: array
+        items:
+          type: object
+          properties:
+            repNumber:
+              type: string
+              description: Representative Number
+              maxLength: 50
+            user:
+              type: object
+              required:
+                - firstName
+                - lastName
+                - username
+                - password
+                - emails
+                - phoneNumbers
+                - branchIds
+              properties:
+                firstName:
+                  type: string
+                  description: First name of the sales rep
+                  example: John
+                  maxLength: 50
+                lastName:
+                  type: string
+                  description: Last name of the sales rep
+                  example: Doe
+                  maxLength: 50
+                username:
+                  type: string
+                  description: Username of the sales rep user account
+                  example: john.doe
+                  maxLength: 255
+                password:
+                  type: string
+                  description: Password of the sales rep user account
+                  example: 94mWlst4g5QONKwmwq5VG7EnrcYOw402afENolRVDSM=
+                  maxLength: 255
+                requirePasswordReset:
+                  type: boolean
+                  description: 'Should the password be marked as requiring a reset on first log in? (Yes = true, No = false)'
+                emails:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        description: Sales rep email address
+                        example: John.Doe@gmail.com
+                        maxLength: 50
+                      emailType:
+                        type: string
+                        description: Email type
+                        enum:
+                          - Standard
+                          - PhoneEmail
+                    required:
+                      - email
+                      - emailType
+                phoneNumbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      phoneNumber:
+                        type: string
+                        description: Sales rep phone number
+                        example: 123-456-7890
+                        maxLength: 50
+                      phoneType:
+                        type: string
+                        description: Sales rep phone number type
+                        enum:
+                          - Main
+                          - Cellular
+                          - Fax
+                    required:
+                      - phoneNumber
+                      - phoneType
+                branchIds:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      branchId:
+                        type: integer
+                        description: Branch ID associated with the sales rep
+                        format: int64
+                      isPrimary:
+                        type: boolean
+                        description: 'Flag for whether the branch id is primary or not, only one branch id can be flagged as primary'
+                    required:
+                      - branchId
+                      - isPrimary
+                languageCode:
+                  type: string
+                  description: Sales rep user language code - default to primary branch languague code value if not provided
+                  example: en
+                  maxLength: 2
+                countryCode:
+                  type: string
+                  description: Sales rep user country code - default to primary branch country code value if not provided
+                  example: US
+                  maxLength: 2
+                timeZone:
+                  type: string
+                  description: Sales rep user time zone - default to primary branch time zone value if not provided
+                  example: America/New_York
+                  maxLength: 50
+            assignTechRepRole:
+              type: boolean
+              description: 'Should the sales rep also be saved as a tech rep? (Yes = true, No = false)'
+            monthlyQuota:
+              type: integer
+              format: int64
+              example: 100
+            techReps:
+              type: array
+              items:
+                type: object
+                properties:
+                  userId:
+                    type: integer
+                    description: Tech representative user id
+                    format: int64
+                required:
+                  - userId
+            inventoryLocations:
+              type: array
+              items:
+                type: object
+                properties:
+                  inventoryLocationId:
+                    type: integer
+                    description: Id of Inventory Location
+                    format: int64
+                required:
+                  - inventoryLocationId
+            physicians:
+              type: array
+              items:
+                type: object
+                properties:
+                  physicianId:
+                    type: integer
+                    description: Id of Phisician
+                    format: int64
+                required:
+                  - physicianId
+            hospitals:
+              type: array
+              items:
+                type: object
+                properties:
+                  hospitalId:
+                    type: integer
+                    description: Id of Hospital
+                    format: int64
+                required:
+                  - hospitalId
+            procedures:
+              type: array
+              items:
+                type: object
+                properties:
+                  procedureId:
+                    type: integer
+                    description: Id of Procedure
+                    format: int64
+                required:
+                  - procedureId
+            productSystems:
+              type: array
+              items:
+                type: object
+                properties:
+                  productSystemId:
+                    type: integer
+                    description: Id of Product System
+                    format: int64
+                required:
+                  - productSystemId
+            shippingAccounts:
+              type: array
+              items:
+                type: object
+                properties:
+                  accountId:
+                    type: integer
+                    description: Id of Account
+                    format: int64
+                required:
+                  - accountId
+            aliases:
+              type: array
+              items:
+                type: object
+                properties:
+                  companyId:
+                    type: integer
+                    description: Company ID associated with the sales rep alias
+                    format: int64
+                    example: 123
+                  firstNameAlias:
+                    type: string
+                    description: Sales Rep Company specific first name alias
+                    example: John
+                    maxLength: 50
+                  lastNameAlias:
+                    type: string
+                    description: Sales Rep Company specific last name alias
+                    example: Doe
+                    maxLength: 50
+                  erpCode:
+                    type: string
+                    description: Sales Rep Company specific erp code
+                    example: ID123
+                    maxLength: 50
+                required:
+                  - companyId
+                  - erpCode
+          required:
+            - user
+    required:
+      - manufacturerId
+      - salesReps
+    x-internal: true
+  sales-rep-bulk-put-identifiers-u:
+    title: Sales Rep Bulk Put Identifiers
+    type: object
+    description: Post new Sales Rep in bulk
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      salesReps:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: ID of the sales representative.
+              format: int64
+              example: 123
+            repNumber:
+              type: string
+              description: Representative Number
+              maxLength: 50
+            user:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  description: First name of the sales rep
+                  example: John
+                  maxLength: 50
+                lastName:
+                  type: string
+                  description: Last name of the sales rep
+                  example: Doe
+                  maxLength: 50
+                requirePasswordReset:
+                  type: boolean
+                  description: 'Should the password be marked as requiring a reset on first log in? (Yes = true, No = false)'
+                emails:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        description: Sales rep email address
+                        example: John.Doe@gmail.com
+                        maxLength: 50
+                      emailType:
+                        type: string
+                        description: Email type
+                        enum:
+                          - Standard
+                          - PhoneEmail
+                    required:
+                      - email
+                      - emailType
+                phoneNumbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      phoneNumber:
+                        type: string
+                        description: Sales rep phone number
+                        example: 123-456-7890
+                        maxLength: 50
+                      phoneType:
+                        type: string
+                        description: Sales rep phone number type
+                        enum:
+                          - Main
+                          - Cellular
+                          - Fax
+                    required:
+                      - phoneNumber
+                      - phoneType
+                branchIds:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      branchId:
+                        type: integer
+                        description: Branch ID associated with the sales rep
+                        format: int64
+                      isPrimary:
+                        type: boolean
+                        description: 'Flag for whether the branch id is primary or not, only one branch id can be flagged as primary'
+                    required:
+                      - branchId
+                      - isPrimary
+                languageCode:
+                  type: string
+                  description: Sales rep user language code - default to primary branch languague code value if not provided
+                  example: en
+                  maxLength: 2
+                countryCode:
+                  type: string
+                  description: Sales rep user country code - default to primary branch country code value if not provided
+                  example: US
+                  maxLength: 2
+                timeZone:
+                  type: string
+                  description: Sales rep user time zone - default to primary branch time zone value if not provided
+                  example: America/New_York
+                  maxLength: 50
+            assignTechRepRole:
+              type: boolean
+              description: 'Should the sales rep also be saved as a tech rep? (Yes = true, No = false)'
+            monthlyQuota:
+              type: integer
+              format: int64
+              example: 100
+            techReps:
+              type: array
+              items:
+                type: object
+                properties:
+                  userId:
+                    type: integer
+                    description: Tech representative user id
+                    format: int64
+                required:
+                  - userId
+            inventoryLocations:
+              type: array
+              items:
+                type: object
+                properties:
+                  inventoryLocationId:
+                    type: integer
+                    description: Id of Inventory Location
+                    format: int64
+                required:
+                  - inventoryLocationId
+            physicians:
+              type: array
+              items:
+                type: object
+                properties:
+                  physicianId:
+                    type: integer
+                    description: Id of Phisician
+                    format: int64
+                required:
+                  - physicianId
+            hospitals:
+              type: array
+              items:
+                type: object
+                properties:
+                  hospitalId:
+                    type: integer
+                    description: Id of Hospital
+                    format: int64
+                required:
+                  - hospitalId
+            procedures:
+              type: array
+              items:
+                type: object
+                properties:
+                  procedureId:
+                    type: integer
+                    description: Id of Procedure
+                    format: int64
+                required:
+                  - procedureId
+            productSystems:
+              type: array
+              items:
+                type: object
+                properties:
+                  productSystemId:
+                    type: integer
+                    description: Id of Product System
+                    format: int64
+                required:
+                  - productSystemId
+            shippingAccounts:
+              type: array
+              items:
+                type: object
+                properties:
+                  accountId:
+                    type: integer
+                    description: Id of Account
+                    format: int64
+                required:
+                  - accountId
+            aliases:
+              type: array
+              items:
+                type: object
+                properties:
+                  companyId:
+                    type: integer
+                    description: Company ID associated with the sales rep alias
+                    format: int64
+                    example: 123
+                  firstNameAlias:
+                    type: string
+                    description: Sales Rep Company specific first name alias
+                    example: John
+                    maxLength: 50
+                  lastNameAlias:
+                    type: string
+                    description: Sales Rep Company specific last name alias
+                    example: Doe
+                    maxLength: 50
+                  erpCode:
+                    type: string
+                    description: Sales Rep Company specific erp code
+                    example: ID123
+                    maxLength: 50
+                required:
+                  - companyId
+                  - erpCode
+          required:
+            - id
+    required:
+      - manufacturerId
+      - salesReps
+    x-internal: true
+  sales-rep-identifiers-1:
+    title: Sales Rep Identifiers
+    type: object
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      branchId:
+        type: integer
+        description: ID of the branch associated to the sales rep
+        example: 10
+      ids:
+        type: string
+        description: Comma-separated list of sales rep IDs; max length of 100 IDs
+        example: '123, 456, 789, 0123'
+      erpCode:
+        type: string
+        description: ERP code of the sales rep
+        example: ERP123
+        maxLength: 50
+      firstName:
+        type: string
+        description: First name of the sales rep
+        example: John
+        maxLength: 50
+      lastName:
+        type: string
+        description: Last name of the sales rep
+        example: Doe
+        maxLength: 50
+      active:
+        type: boolean
+        description: 'Default = true (Active = true, Inactive = false)'
+        example: true
+      includeDetails:
+        type: boolean
+        description: 'Include sales rep details in response - Default = false (Yes = true, False = false)'
+        example: true
+    x-internal: true
+  updated:
+    title: Updated
+    type: object
+    required:
+      - manufacturerId
+      - messageId
+      - timestamp
+    properties:
+      updatedAtMin:
+        type: string
+        format: date-time
+        example: '2017-11-05T13:15:30Z'
+        description: Get updated results after this date. All date times must be provided in ISO 8601 Z format
+      updatedAtMax:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Get updated results before this date. All date times must be provided in ISO 8601 Z format
+    x-internal: true

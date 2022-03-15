@@ -1,0 +1,72 @@
+title: Transfer Identifiers - Count
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1000
+  ids:
+    type: string
+    description: Comma-separated list of transfer IDs
+    format: string
+    example: '123,456,789'
+  catalogNumber:
+    type: string
+    description: Catalog number of the item contained within a transfer
+    format: string
+    maxLength: 20
+    example: 100A
+  lotCode:
+    type: string
+    description: Lot code of the item contained within a transfer
+    format: string
+    maxLength: 20
+    example: '100'
+  kitName:
+    type: string
+    description: Name of the kit contained within a transfer
+    format: string
+    maxLength: 100
+    example: Kit name
+  trackingNumber:
+    type: string
+    description: Tracking number of shipment
+    format: string
+    maxLength: 200
+    example: Ex12345
+  originBranchId:
+    type: integer
+    description: ID of the origin branch
+    format: int64
+    example: 188888
+  destinationBranchId:
+    type: integer
+    description: ID of the destination branch
+    format: int64
+    example: 188888
+  transferStatus:
+    type: string
+    enum:
+      - All
+      - New
+      - In Transit
+      - Delivered
+      - Closed
+    description: 'Transfer status. Default: All'
+    example: New
+  shipDateMin:
+    type: string
+    description: Show transfers shipped after this date. All date times must be provided in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-01'
+  shipDateMax:
+    type: string
+    description: Show transfers shipped before this date. All date times must be provided in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-01'
+  shippingMethodId:
+    type: integer
+    description: ID of the shipping method
+    format: int64
+    example: 11453

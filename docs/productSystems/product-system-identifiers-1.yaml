@@ -1,0 +1,30 @@
+title: Product System Identifiers
+type: object
+required:
+  - messageId
+  - manufacturerId
+  - timestamp
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Product system branch id
+    format: int64
+    example: 1234
+  ids:
+    type: string
+    description: Comma-separated list of Product system IDs; max length of 100 IDs
+    example: '123, 456, 789, 0123'
+  name:
+    type: string
+    description: Product system Name
+    example: Product system A
+    maxLength: 50
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true

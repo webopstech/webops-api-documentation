@@ -1,0 +1,720 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WebOps API
+  description: ''
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /shipments:
+    post:
+      operationId: get-shipments
+      summary: Get Shipments
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added shippingMethodId (8.1.0)\r\n- Changed branchId to a string list of ids (8.1.11)\r\n- Changed shippingMethodId to a string list of ids (8.1.11)\r\n\r\n#### Response\r\n- Added shipmentExternalKits (8.1.0)\r\n- Changed datatype to string for numberOfTubs (8.1.0)\r\n- Changed datatype to string for numberOfTrays (8.1.0)\r\n- Added branchId (8.1.11)"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/shipment-identifiers-u'
+              - $ref: '#/definitions/updated'
+              - $ref: '#/definitions/paging'
+              - type: object
+                properties:
+                  includeKitDetails:
+                    type: boolean
+                    description: 'Yes to include shipment kit details in the response. Default = No (true = Yes, false = No)'
+                    example: true
+                  includeAddressDetails:
+                    type: boolean
+                    description: 'Yes to include full address details in the response. Default = No (true = Yes, false = No)'
+                    example: true
+            description: Shipments
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              shipments:
+                type: array
+                items:
+                  $ref: '#/definitions/shipment-u'
+            required:
+              - messageId
+              - timestamp
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+  /shipments/count:
+    post:
+      operationId: shipments_count
+      summary: Get total number of shipments per defined parameters. Must be used in conjunction with /shipments.
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added shippingMethodId (8.1.0)\r\n- Changed branchId to a string list of ids (8.1.11)\r\n- Changed shippingMethodId to a string list of ids (8.1.11)\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/shipment-identifiers-u'
+              - $ref: '#/definitions/updated'
+            description: Shipments
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/count'
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+  '/shipment/{WebopsShipmentId}':
+    parameters:
+      - name: WebopsShipmentId
+        in: path
+        required: true
+        type: string
+    put:
+      operationId: update-shipment
+      summary: Update Shipment
+      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- Added shipmentExternalKits (8.1.0)\r\n- Changed datatype to string for numberOfTubs (8.1.0)\r\n- Changed datatype to string for numberOfTrays (8.1.0)"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - type: object
+                properties:
+                  manufacturerId:
+                    type: integer
+                    description: Designated manufacturer ID
+                    format: int64
+                    example: 1234
+                  shipmentStatus:
+                    type: string
+                    enum:
+                      - Scheduled
+                      - Shipped
+                      - Received
+                      - Canceled
+                    description: Shipment status
+                    example: Scheduled
+                  trackingNumber:
+                    type: string
+                    description: Tracking Number of shipment
+                    example: x1478054
+                    maxLength: 200
+                required:
+                  - manufacturerId
+            description: Update Shipment
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              shipment:
+                $ref: '#/definitions/shipment-u'
+            required:
+              - messageId
+              - timestamp
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+parameters:
+  'trait:messageHeaders:Authorization':
+    name: Authorization
+    in: header
+    description: 'Base64(UserName:Password)'
+    required: true
+    type: string
+  'trait:messageHeaders:Access_token':
+    name: Access_token
+    in: header
+    description: '{Access_Token} from token inbound service'
+    required: true
+    type: string
+responses:
+  'trait:errorResponses:403':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1105'
+        message:
+          type: string
+          description: Error message description
+          example: Call limit is reached
+  'trait:errorResponses:422':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1020-1040
+        message:
+          type: string
+          description: Error message description
+          example: Invalid parameter
+  'trait:errorResponses:500':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1100'
+        message:
+          type: string
+          description: Error message description
+          example: An unexpected server error occurred while processing the request
+definitions:
+  count:
+    title: Count
+    type: object
+    required:
+      - count
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        format: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+      count:
+        type: integer
+        example: 100
+        description: total number of results that match the requested criteria
+    x-internal: true
+  message-data:
+    title: Message Data
+    type: object
+    required:
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID of the request
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+    x-internal: true
+  paging:
+    title: Paging
+    type: object
+    properties:
+      limit:
+        type: integer
+        example: 50
+        description: 'Number of returned results (default: 50)(maximum: 500)'
+      page:
+        type: integer
+        example: 1
+        description: 'Page to show (default: 1)'
+    description: Limit and page parameters get set to default values if not provided
+    x-internal: true
+  shipment-identifiers-u:
+    title: Shipment Identifiers (Upcoming)
+    type: object
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      branchId:
+        type: string
+        description: Comma-separated list of Case branch IDs
+        example: '12345, 23456, 34567, 45678'
+      caseIds:
+        type: string
+        description: Comma separated list of Case IDs.
+        example: '12345, 23456, 34567, 45678'
+      ids:
+        type: string
+        description: Comma-separated list of shipment IDs
+        example: '123, 456, 789'
+      shipmentStatuses:
+        type: string
+        description: Comma separated list of shipment statuses.
+        enum:
+          - Scheduled
+          - Shipped
+          - Received
+          - Canceled
+      shippingMethodId:
+        type: string
+        format: int64
+        description: Comma separated list of Shipping method ids
+        example: '12345, 23456, 34567, 45678'
+    required:
+      - manufacturerId
+    x-internal: true
+  shipment-u:
+    title: Shipment (Upcoming)
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Shipment Id
+        format: int64
+        example: 731873281
+      caseId:
+        type: integer
+        description: Case Id
+        format: int64
+        example: 123456
+      branchId:
+        type: integer
+        description: Case branch ID for the shipment
+        example: 1234
+      shipmentType:
+        type: string
+        enum:
+          - Incoming
+          - Outgoing
+        description: Shipment type.
+        example: Incoming
+      shipmentStatus:
+        type: string
+        description: Shipment status.
+        enum:
+          - Scheduled
+          - Shipped
+          - Received
+          - Canceled
+      originAddress:
+        type: object
+        properties:
+          originAddressId:
+            type: integer
+            format: int64
+            description: Origin Address Id (required for integrated shipping)
+            example: 1133
+          originAddressErpCode:
+            type: string
+            description: Origin Address ERP code
+            example: OA-123
+            maxLength: 50
+          originInventoryLocationErpCode:
+            type: string
+            description: Origin Inventory Location ERP code
+            example: IL-123
+            maxLength: 50
+          originAddressStreet1:
+            type: string
+            description: Origin Address street line 1
+            example: Street line 1
+            maxLength: 50
+          originAddressStreet2:
+            type: string
+            description: Origin Address street line 2
+            example: Street line 2
+            maxLength: 50
+          originAddressCity:
+            type: string
+            description: Origin Address city
+            example: Atlanta
+            maxLength: 50
+          originAddressSubdivision:
+            type: string
+            description: Origin Address state/province/subdivision
+            example: US-GA
+            maxLength: 50
+          originAddressZipCode:
+            type: string
+            description: Origin Address zip or portal code
+            example: 30000
+            maxLength: 50
+          originAddressCountry:
+            type: string
+            description: Origin Address country
+            example: US
+            maxLength: 50
+          originAddressAttention:
+            type: string
+            description: Origin Address attention
+            example: Street line 2 description
+            maxLength: 50
+        required:
+          - originAddressId
+          - originAddressErpCode
+      destinationAddress:
+        type: object
+        properties:
+          destinationAddressId:
+            type: integer
+            format: int64
+            description: Destination Address Id (required for integrated shipping)
+            example: 1133
+          destinationAddressErpCode:
+            type: string
+            description: Destination Address ERP code
+            example: OA-123
+            maxLength: 50
+          destinationInventoryLocationErpCode:
+            type: string
+            description: Destination Inventory Location ERP code
+            example: IL-123
+            maxLength: 50
+          destinationAddressStreet1:
+            type: string
+            description: Destination Address street line 1
+            example: Street line 1
+            maxLength: 50
+          destinationAddressStreet2:
+            type: string
+            description: Destination Address street line 2
+            example: Street line 2
+            maxLength: 50
+          destinationAddressCity:
+            type: string
+            description: Destination Address city
+            example: Atlanta
+            maxLength: 50
+          destinationAddressSubdivision:
+            type: string
+            description: Destination Address state/province/subdivision
+            example: US-GA
+            maxLength: 50
+          destinationAddressZipCode:
+            type: string
+            description: Destination Address zip or portal code
+            example: 30000
+            maxLength: 50
+          destinationAddressCountry:
+            type: string
+            description: Destination Address country
+            example: US
+            maxLength: 50
+          destinationAddressAttention:
+            type: string
+            description: Destination Address attention
+            example: Street line 2 description
+            maxLength: 50
+        required:
+          - destinationAddressId
+          - destinationAddressErpCode
+      recipientPhoneNumber:
+        type: string
+        format: string
+        description: Recipient Phone Number (required for integrated shipping)
+        example: 777-888-9999
+      shippingMethodId:
+        type: integer
+        format: int64
+        description: Shipping method id
+        example: 11453
+      pickUpDate:
+        type: string
+        format: date-time
+        description: Ship date in YYYY-MM-DD format
+        example: '2018-01-01'
+      arrivalDate:
+        type: string
+        description: Arrival date in YYYY-MM-DD format
+        format: date-time
+        example: '2018-01-05'
+      dueBackDate:
+        type: string
+        description: Due back date in YYYY-MM-DD format
+        format: date-time
+        example: '2018-01-05'
+      cost:
+        type: integer
+        format: int64
+        description: Cost
+        example: 1
+      currencyCode:
+        type: string
+        format: string
+        description: Currency Code
+        example: USD
+      trackingNumber:
+        type: string
+        format: string
+        description: Tracking Number of shipment
+        example: x1478054
+      weight:
+        type: integer
+        format: int64
+        description: Weight of shipment. Default 1 (required for integrated shipping)
+        example: 1
+      weightMeasurementType:
+        type: string
+        enum:
+          - lb
+          - kg
+        description: Weight measurement type.
+        example: lb
+      numberOfPackages:
+        type: integer
+        format: int64
+        description: Number of packages. (required for integrated shipping)
+        example: 1
+      invoiceNumber:
+        type: string
+        format: string
+        description: Invoice Number for shipment
+        example: 123XYZ
+      poNumber:
+        type: string
+        format: string
+        description: PO Number for shipment
+        example: 1122RUU
+      referenceNumber:
+        type: string
+        format: string
+        description: Reference Number for shipment
+        example: 123XYZ
+      instructions:
+        type: string
+        format: string
+        description: Shipment instructions
+        example: This is a sample instructional text
+      saturdayDelivery:
+        type: boolean
+        description: True if allows Saturday Delivery
+        example: true
+      createdDate:
+        type: string
+        description: Last created date and time in ISO 8601 Z format
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+      changedDate:
+        type: string
+        description: Last changed date and time in ISO 8601 Z format
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+      changedBy:
+        type: string
+        description: Name of the user who last changed the shipment
+        example: John Doe
+      numberOfTubs:
+        type: string
+        description: Number of tubs in the shipment
+        example: '5'
+      numberOfTrays:
+        type: string
+        description: Number of trays in the shipment
+        example: '5'
+      active:
+        type: boolean
+        description: '(Active = true, Inactive = false)'
+        example: true
+      shipmentKits:
+        type: array
+        items:
+          $ref: '#/definitions/shipment-kits-1'
+      shipmentExternalKits:
+        type: array
+        items:
+          type: object
+          properties:
+            externalKitId:
+              type: integer
+              description: Shipment external kit instance ID
+              format: int64
+              example: 12345
+            externalKitName:
+              type: string
+              description: Shipment external kit instance name
+              example: Kit 123
+            externalKitDescription:
+              type: string
+              description: Shipment external kit instance description
+              example: Kit 123 Description
+          required:
+            - externalKitId
+            - externalKitName
+    required:
+      - id
+      - caseId
+      - shipmentStatus
+      - shippingMethodId
+      - arrivalDate
+      - cost
+      - trackingNumber
+      - createdDate
+      - changedDate
+      - changedBy
+      - numberOfTubs
+      - numberOfTrays
+    x-internal: true
+  shipment-kits-1:
+    title: Shipment Kits
+    type: object
+    properties:
+      kitInstanceId:
+        type: integer
+        description: Shipment kit instance ID
+        format: int64
+        example: 12345
+      kitInstanceName:
+        type: string
+        description: Shipment kit instance name
+        example: Kit 123
+      shipmentKitItems:
+        type: array
+        items:
+          $ref: '#/definitions/shipment-kit-items-1'
+    required:
+      - kitInstanceId
+      - kitInstanceName
+    x-internal: true
+  shipment-kit-items-1:
+    title: Shipment Kit Items
+    type: object
+    properties:
+      kitInstanceItemId:
+        type: integer
+        description: Shipment kit item ID
+        format: int64
+        example: 12345
+      inventoryItemPartId:
+        type: integer
+        description: Inventory item part ID of the shipment kit item
+        format: int64
+        example: 34088
+      catalogNumber:
+        type: string
+        description: Shipment kit item catalog number
+        example: 02-354-TEMP
+      lotCode:
+        type: string
+        description: Shipment kit item lot code
+        example: LotCode1
+    required:
+      - kitInstanceItemId
+      - inventoryItemPartId
+      - catalogNumber
+    x-internal: true
+  updated:
+    title: Updated
+    type: object
+    required:
+      - manufacturerId
+      - messageId
+      - timestamp
+    properties:
+      updatedAtMin:
+        type: string
+        format: date-time
+        example: '2017-11-05T13:15:30Z'
+        description: Get updated results after this date. All date times must be provided in ISO 8601 Z format
+      updatedAtMax:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Get updated results before this date. All date times must be provided in ISO 8601 Z format
+    x-internal: true

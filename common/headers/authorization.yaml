@@ -1,0 +1,6 @@
+name: Authorization
+in: header
+description: 'Base64(UserName:Password)'
+required: true
+type: string
+x-internal: true

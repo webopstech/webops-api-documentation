@@ -1,0 +1,281 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WebOps API
+  description: ''
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /kit/checkIn:
+    put:
+      operationId: kits-check-in
+      summary: Check In Kit
+      description: "## New Endpoint (7.7.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/kit-check-in-identifiers-1'
+            description: Kit Families
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            description: ''
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              checkInSummary:
+                type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: integer
+                    description: Check In Summary ID.
+                    format: int64
+                    example: 123
+                  kitId:
+                    type: integer
+                    description: Kit ID.
+                    format: int64
+                    example: 123
+                  caseId:
+                    type: integer
+                    description: Case ID.
+                    format: int64
+                    example: 123
+                  complete:
+                    type: boolean
+                    description: '(Complete = true, Incomplete = false)'
+                    example: true
+                  scannedInventoryItemParts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        catalogNumber:
+                          type: string
+                          description: Kit item catalog number
+                          example: 01-2432-3333
+                          maxLength: 45
+                        lotCode:
+                          type: string
+                          description: Kit item lot code
+                          example: HEBN7890
+                          maxLength: 45
+                        inventoryItemPartId:
+                          type: integer
+                          description: Inventory Item Part ID
+                          format: int64
+                          example: 10
+                      required:
+                        - catalogNumber
+                        - inventoryItemPartId
+                  invalidScanneditems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        catalogNumber:
+                          type: string
+                          description: Kit item catalog number
+                          example: 01-2432-3333
+                          maxLength: 45
+                        lotCode:
+                          type: string
+                          description: Kit item lot code
+                          example: HEBN7890
+                          maxLength: 45
+                        errorDescription:
+                          type: string
+                          description: Reason scanned item was invalid
+                          example: Scanned Item doesn't belong to this kit.
+                          maxLength: 255
+                      required:
+                        - catalogNumber
+                        - errorDescription
+            required:
+              - messageId
+              - timestamp
+              - checkInSummary
+parameters:
+  'trait:messageHeaders:Authorization':
+    name: Authorization
+    in: header
+    description: 'Base64(UserName:Password)'
+    required: true
+    type: string
+  'trait:messageHeaders:Access_token':
+    name: Access_token
+    in: header
+    description: '{Access_Token} from token inbound service'
+    required: true
+    type: string
+responses:
+  'trait:errorResponses:403':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1105'
+        message:
+          type: string
+          description: Error message description
+          example: Call limit is reached
+  'trait:errorResponses:422':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1020-1040
+        message:
+          type: string
+          description: Error message description
+          example: Invalid parameter
+  'trait:errorResponses:500':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1100'
+        message:
+          type: string
+          description: Error message description
+          example: An unexpected server error occurred while processing the request
+definitions:
+  kit-check-in-identifiers-1:
+    title: Kit Check In Identifiers
+    type: object
+    description: ''
+    required:
+      - manufacturerId
+      - id
+      - items
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      userName:
+        type: string
+        description: User name for history records
+        format: string
+        example: John Doe
+        maxLength: 101
+      id:
+        type: integer
+        description: 'Kit ID. Either id or barcode are required. If both are provided, id will be used.'
+        format: int64
+        example: 123
+      barcode:
+        type: string
+        description: 'Kit Barcode. Either id or barcode are required. If both are provided, id will be used.'
+        example: ABCKitBarcode
+        maxLength: 100
+      items:
+        type: array
+        items:
+          type: object
+          required:
+            - catalogNumber
+          properties:
+            catalogNumber:
+              type: string
+              description: Kit item catalog number
+              example: 01-2432-3333
+              maxLength: 45
+            lotCode:
+              type: string
+              description: Kit item lot code
+              example: HEBN7890
+              maxLength: 45
+    x-internal: true
+  message-data:
+    title: Message Data
+    type: object
+    required:
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID of the request
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+    x-internal: true

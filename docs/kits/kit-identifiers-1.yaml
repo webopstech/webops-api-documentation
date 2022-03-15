@@ -1,0 +1,85 @@
+title: Kit Identifiers
+type: object
+required:
+  - messageId
+  - manufacturerId
+  - timestamp
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Kit branch ID
+    example: 10
+  warehouseId:
+    type: integer
+    description: Kit warehouse ID
+    format: int64
+    example: 8989
+  ids:
+    type: string
+    description: Comma separated list of kit IDs; max length of 100 IDs
+    example: '123, 456, 789, 0123'
+  kitName:
+    type: string
+    description: Kit name
+    example: Kit ABCDE89-01
+    maxLength: 100
+  kitBarcode:
+    type: string
+    description: Kit barcode
+    example: ABCDE8901
+    maxLength: 45
+  kitFamilyName:
+    type: string
+    description: Kit family name
+    example: Kit ABCDE89
+    maxLength: 100
+  kitFamilyId:
+    type: integer
+    description: Kit Family ID
+    format: int64
+    example: 12345
+  kitFamilyType:
+    type: string
+    description: Kit family type
+    enum:
+      - Standard
+      - Temporary
+      - External
+      - Instruments
+    example: Standard
+  locationStatus:
+    type: string
+    description: Kit location status
+    enum:
+      - In Warehouse
+      - In Field
+      - Transferred
+      - Pending Receipt
+    example: In Warehouse
+  processStatus:
+    type: string
+    description: Kit process status
+    enum:
+      - Inspection
+      - Cleaning
+      - Repair
+      - Upgrade
+      - Scrap
+      - Downgrade
+      - Post-Cleaning Inspection
+      - Ready
+    example: Inspection
+  complete:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+x-internal: true
