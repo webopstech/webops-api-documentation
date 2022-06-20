@@ -20,7 +20,7 @@ paths:
           schema:
             allOf:
               - $ref: ../common/message-data.yaml
-              - $ref: ../docs/branches/branch-identifiers-1.yaml
+              - $ref: ../../docs/branches/branch-identifiers-1.yaml
               - $ref: ../common/updated.yaml
               - $ref: ../common/paging.yaml
             description: Branches

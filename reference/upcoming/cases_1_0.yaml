@@ -1,0 +1,194 @@
+swagger: '2.0'
+info:
+  title: upcoming
+  version: '2.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /cases:
+    post:
+      operationId: cases
+      summary: Get Cases
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - No changes
+
+        #### Response
+        - Added rfidTagId (8.4.0)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/cases/case-identifiers-u.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../docs/cases/case-surgery-date-1.yaml
+              - $ref: ../../common/paging.yaml
+              - $ref: ../../docs/cases/case-additional-entities-1.yaml
+            description: Cases
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              cases:
+                type: array
+                items:
+                  $ref: ../../docs/cases/case-u.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  '/case/{WebOpsCaseId}':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    put:
+      operationId: update-case
+      summary: Update Case
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - No changes
+
+        #### Response
+        - Added rfidTagId (8.4.0)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/cases/case-update-u.yaml
+            description: Cases
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              cases:
+                type: array
+                items:
+                  $ref: ../../docs/cases/case-u.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  '/case/{WebOpsCaseId}/cancel':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    put:
+      operationId: cancel-case
+      summary: Cancel Case
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - No changes
+
+        #### Response
+        - Added rfidTagId (8.4.0)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/cases/case-cancel-2.yaml
+            description: Cases
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              cases:
+                type: array
+                items:
+                  $ref: ../../docs/cases/case-u.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml

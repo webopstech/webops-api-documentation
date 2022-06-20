@@ -175,4 +175,4 @@ required:
   - timestamp
   - manufacturerId
   - hospitals
-x-internal: true
+x-internal: false

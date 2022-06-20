@@ -15,7 +15,13 @@ paths:
     post:
       operationId: get-kits
       summary: Get Kits
-      description: "## New Endpoint (7.7.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      description: |-
+        ## New Endpoint (7.7.0)
+        ### Endpoint Changes
+        #### Request
+        - No changes
+        #### Response
+        - No changes
       consumes:
         - application/json
       produces:

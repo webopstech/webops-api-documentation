@@ -33,4 +33,4 @@ properties:
 required:
   - manufacturerId
   - kitItems
-x-internal: true
+x-internal: false

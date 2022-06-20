@@ -37,4 +37,4 @@ properties:
           type: string
           description: Contract price currency code - ISO 4217
           example: USD
-x-internal: true
+x-internal: false

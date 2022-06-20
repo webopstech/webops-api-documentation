@@ -15,7 +15,21 @@ paths:
     post:
       operationId: get-shipments
       summary: Get Shipments
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added shippingMethodId (8.1.0)\r\n- Changed branchId to a string list of ids (8.1.11)\r\n- Changed shippingMethodId to a string list of ids (8.1.11)\r\n\r\n#### Response\r\n- Added shipmentExternalKits (8.1.0)\r\n- Changed datatype to string for numberOfTubs (8.1.0)\r\n- Changed datatype to string for numberOfTrays (8.1.0)\r\n- Added branchId (8.1.11)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added shippingMethodId (8.1.0)
+        - Changed branchId to a string list of ids (8.1.11)
+        - Changed shippingMethodId to a string list of ids (8.1.11)
+
+        #### Response
+        - Added shipmentExternalKits (8.1.0)
+        - Changed datatype to string for numberOfTubs (8.1.0)
+        - Changed datatype to string for numberOfTrays (8.1.0)
+        - Added branchId (8.1.11)
+        - Changed pickUpDate, arrivalDate, and dueBackDate to ISO 8601 Z format (8.3.0)
+        - Added rfidTagId(8.4.0)
       consumes:
         - application/json
       produces:
@@ -110,7 +124,18 @@ paths:
     put:
       operationId: update-shipment
       summary: Update Shipment
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- Added shipmentExternalKits (8.1.0)\r\n- Changed datatype to string for numberOfTubs (8.1.0)\r\n- Changed datatype to string for numberOfTrays (8.1.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - No changes
+
+        #### Response
+        - Added shipmentExternalKits (8.1.0)
+        - Changed datatype to string for numberOfTubs (8.1.0)
+        - Changed datatype to string for numberOfTrays (8.1.0)
+        - Changed pickUpDate, arrivalDate, and dueBackDate to ISO 8601 Z format (8.3.0)
+        - Added rfidTagId(8.4.0)
       consumes:
         - application/json
       produces:
@@ -363,6 +388,7 @@ definitions:
   shipment-u:
     title: Shipment (Upcoming)
     type: object
+    x-internal: true
     properties:
       id:
         type: integer
@@ -518,18 +544,18 @@ definitions:
       pickUpDate:
         type: string
         format: date-time
-        description: Ship date in YYYY-MM-DD format
-        example: '2018-01-01'
+        description: Ship date and time in ISO 8601 Z format
+        example: '2018-11-05T13:15:30Z'
       arrivalDate:
         type: string
-        description: Arrival date in YYYY-MM-DD format
+        description: Arrival date and time in ISO 8601 Z format
         format: date-time
-        example: '2018-01-05'
+        example: '2018-11-05T13:15:30Z'
       dueBackDate:
         type: string
-        description: Due back date in YYYY-MM-DD format
+        description: Due back date and time in ISO 8601 Z format
         format: date-time
-        example: '2018-01-05'
+        example: '2018-11-05T13:15:30Z'
       cost:
         type: integer
         format: int64
@@ -650,7 +676,6 @@ definitions:
       - changedBy
       - numberOfTubs
       - numberOfTrays
-    x-internal: true
   shipment-kits-1:
     title: Shipment Kits
     type: object
@@ -686,6 +711,11 @@ definitions:
         description: Inventory item part ID of the shipment kit item
         format: int64
         example: 34088
+      rfidTagId:
+        type: string
+        description: RFID Tag Id
+        example: '1234567890123456789012345678901234567890'
+        maxLength: 40
       catalogNumber:
         type: string
         description: Shipment kit item catalog number

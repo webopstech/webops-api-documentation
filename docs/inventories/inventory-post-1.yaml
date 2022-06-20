@@ -28,6 +28,11 @@ properties:
     description: inventory location ID
     format: int64
     example: 12
+  inventoryLocationErpCode:
+    type: string
+    description: 'Inventory location ERP Code. If both inventoryLocationErpCode and inventoryLocationId are provided, inventoryLocationId will be used.'
+    example: '1010'
+    maxLength: 50
   userName:
     type: string
     description: User name for history records
@@ -37,4 +42,4 @@ properties:
     type: array
     items:
       $ref: inventory-item-request-1.yaml
-x-internal: true
+x-internal: false

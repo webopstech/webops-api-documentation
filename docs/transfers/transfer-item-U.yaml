@@ -1,0 +1,54 @@
+title: Transfer Item
+type: object
+description: Only one kit or one inventory item part will be displayed per transfer item
+properties:
+  transferItemId:
+    type: integer
+    format: int64
+    description: Transfer Item ID specific to this transfer.  Each item or kit has a unique number.  Use this ID when updating a transfer item
+    example: 11242
+  kitName:
+    type: string
+    description: Kit Name
+    example: Kit 123
+  kitId:
+    type: integer
+    format: int64
+    description: Kit ID of transfer item
+    example: 11242
+  catalogNumber:
+    type: string
+    description: Catalog number
+    example: CAT 123
+  lotCode:
+    type: string
+    description: Lot Code
+    example: LOT 123
+  inventoryItemPartId:
+    type: integer
+    format: int64
+    description: Inventory Item Part ID of transfer item
+    example: 11242
+  rfidTagId:
+    type: string
+    description: RFID Tag ID for the item
+    example: '1234567890123456789012345678901234567890'
+    maxLength: 40
+  inventoryItemId:
+    type: integer
+    format: int64
+    description: Inventory Item ID of transfer item
+    example: 11242
+  isScanned:
+    type: boolean
+    description: True if the item has been scanned and recieved by destination. Default = false.  Items are scanned only when receiving is turned on in the manufacturer settings for transfers.
+    example: false
+  changedBy:
+    type: string
+    description: The user who updated the item last
+    example: John Smith
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'

@@ -1,0 +1,100 @@
+title: Order - Edit
+type: object
+required:
+  - messageId
+  - timestamp
+  - manufacturerId
+  - branchId
+  - status
+  - orderItems
+properties:
+  messageId:
+    type: string
+    description: Message ID
+    format: string
+    example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+  timestamp:
+    type: string
+    description: Current date/time in ISO-8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  manufacturerId:
+    type: integer
+    description: Designated Manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Designated Branch ID
+    format: int64
+    example: 9
+  status:
+    type: string
+    description: Order status
+    enum:
+      - Submitted
+      - Pre-Valid
+      - Errors
+      - BilledOrderNo
+      - ReplenNo
+      - Booked
+      - Invoiced
+    example: Submitted
+  replenishmentNumber:
+    type: string
+    description: Replenishment order number
+    example: 12345-RO
+    maxLength: 50
+  billOrderNumber:
+    type: string
+    description: Bill to order number
+    example: 12345-BO
+    maxLength: 50
+  message:
+    type: string
+    description: Order message
+    example: Message
+    maxLength: 5000
+  tax:
+    type: number
+    format: float
+    description: Order tax
+    example: '100.00'
+  orderHold:
+    type: boolean
+    description: 'Order hold? (Yes = true, No = false)'
+    example: true
+  orderHoldReason:
+    type: string
+    description: Reason for order hold
+    example: Hospital Hold
+    maxLength: 50
+  orderItems:
+    type: array
+    items:
+      type: object
+      required:
+        - orderItemId
+        - lineNumber
+      properties:
+        orderItemId:
+          type: integer
+          description: 'WebOps Order Item ID. '
+          format: int64
+          example: 123
+        lineNumber:
+          type: integer
+          description: Order item line number
+          format: int64
+          example: 123
+        message:
+          type: string
+          description: Order item message
+          example: Message
+          maxLength: 5000
+        price:
+          type: number
+          format: float
+          description: Order item price
+          example: '100.00'
+x-internal: false

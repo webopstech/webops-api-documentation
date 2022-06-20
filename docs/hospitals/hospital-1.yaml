@@ -178,4 +178,4 @@ required:
   - baseCurrencyCode
   - active
   - changedDate
-x-internal: true
+x-internal: false

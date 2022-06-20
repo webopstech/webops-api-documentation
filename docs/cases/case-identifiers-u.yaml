@@ -102,4 +102,4 @@ properties:
     type: boolean
     description: 'Order hold for this case? (Yes = true, No = false)'
     example: true
-x-internal: true
+x-internal: false

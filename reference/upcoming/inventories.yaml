@@ -15,7 +15,16 @@ paths:
     post:
       operationId: inventories
       summary: Get Inventories
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added rfidTagIds (8.2.1)\r\n\r\n#### Response\r\n- Added rfidTagId (8.2.1)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagIds (8.2.1)
+
+        #### Response
+        - Added branchId (8.2.1)
+        - Added rfidTagId (8.2.1)
+        - Added expirationDate (8.3.0)
       parameters:
         - name: body
           in: body
@@ -109,17 +118,14 @@ paths:
           in: body
           schema:
             allOf:
-              - $ref: '#/definitions/message-data'
-              - $ref: '#/definitions/inventory-post-u'
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/inventories/inventory-post-U.yaml
             description: Post Inventory in Bulk
       responses:
         '200':
           description: ''
           schema:
             type: object
-            required:
-              - messageId
-              - timestamp
             properties:
               messageId:
                 type: string
@@ -141,7 +147,10 @@ paths:
               details:
                 type: array
                 items:
-                  $ref: '#/definitions/line-detail-inventory-1'
+                  $ref: ../../docs/inventories/line-detail-inventory-U.yaml
+            required:
+              - messageId
+              - timestamp
   /inventories/status:
     put:
       operationId: inventories_status
@@ -174,7 +183,7 @@ paths:
               itemParts:
                 type: array
                 items:
-                  $ref: '#/definitions/inventory-status-update-u'
+                  $ref: ../../docs/inventories/inventory-status-update-1.yaml
             required:
               - messageId
               - timestamp
@@ -208,7 +217,7 @@ paths:
               details:
                 type: array
                 items:
-                  $ref: '#/definitions/line-detail-inventory-status-1'
+                  $ref: ../../docs/inventories/line-detail-inventory-status-1.yaml
             required:
               - messageId
               - timestamp
@@ -360,57 +369,12 @@ definitions:
         example: 1
       rfidTagId:
         type: string
-        description: RFID Tag Id
-        example: "1234567890123456789012345678901234567890"
+        description: RFID Tag ID for the item
+        example: '1234567890123456789012345678901234567890'
         maxLength: 40
     required:
       - catalogNumber
       - quantity
-    x-internal: true
-  inventory-post-u:
-    title: Inventory - Post
-    type: object
-    required:
-      - messageId
-      - timestamp
-      - manufacturerId
-      - branchId
-      - inventoryLocationId
-      - itemParts
-    properties:
-      manufacturerId:
-        type: integer
-        description: Designated manufacturer ID
-        format: int64
-        example: 1234
-      branchId:
-        type: integer
-        description: Branch ID of the inventory location
-        format: int64
-        example: 12
-      branchErpCode:
-        type: string
-        description: 'Inventory location Branch ERP Code. If both branchErpCode and branchId are provided, branchId will be used.'
-        example: ERP123
-        maxLength: 50
-      inventoryLocationId:
-        type: integer
-        description: inventory location ID
-        format: int64
-        example: 12
-      userName:
-        type: string
-        description: User name for history records
-        example: John Doe
-        maxLength: 50
-      processAsTransaction:
-        type: boolean
-        description: 'Process entire request as a single transaction. Default = false (Yes = true, No = false)'
-        example: true
-      itemParts:
-        type: array
-        items:
-          $ref: '#/definitions/inventory-item-request-u'
     x-internal: true
   inventory-status-update-u:
     title: Inventory Status Update
@@ -468,7 +432,7 @@ definitions:
       rfidTagId:
         type: string
         description: RFID Tag Id
-        example: "1234567890123456789012345678901234567890"
+        example: '1234567890123456789012345678901234567890'
         maxLength: 40
       code:
         type: integer
@@ -478,29 +442,6 @@ definitions:
         type: string
         description: Success
         example: Message
-    x-internal: true
-  line-detail-inventory-status-1:
-    title: Line Detail Inventory Status
-    type: object
-    description: Line number and status of any individual insertion.
-    properties:
-      id:
-        type: integer
-        description: The inventory item part id
-        format: int64
-        example: 34568908
-      code:
-        type: integer
-        description: One of the defined response codes
-        example: 1010
-      message:
-        type: string
-        description: Success
-        example: Message
-    required:
-      - lotId
-      - code
-      - message
     x-internal: true
   message-data:
     title: Message Data

@@ -1,0 +1,86 @@
+title: Transaction - Post (Upcoming)
+type: object
+required:
+  - messageId
+  - timestamp
+  - manufacturerId
+  - branchId
+  - originWarehouseId
+  - destinationWarehouseId
+  - transactionType
+  - shippingMethodId
+  - salesRepId
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Designated branch ID.
+    format: int64
+    example: 9
+  transactionDate:
+    type: string
+    description: Transaction date in 24 hour format
+    format: date-time
+    example: '2018-11-05 13:15'
+  salesRepId:
+    type: integer
+    description: Transaction sales rep ID
+    format: int64
+    example: 123
+  originWarehouseId:
+    type: integer
+    description: Transaction origin warehouse ID
+    format: int64
+    example: 123
+  destinationWarehouseId:
+    type: integer
+    description: Transaction destination warehouse ID
+    format: int64
+    example: 123
+  transactionType:
+    type: string
+    description: Transaction type
+    enum:
+      - Demo
+      - Order
+      - Return
+      - Sale
+      - Sample
+      - Swap -One-Sided
+      - Swap -Two-Sided
+    example: Demo
+  transactionStatus:
+    type: string
+    description: Transaction status
+    enum:
+      - New
+      - Pending
+      - Closed
+      - Cancelled
+      - Modified
+    example: New
+  shippingMethodId:
+    type: integer
+    description: Transaction shipping method ID
+    format: int64
+    example: 1345
+  purchaseOrderNumber:
+    type: string
+    description: Transaction purchase order number
+    example: TXN12346-PO
+    maxLength: 50
+  notes:
+    type: string
+    description: Transaction notes
+    example: Additional notes or comments
+    maxLength: 500
+  userName:
+    type: string
+    description: User name for history records
+    format: string
+    example: John Doe
+x-internal: true

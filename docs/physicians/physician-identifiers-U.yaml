@@ -1,0 +1,48 @@
+title: Physician Identifiers (Upcoming)
+type: object
+x-internal: false
+x-examples:
+  example-1:
+    manufacturerId: 1234
+    branchId: 10
+    ids: '123, 456, 789, 0123'
+    erpCode: ERP123
+    firstName: John
+    lastName: Doe
+    active: true
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: ID of the branch associated to the physician
+    format: int64
+    example: 10
+  ids:
+    type: string
+    description: Comma-separated list of physician IDs; max length of 100 IDs
+    example: '123, 456, 789, 0123'
+  erpCode:
+    type: string
+    description: External ERP Code of the physician
+    example: ERP123
+    maxLength: 50
+  firstName:
+    type: string
+    description: First name of the physician
+    example: John
+    maxLength: 125
+  lastName:
+    type: string
+    description: Last name of the physician
+    example: Doe
+    maxLength: 125
+  active:
+    type: boolean
+    description: 'Default = true (Active = true, Inactive = false)'
+    example: true
+required:
+  - manufacturerId

@@ -33,4 +33,4 @@ properties:
     type: boolean
     description: 'Default = true (Active = true, Inactive = false)'
     example: true
-x-internal: true
+x-internal: false

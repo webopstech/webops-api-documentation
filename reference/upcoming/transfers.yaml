@@ -1,0 +1,237 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /transfers:
+    post:
+      operationId: transfers
+      summary: Get Transfers
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/transfers/transfer-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+            description: Transfers
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              transfers:
+                type: array
+                items:
+                  $ref: ../../docs/transfers/transfer-U.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |
+        ### Endpoint Changes
+
+        #### Request
+        No changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+  '/transfers/{WebopsTransferId}':
+    parameters:
+      - name: WebopsTransferId
+        in: path
+        required: true
+        type: string
+    put:
+      operationId: transfer-update
+      summary: Update a Specific Transfer
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - type: object
+                properties:
+                  manufacturerId:
+                    type: integer
+                    description: Designated manufacturer ID
+                    format: int64
+                    example: 1234
+              - type: object
+                properties:
+                  transfers:
+                    type: array
+                    items:
+                      $ref: ../../docs/transfers/transfer-identifiers-update-1.yaml
+            description: Transfers
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              transfers:
+                type: array
+                items:
+                  $ref: ../../docs/transfers/transfer-update-U.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        No changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+  '/transfer/{WebopsTransferId}/transferItems':
+    parameters:
+      - name: WebopsTransferId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: transfers-item
+      summary: Add a New Transfer Item on a Saved Transfer
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            description: 'Only enter in one kit or one inventory item per transfer item. For an item, provide either inventoryItemPartId or catalogNumber and lotCode (for non lot code item, then omit).  If both are provided, inventoryItemPartId will be used.  For a kit, provide either kitName or kitId.  If both are provided, kitId will be used. Items provided with inventoryItemPartId, RFID items, and kits must have quantity = 1.'
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - transferItems
+            properties:
+              messageId:
+                type: string
+                description: message ID
+                format: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format in Z
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              manufacturerId:
+                type: integer
+                description: Designated manufacturer ID
+                format: int64
+                example: 1234
+              transferItems:
+                type: array
+                items:
+                  $ref: ../../docs/transfers/transfer-identifiers-item-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              transferItems:
+                type: array
+                items:
+                  $ref: ../../docs/transfers/transfer-item-add-U.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Request
+        - Added rfidTagId (8.4.0)

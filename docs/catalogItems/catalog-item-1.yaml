@@ -144,7 +144,18 @@ properties:
   globalTradeItemNumbers:
     type: array
     items:
-      $ref: global-trade-item-numbers-1.yaml
+      type: object
+      properties:
+        gtin:
+          type: string
+          description:
+            Catalog Global Trade Item Number (GTIN)
+            <br/>---<br/>
+            Updating a Catalog Item's GTIN will overwrite any existing GTIN information for the Catalog Item
+          example: 12345678901234
+          maxLength: 14
+      required:
+        - gtin
   companyId:
     type: integer
     description: Company ID

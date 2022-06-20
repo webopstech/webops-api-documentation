@@ -1,0 +1,429 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WebOps API
+  description: ''
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /procedures:
+    post:
+      operationId: get_procedures
+      summary: Get Procedures
+      description: "## New Endpoint (8.3.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/procedure-identifiers-u2'
+              - $ref: '#/definitions/updated'
+              - $ref: '#/definitions/paging'
+              - type: object
+                properties:
+                  includeDetails:
+                    type: boolean
+                    example: true
+                    description: 'Include procedure categories in response - Default = false (Yes = true, No = false)'
+            description: Procedures
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              procedures:
+                type: array
+                items:
+                  $ref: '#/definitions/procedure-u'
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+  /procedures/count:
+    post:
+      operationId: procedures_count
+      summary: Get total number of procedures per defined parameters. Must be used in conjunction with /procedures
+      description: "## New Endpoint (8.3.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: '#/definitions/procedure-identifiers-u2'
+              - $ref: '#/definitions/updated'
+            description: Sales Reps
+        - $ref: '#/parameters/trait:messageHeaders:Authorization'
+        - $ref: '#/parameters/trait:messageHeaders:Access_token'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/count'
+        '403':
+          $ref: '#/responses/trait:errorResponses:403'
+        '422':
+          $ref: '#/responses/trait:errorResponses:422'
+        '500':
+          $ref: '#/responses/trait:errorResponses:500'
+parameters:
+  'trait:messageHeaders:Authorization':
+    name: Authorization
+    in: header
+    description: 'Base64(UserName:Password)'
+    required: true
+    type: string
+  'trait:messageHeaders:Access_token':
+    name: Access_token
+    in: header
+    description: '{Access_Token} from token inbound service'
+    required: true
+    type: string
+responses:
+  'trait:errorResponses:403':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1105'
+        message:
+          type: string
+          description: Error message description
+          example: Call limit is reached
+  'trait:errorResponses:422':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: 1020-1040
+        message:
+          type: string
+          description: Error message description
+          example: Invalid parameter
+  'trait:errorResponses:500':
+    description: ''
+    schema:
+      type: object
+      required:
+        - messageId
+        - timestamp
+        - code
+        - message
+      properties:
+        messageId:
+          type: string
+          description: Message ID of the request
+          example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        timestamp:
+          type: string
+          description: Current date/time in ISO-8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        code:
+          type: integer
+          description: Error code
+          example: '1100'
+        message:
+          type: string
+          description: Error message description
+          example: An unexpected server error occurred while processing the request
+definitions:
+  count:
+    title: Count
+    type: object
+    required:
+      - count
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        format: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+      count:
+        type: integer
+        example: 100
+        description: total number of results that match the requested criteria
+    x-internal: true
+  message-data:
+    title: Message Data
+    type: object
+    required:
+      - messageId
+      - timestamp
+    properties:
+      messageId:
+        type: string
+        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+        description: Message ID of the request
+      timestamp:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Current date/time in ISO-8601 Z format
+    x-internal: true
+  paging:
+    title: Paging
+    type: object
+    properties:
+      limit:
+        type: integer
+        example: 50
+        description: 'Number of returned results (default: 50)(maximum: 500)'
+      page:
+        type: integer
+        example: 1
+        description: 'Page to show (default: 1)'
+    description: Limit and page parameters get set to default values if not provided
+    x-internal: true
+  procedure-identifiers-u2:
+    title: Procedure Identifiers
+    type: object
+    required:
+      - messageId
+      - manufacturerId
+      - timestamp
+    properties:
+      manufacturerId:
+        type: integer
+        description: Designated manufacturer ID
+        format: int64
+        example: 1234
+      branchId:
+        type: integer
+        description: 'Procedure branch ID. If both branchId and branchErp are provided, branchId will be used.'
+        format: int64
+        example: 10
+      branchErpCode:
+        type: string
+        description: 'Procedure branch erp code. If both branchErp and branchId are provided, branchId will be used.'
+        example: 123-ERP
+        maxLength: 50
+      ids:
+        type: string
+        description: Comma-separated list of Procedure IDs; max length of 100 IDs
+        example: '123, 456, 789, 0123'
+      name:
+        type: string
+        description: Procedure Name
+        example: proc
+        maxLength: 50
+      active:
+        type: boolean
+        description: '(Active = true, Inactive = false)'
+        example: true
+      manufacturerGlobal:
+        type: boolean
+        description: '(Yes = true, No = false)'
+        example: true
+      companyId:
+        type: integer
+        description: Procedure company ID.
+        format: int64
+        example: 10
+    x-internal: true
+  procedure-u:
+    title: Procedure
+    type: object
+    required:
+      - branchId
+      - id
+      - name
+      - description
+      - active
+      - manufacturerGlobal
+      - changedDate
+      - procedureCategories
+    properties:
+      branchId:
+        type: integer
+        description: Procedure branch ID
+        example: 1234
+      branchErp:
+        type: string
+        description: Procedure branch ERP code
+        example: 123-ERP
+        maxLength: 50
+      id:
+        type: integer
+        description: Procedure ID
+        example: 1234
+      name:
+        type: string
+        description: Procedure Name
+        example: proc
+        maxLength: 50
+      description:
+        type: string
+        description: Procedure description
+        example: desc
+        maxLength: 500
+      active:
+        type: boolean
+        description: '(Active = true, Inactive = false)'
+        example: true
+      companyId:
+        type: integer
+        description: Company ID linked to Procedure
+        format: int64
+        example: 9
+      manufacturerGlobal:
+        type: boolean
+        description: 'Yes = true, No = false'
+        example: true
+      changedDate:
+        type: string
+        format: date-time
+        description: Last changed date and time in ISO 8601 Z format
+        example: '2018-11-05T13:15:30Z'
+      procedureCategories:
+        type: array
+        items:
+          required:
+            - procedureCategoryId
+          properties:
+            procedureCategoryId:
+              type: integer
+              description: Procedure Category ID
+              format: int64
+              example: 5855
+            name:
+              type: string
+              description: Procedure Category Name
+              format: string
+              example: Example Procedure Category
+              maxLength: 50
+            active:
+              type: boolean
+              description: '(Active = true, Inactive = false)'
+              example: true
+            productSystems:
+              type: array
+              items:
+                required:
+                  - productSystemId
+                  - name
+                  - description
+                  - active
+                  - manufacturerGlobal
+                  - changedDate
+                properties:
+                  productSystemId:
+                    type: integer
+                    description: Product System ID
+                    format: int64
+                    example: 1234
+                  name:
+                    type: string
+                    description: Product system Name
+                    example: proc
+                    maxLength: 50
+                  description:
+                    type: string
+                    description: Product system description
+                    example: desc
+                    maxLength: 500
+                  active:
+                    type: boolean
+                    description: '(Active = true, Inactive = false)'
+                    example: true
+                  manufacturerGlobal:
+                    type: boolean
+                    description: 'Yes = true, No = false'
+                    example: true
+                  changedDate:
+                    type: string
+                    format: date-time
+                    description: Last changed date and time in ISO 8601 Z format
+                    example: '2018-11-05T13:15:30Z'
+    x-internal: true
+  updated:
+    title: Updated
+    type: object
+    required:
+      - manufacturerId
+      - messageId
+      - timestamp
+    properties:
+      updatedAtMin:
+        type: string
+        format: date-time
+        example: '2017-11-05T13:15:30Z'
+        description: Get updated results after this date. All date times must be provided in ISO 8601 Z format
+      updatedAtMax:
+        type: string
+        format: date-time
+        example: '2018-11-05T13:15:30Z'
+        description: Get updated results before this date. All date times must be provided in ISO 8601 Z format
+    x-internal: true

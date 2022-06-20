@@ -1,0 +1,1591 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  '/case/{WebOpsCaseId}/usage':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: ' POST case/{WebOpsCaseId}/usage'
+      summary: Create Case Usage
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-usage-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual usage items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+    put:
+      operationId: ' PUT case/{WebOpsCaseId}/usage'
+      summary: Update Case Usage
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-put-usage-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual usage items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  '/case/{WebOpsCaseId}/usage/erp':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: 'POST case/{WebOpsCaseId}/usage/erp'
+      summary: Create Case Usage (ERP)
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-usage-erp-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual usage items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+    put:
+      operationId: 'PUT case/{WebOpsCaseId}/usage/erp'
+      summary: Update Case Usage (ERP)
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-put-usage-erp-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual usage items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+  '/case/{WebOpsCaseId}/loanerUsage':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: 'POST case/{WebOpsCaseId}/loanerUsage'
+      summary: Create Case Loaner Usage
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-loaner-usage-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+    put:
+      operationId: 'PUT case/{WebOpsCaseId}/loanerUsage'
+      summary: Update Case Loaner Usage
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-put-loaner-usage-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+  '/case/{WebOpsCaseId}/loanerUsage/erp':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: 'POST case/{WebOpsCaseId}/loanerUsage/erp'
+      summary: Create Case Loaner Usage (ERP)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-loaner-usage-erp-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+    put:
+      operationId: 'PUT case/{WebOpsCaseId}/loanerUsage/erp'
+      summary: Update Case Loaner Usage (ERP)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-put-loaner-usage-erp-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+  '/case/{WebOpsCaseId}/consignmentUsage':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: 'POST case/{WebOpsCaseId}/consignmentUsage'
+      summary: Create Case Consignment Usage
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-consignment-usage-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+    put:
+      operationId: 'PUT case/{WebOpsCaseId}/consignmentUsage'
+      summary: Update Case Consignment Usage
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-put-consignment-usage-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+  '/case/{WebOpsCaseId}/consignmentUsage/erp':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: 'POST case/{WebOpsCaseId}/consignmentUsage/erp'
+      summary: Create Case Consignment Usage (ERP)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-consignment-usage-erp-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+    put:
+      operationId: 'PUT case/{WebOpsCaseId}/consignmentUsage/erp'
+      summary: Update Case Consignment Usage (ERP)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-put-consignment-usage-erp-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+  '/case/{WebOpsCaseId}/externalUsage':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: 'POST case/{WebOpsCaseId}/externalUsage'
+      summary: Create Case External Usage
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-external-usage-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added rfidTagId (8.4.0)
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+    put:
+      operationId: 'PUT case/{WebOpsCaseId}/externalUsage'
+      summary: Update Case External Usage
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-put-external-usage-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+  '/case/{WebOpsCaseId}/externalUsage/erp':
+    parameters:
+      - name: WebOpsCaseId
+        in: path
+        required: true
+        type: string
+    post:
+      operationId: 'POST case/{WebOpsCaseId}/externalUsage/erp'
+      summary: Create Case External Usage (ERP)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-external-usage-erp-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)
+    put:
+      operationId: 'PUT case/{WebOpsCaseId}/externalUsage/erp'
+      summary: Update Case External Usage (ERP)
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - manufacturerId
+              - usageItems
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerId:
+                type: integer
+                format: int64
+                example: 1234
+                description: Designated manufacturer ID
+              userName:
+                type: string
+                description: User name for history records
+                example: John Doe
+                maxLength: 50
+              usageItems:
+                type: array
+                items:
+                  $ref: ../../docs/usage/case-post-external-usage-erp-U.yaml
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+              - caseId
+              - usage
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderFreight (8.4.0)
+        - Added orderAroReference (8.4.0)
+        - Added dnr (8.4.0)
+        - Added orderItemAroReference(8.4.0)
+        - Added dns (8.4.0)
+        - Added capChargeCode (8.4.0)
+        - Added capUpchargeCode (8.4.0)
+        - Added shippingPriorityName (8.4.0)

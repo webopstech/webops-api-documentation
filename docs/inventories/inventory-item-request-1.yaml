@@ -18,4 +18,4 @@ properties:
 required:
   - catalogNumber
   - quantity
-x-internal: true
+x-internal: false

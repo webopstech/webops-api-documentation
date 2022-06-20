@@ -1,0 +1,191 @@
+title: Transaction (Upcoming)
+type: object
+properties:
+  id:
+    type: integer
+    description: WebOps Transaction ID
+    format: int64
+    example: 123
+  transactionDate:
+    type: string
+    description: Transaction date in 24 hour format
+    format: date-time
+    example: '2018-11-05 13:15'
+  salesRepId:
+    type: integer
+    description: Transaction sales rep ID
+    format: int64
+    example: 123
+  originWarehouseId:
+    type: integer
+    description: Transaction origin warehouse ID
+    format: int64
+    example: 123
+  destinationWarehouseId:
+    type: integer
+    description: Transaction destination warehouse ID
+    format: int64
+    example: 123
+  transactionType:
+    type: string
+    description: Transaction type
+    enum:
+      - Demo
+      - Order
+      - Return
+      - Sale
+      - Sample
+      - Swap -One-Sided
+      - Swap -Two-Sided
+    example: Demo
+  transactionStatus:
+    type: string
+    description: Transaction status
+    enum:
+      - New
+      - Pending
+      - Closed
+      - Cancelled
+      - Modified
+    example: New
+  shippingMethodId:
+    type: integer
+    description: Transaction shipping method ID
+    format: int64
+    example: 1345
+  active:
+    type: boolean
+    description: 'Is transaction active - (Yes = true, No = false)'
+    example: true
+  createdBy:
+    type: string
+    description: Name of the user who created the transaction
+    example: John Doe
+    maxLength: 101
+  createdDate:
+    type: string
+    description: Created date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  changedBy:
+    type: string
+    description: Name of the user who last changed the transaction
+    example: John Doe
+    maxLength: 101
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  purchaseOrderNumber:
+    type: string
+    description: Transaction purchase order number
+    example: TXN12346-PO
+    maxLength: 50
+  notes:
+    type: string
+    description: Transaction notes
+    example: Additional notes or comments
+    maxLength: 500
+  timezone:
+    type: string
+    description: Last changed date time zone
+    example: America/New_York
+    maxLength: 50
+  transactionItems:
+    type: array
+    items:
+      type: object
+      properties:
+        transactionItemId:
+          type: integer
+          description: WebOps transaction item ID
+          format: int64
+          example: 34088
+        catalogNumber:
+          type: string
+          description: Transaction item catalog number
+          example: 02-354-TEMP
+        lotCode:
+          type: string
+          description: Transaction item lot code
+          example: LotCode1
+        expirationDate:
+          type: string
+          format: date-time
+          example: '2018-01-31'
+          description: Date the item is set to expire. Must be in YYYY-MM-DD format
+        unitPrice:
+          type: integer
+          format: double
+          description: Transaction item price
+          example: 12.89
+        quantity:
+          type: integer
+          description: 'Total quantity of specified transaction item (default: 1)'
+          example: 1
+        totalPrice:
+          type: integer
+          format: double
+          description: Transaction item price x quantity
+          example: 12.89
+        currencyCode:
+          type: string
+          description: Transaction item price currency code - ISO 4217
+          example: USD
+        discrepancyCodeId:
+          type: integer
+          description: Transaction item price discrepancy code ID
+          format: int64
+          example: 34088
+        sourceWarehouseId:
+          type: integer
+          description: Transaction item source warehouse ID
+          format: int64
+          example: 123
+        createdBy:
+          type: string
+          description: Name of the user who created the transaction
+          example: John Doe
+          maxLength: 101
+        createdDate:
+          type: string
+          description: Created date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        changedBy:
+          type: string
+          description: Name of the user who last changed the transaction
+          example: John Doe
+          maxLength: 101
+        changedDate:
+          type: string
+          description: Last changed date and time in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+      required:
+        - transactionItemId
+        - catalogNumber
+        - unitPrice
+        - quantity
+        - totalPrice
+        - currencyCode
+        - createdBy
+        - createdDate
+        - changedBy
+        - changedDate
+required:
+  - id
+  - transactionDate
+  - salesRepId
+  - originWarehouseId
+  - destinationWarehouseId
+  - transactionType
+  - transactionStatus
+  - shippingMethodId
+  - active
+  - createdBy
+  - createdDate
+  - changedBy
+  - changedDate
+x-internal: true

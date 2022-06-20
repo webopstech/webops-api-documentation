@@ -1,0 +1,48 @@
+title: Line Detail Inventory
+type: object
+required:
+  - index
+  - id
+  - inventoryItemId
+  - catalogNumber
+  - code
+  - message
+description: Line number and status of any individual insertion.
+properties:
+  index:
+    type: integer
+    description: Position of the record in the request body
+    example: 2
+  id:
+    type: integer
+    description: 'If failures, the invetnroy part id is not returned'
+    format: int64
+    example: 34568908
+  inventoryItemId:
+    type: integer
+    description: Item ID
+    format: int64
+    example: 1234
+  catalogNumber:
+    type: string
+    description: Manufacturer catalog number of an item. The maximum length is 20 characters
+    maxLength: 20
+    example: 10-4567
+  lotCode:
+    type: string
+    description: Manufacturer lot code of an item. Maximum length is 20 characters
+    example: SADF4564
+  rfidTagId:
+    type: string
+    description: RFID Tag Id
+    example: '1234567890123456789012345678901234567890'
+    maxLength: 40
+  code:
+    type: integer
+    description: One the defined response codes
+    example: 1010
+  message:
+    type: string
+    description: Success
+    example: Message
+x-internal: false

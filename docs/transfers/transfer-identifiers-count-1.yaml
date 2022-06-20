@@ -45,7 +45,7 @@ properties:
     description: ID of the destination branch
     format: int64
     example: 188888
-  transferStatus:
+  transferStatuses:
     type: string
     enum:
       - All

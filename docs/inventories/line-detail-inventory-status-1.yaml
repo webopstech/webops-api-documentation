@@ -19,4 +19,4 @@ required:
   - lotId
   - code
   - message
-x-internal: true
+x-internal: false

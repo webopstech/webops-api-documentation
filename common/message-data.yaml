@@ -13,4 +13,4 @@ properties:
     format: date-time
     example: '2018-11-05T13:15:30Z'
     description: Current date/time in ISO-8601 Z format
-x-internal: true
+x-internal: false

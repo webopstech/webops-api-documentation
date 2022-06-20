@@ -25,9 +25,10 @@ paths:
           in: body
           schema:
             allOf:
-              - $ref: '#/definitions/message-data'
-              - $ref: '#/definitions/kit-check-in-identifiers-1'
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/kits/kit-check-in-identifiers-1.yaml
             description: Kit Families
+          description: ''
       responses:
         '200':
           description: ''
@@ -213,69 +214,3 @@ responses:
           type: string
           description: Error message description
           example: An unexpected server error occurred while processing the request
-definitions:
-  kit-check-in-identifiers-1:
-    title: Kit Check In Identifiers
-    type: object
-    description: ''
-    required:
-      - manufacturerId
-      - id
-      - items
-    properties:
-      manufacturerId:
-        type: integer
-        description: Designated manufacturer ID
-        format: int64
-        example: 1234
-      userName:
-        type: string
-        description: User name for history records
-        format: string
-        example: John Doe
-        maxLength: 101
-      id:
-        type: integer
-        description: 'Kit ID. Either id or barcode are required. If both are provided, id will be used.'
-        format: int64
-        example: 123
-      barcode:
-        type: string
-        description: 'Kit Barcode. Either id or barcode are required. If both are provided, id will be used.'
-        example: ABCKitBarcode
-        maxLength: 100
-      items:
-        type: array
-        items:
-          type: object
-          required:
-            - catalogNumber
-          properties:
-            catalogNumber:
-              type: string
-              description: Kit item catalog number
-              example: 01-2432-3333
-              maxLength: 45
-            lotCode:
-              type: string
-              description: Kit item lot code
-              example: HEBN7890
-              maxLength: 45
-    x-internal: true
-  message-data:
-    title: Message Data
-    type: object
-    required:
-      - messageId
-      - timestamp
-    properties:
-      messageId:
-        type: string
-        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
-        description: Message ID of the request
-      timestamp:
-        type: string
-        format: date-time
-        example: '2018-11-05T13:15:30Z'
-        description: Current date/time in ISO-8601 Z format
-    x-internal: true

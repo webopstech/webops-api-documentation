@@ -14,4 +14,4 @@ properties:
     description: 'The desired inventory item part status. Items can only be changed from Shelf Stock (id = 1) to one of the following status ids: 3, 4, 5, 6, 9, 10, 11, or 15. The status associated with these ids can be retrieved from the /inventories/statuses endpoint.'
     format: int64
     example: 3
-x-internal: true
+x-internal: false

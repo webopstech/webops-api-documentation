@@ -1,0 +1,26 @@
+title: Line Detail Transaction Items (Upcoming)
+type: object
+required:
+  - transactionItemId
+  - catalogNumber
+  - code
+  - message
+properties:
+  transactionItemId:
+    type: integer
+    description: WebOps transaction item ID
+    format: int64
+    example: 34088
+  catalogNumber:
+    type: string
+    description: Transaction item catalog number
+    example: 02-354-TEMP
+  code:
+    type: integer
+    description: One of the defined response codes
+    example: 1010
+  message:
+    type: string
+    description: Status Message
+    example: Success
+x-internal: true

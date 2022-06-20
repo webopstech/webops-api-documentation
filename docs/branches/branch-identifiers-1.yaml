@@ -28,4 +28,4 @@ properties:
     type: boolean
     example: true
     description: 'Default = true (Active = true, Inactive = false)'
-x-internal: true
+x-internal: false

@@ -79,4 +79,4 @@ properties:
     description: date and time when the item was lost (ISO 8601 Z format) if the status is LOST
     format: date-time
     example: '2018-11-05T13:15:30Z'
-x-internal: true
+x-internal: false

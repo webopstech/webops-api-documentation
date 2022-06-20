@@ -1,0 +1,345 @@
+swagger: '2.0'
+info:
+  title: v1
+  version: '1.0'
+host: stagingapi.webops.net/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /insuranceCompanies:
+    post:
+      operationId: insurance_companies
+      summary: Get Insurance Companies
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/lookUpEntities/insurance-company-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+            description: Branches
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              insuranceCompanies:
+                type: array
+                items:
+                  $ref: ../../docs/lookUpEntities/insurance-company-1.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |
+        ### Endpoint Changes
+
+        #### Request
+        - Added limit (8.4.0)
+        - Added page (8.4.0)
+  /manufacturerRevisedChoices:
+    post:
+      operationId: manufacturer_revised_choices
+      summary: Get Manufacturer Revised Choices
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/lookUpEntities/manufacturer-revised-choices-identifiers-1.yaml
+              - $ref: ../../common/paging.yaml
+            description: Branches
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              manufacturerRevisedChoices:
+                type: array
+                items:
+                  $ref: ../../docs/lookUpEntities/manufacturer-revised-choice-1.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |
+        ### Endpoint Changes
+
+        #### Request
+        - Added limit (8.4.0)
+        - Added page (8.4.0)
+  /orderQuoteReasonCodes:
+    post:
+      operationId: order_quote_reason_codes
+      summary: Get Order Quote Reason Codes
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/lookUpEntities/order-quote-reason-code-identifiers-1.yaml
+              - $ref: ../../common/paging.yaml
+            description: Branches
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              orderQuoteReasonCodes:
+                type: array
+                items:
+                  $ref: ../../docs/lookUpEntities/order-quote-reason-code-1.yaml
+            required:
+              - messageId
+              - timestamp
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |
+        ### Endpoint Changes
+
+        #### Request
+        - Added limit (8.4.0)
+        - Added page (8.4.0)
+  /priceDiscrepancyCodes:
+    post:
+      operationId: price_discrepancy_codes
+      summary: Get Price Discrepancy Codes
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/lookUpEntities/price-discrepancy-code-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+            description: Branches
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              priceDiscrepancyCodes:
+                type: array
+                items:
+                  $ref: ../../docs/lookUpEntities/price-discrepancy-code-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |
+        ### Endpoint Changes
+
+        #### Request
+        - Added limit (8.4.0)
+        - Added page (8.4.0)
+  /replenishmentShippingMethods:
+    post:
+      operationId: replenishment_shipping_methods
+      summary: Get Replenishment Shipping Methods
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/lookUpEntities/replenishment-shipping-method-identifiers-1.yaml
+              - $ref: ../../common/paging.yaml
+            description: Replenishment Shipping Methods
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            required:
+              - messageId
+              - timestamp
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              methods:
+                type: array
+                items:
+                  $ref: ../../docs/lookUpEntities/replenishment-shipping-method-1.yaml
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |
+        ### Endpoint Changes
+
+        #### Request
+        - Added limit (8.4.0)
+        - Added page (8.4.0)
+  /shippingMethods:
+    post:
+      operationId: shipping_methods
+      summary: Get Shipping Methods
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/lookUpEntities/shipping-method-identifiers-1.yaml
+              - $ref: ../../common/paging.yaml
+            description: Shipping Methods
+        - $ref: ../../common/headers/authorization.yaml
+        - $ref: ../../common/headers/access-token.yaml
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+                description: Message ID of the request
+              timestamp:
+                type: string
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+                description: Current date/time in ISO-8601 Z format
+              shippingMethods:
+                type: array
+                items:
+                  $ref: ../../docs/lookUpEntities/shipping-method-1.yaml
+            required:
+              - messageId
+              - timestamp
+              - shippingMethods
+        '403':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-403.yaml
+        '422':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-422.yaml
+        '500':
+          description: ''
+          schema:
+            $ref: ../../common/responses/error-500.yaml
+      description: |
+        ### Endpoint Changes
+
+        #### Request
+        - Added limit (8.4.0)
+        - Added page (8.4.0)

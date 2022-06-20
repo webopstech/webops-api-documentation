@@ -19,4 +19,4 @@ properties:
     type: integer
     example: 100
     description: total number of results that match the requested criteria
-x-internal: true
+x-internal: false

@@ -1,0 +1,109 @@
+title: Transaction No Items (Upcoming)
+type: object
+properties:
+  id:
+    type: integer
+    description: WebOps Transaction ID
+    format: int64
+    example: 123
+  transactionDate:
+    type: string
+    description: Transaction date in 24 hour format
+    format: date-time
+    example: '2018-11-05 13:15'
+  salesRepId:
+    type: integer
+    description: Transaction sales rep ID
+    format: int64
+    example: 123
+  originWarehouseId:
+    type: integer
+    description: Transaction origin warehouse ID
+    format: int64
+    example: 123
+  destinationWarehouseId:
+    type: integer
+    description: Transaction destination warehouse ID
+    format: int64
+    example: 123
+  transactionType:
+    type: string
+    description: Transaction type
+    enum:
+      - Demo
+      - Order
+      - Return
+      - Sale
+      - Sample
+      - Swap -One-Sided
+      - Swap -Two-Sided
+    example: Demo
+  transactionStatus:
+    type: string
+    description: Transaction status
+    enum:
+      - New
+      - Pending
+      - Closed
+      - Cancelled
+      - Modified
+    example: New
+  shippingMethodId:
+    type: integer
+    description: Transaction shipping method ID
+    format: int64
+    example: 1345
+  active:
+    type: boolean
+    description: 'Is transaction active - (Yes = true, No = false)'
+    example: true
+  createdBy:
+    type: string
+    description: Name of the user who created the transaction
+    example: John Doe
+    maxLength: 101
+  createdDate:
+    type: string
+    description: Created date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  changedBy:
+    type: string
+    description: Name of the user who last changed the transaction
+    example: John Doe
+    maxLength: 101
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  purchaseOrderNumber:
+    type: string
+    description: Transaction purchase order number
+    example: TXN12346-PO
+    maxLength: 50
+  notes:
+    type: string
+    description: Transaction notes
+    example: Additional notes or comments
+    maxLength: 500
+  timezone:
+    type: string
+    description: Last changed date time zone
+    example: America/New_York
+    maxLength: 50
+required:
+  - id
+  - transactionDate
+  - salesRepId
+  - originWarehouseId
+  - destinationWarehouseId
+  - transactionType
+  - transactionStatus
+  - shippingMethodId
+  - active
+  - createdBy
+  - createdDate
+  - changedBy
+  - changedDate
+x-internal: true

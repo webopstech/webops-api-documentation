@@ -1,0 +1,69 @@
+title: Transaction Identifiers (Upcoming)
+type: object
+required:
+  - manufacturerId
+  - messageId
+  - timestamp
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  branchId:
+    type: integer
+    description: Designated branch ID.
+    format: int64
+    example: 9
+  ids:
+    type: string
+    description: Comma-separated list of transaction IDs
+    example: '12346, 45678, 123453'
+    maxLength: 500
+  transactionType:
+    type: string
+    description: Comma-separated list of transaction types
+    enum:
+      - Demo
+      - Order
+      - Return
+      - Sale
+      - Sample
+      - Swap -One-Sided
+      - Swap -Two-Sided
+    example: 'Demo, Order, Return'
+  transactionStatuses:
+    type: string
+    description: Comma-separated list of transaction statuses
+    enum:
+      - New
+      - Pending
+      - Closed
+      - Cancelled
+      - Modified
+    example: 'New, Pending, Closed'
+  purchaseOrderNumber:
+    type: string
+    description: Transaction purchase order number
+    example: TXN12346-PO
+    maxLength: 50
+  originWarehouseId:
+    type: integer
+    description: Transaction origin warehouse ID
+    format: int64
+    example: 1234
+  destinationWarehouseId:
+    type: integer
+    description: Transaction destination warehouse ID
+    format: int64
+    example: 1234
+  salesRepId:
+    type: integer
+    description: Transaction sales rep ID
+    format: int64
+    example: 123
+  isActive:
+    type: boolean
+    description: 'Is transaction active - (Yes = true, No = false)'
+    example: true
+x-internal: true

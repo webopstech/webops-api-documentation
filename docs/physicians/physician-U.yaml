@@ -1,0 +1,227 @@
+title: Physician (Upcoming)
+type: object
+x-internal: true
+properties:
+  branchId:
+    type: integer
+    description: ID of the branch associated to the physician
+    format: int64
+    example: 123
+  id:
+    type: integer
+    description: ID of the physician
+    format: int64
+    example: 123
+  erpCode:
+    type: string
+    description: External ERP Code of the physician
+    example: ERP123
+    maxLength: 50
+  firstName:
+    type: string
+    description: First name of the physician
+    example: John
+    maxLength: 125
+  lastName:
+    type: string
+    description: Last name of the physician
+    example: Doe
+    maxLength: 125
+  active:
+    type: boolean
+    description: '(Active = true, Inactive = false)'
+    example: true
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  manufacturerGlobal:
+    type: boolean
+    description: 'Global = true, Branch = false'
+    example: true
+  insuranceCompany:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Insurance Company ID
+        format: int64
+        example: 12345
+      name:
+        type: string
+        description: Insurance company name
+        example: Insurance company 123
+        maxLength: 100
+      erpCode:
+        type: string
+        description: Insurance company ERP Code
+        example: ERP123
+        maxLength: 50
+    required:
+      - id
+      - name
+      - erpCode
+  preferences:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Physician preference name
+          example: Preference 123
+          maxLength: 100
+        procedureId:
+          type: integer
+          description: Physician preferred procedure ID
+          format: int64
+          example: 34088
+        hospitalId:
+          type: string
+          description: Physician preferred hospital ID
+          example: Attention field
+          maxLength: 50
+        changedDate:
+          type: string
+          description: Changed date in ISO 8601 Z format
+          format: date-time
+          example: '2018-11-05T13:15:30Z'
+        notes:
+          type: string
+          description: Physician Preference note
+          example: Additional notes or comments
+          maxLength: 4000
+        productSystems:
+          type: array
+          items:
+            type: object
+            properties:
+              procedureCategoryId:
+                type: integer
+                description: Procedure Category associated with preference product system
+                format: int64
+                example: 465498
+              productSystemId:
+                type: integer
+                description: Physician preferred product system ID
+                format: int64
+                example: 465498
+            required:
+              - procedureCategoryId
+              - productSystemId
+        inventoryItems:
+          type: array
+          items:
+            type: object
+            properties:
+              inventoryItemId:
+                type: integer
+                description: Physician preferred inventory item ID
+                format: int64
+                example: 34088
+            required:
+              - inventoryItemId
+      required:
+        - procedureId
+  addresses:
+    type: array
+    items:
+      type: object
+      properties:
+        addressId:
+          type: integer
+          description: Physician address ID
+          format: int64
+          example: 89893
+        addressErpCode:
+          type: string
+          description: Physician address ERP code
+          example: Physician-Address-1
+          maxLength: 50
+        addressStreet1:
+          type: string
+          description: Physician address street line 1
+          example: Street line 1
+          maxLength: 50
+        addressStreet2:
+          type: string
+          description: Physician address street line 2
+          example: Street line 2
+          maxLength: 50
+        addressCity:
+          type: string
+          description: Physician city
+          example: Atlanta
+          maxLength: 50
+        addressSubdivision:
+          type: string
+          description: Physician state/province/subdivision
+          example: US-GA
+          maxLength: 50
+        addressZipCode:
+          type: string
+          description: Physician zip or portal code
+          example: 30000
+          maxLength: 50
+        addressCountry:
+          type: string
+          description: Physician country
+          example: US
+          maxLength: 50
+        description:
+          type: string
+          description: Address description
+          example: Physician Home Address
+          maxLength: 100
+        attention:
+          type: string
+          description: Address attention
+          example: Physician ABC
+          maxLength: 50
+        primary:
+          type: boolean
+          description: '(Yes = true, No = false)'
+          example: true
+        category:
+          type: string
+          description: Physician address category type
+          enum:
+            - Billing
+            - Shipping
+          example: Shipping
+      required:
+        - addressId
+        - addressErpCode
+        - addressStreet1
+        - primary
+        - category
+  phoneNumbers:
+    type: array
+    items:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          description: Physician phone number
+          example: 123-456-7890
+          maxLength: 50
+        phoneType:
+          type: string
+          description: Physician phone number type
+          enum:
+            - Main
+            - Mobile
+            - Fax
+          example: Main
+      required:
+        - phoneNumber
+        - phoneType
+required:
+  - branchId
+  - id
+  - erpCode
+  - firstName
+  - lastName
+  - active
+  - changedDate

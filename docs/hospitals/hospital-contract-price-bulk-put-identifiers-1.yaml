@@ -48,4 +48,4 @@ required:
   - timestamp
   - manufacturerId
   - hospitalContractPrices
-x-internal: true
+x-internal: false

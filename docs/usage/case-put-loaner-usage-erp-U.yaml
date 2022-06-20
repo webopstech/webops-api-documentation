@@ -1,0 +1,109 @@
+title: Case - Put Loaner Usage (ERP)
+type: object
+description: ''
+required:
+  - catalogNumber
+  - externalCaseUsageId
+properties:
+  externalCaseUsageId:
+    type: string
+    description: Customer ID of case usage
+    format: string
+    example: EX123
+    maxLength: 32
+  usageItemId:
+    type: integer
+    description: WebOps usage item ID
+    format: int64
+    example: 34088
+  catalogNumber:
+    type: string
+    description: Usage catalog number
+    example: 02-354-TEMP
+  price:
+    type: integer
+    format: double
+    description: Usage price
+    example: 12.89
+  priceCurrency:
+    type: string
+    description: Usage price currency code - ISO 4217
+    example: USD
+  priceDiscrepancyCodeId:
+    type: integer
+    description: Usage price discrepancy code ID
+    format: int64
+    example: 34088
+  shipToAddressErpCode:
+    type: string
+    description: Address ERP Code where item part will be shipped to
+    format: string
+    example: shipToErpCode123
+  replenToAddressErpCode:
+    type: string
+    description: Replenishment shipment address ERP Code
+    format: string
+    example: replenErpCode123
+  replenishmentShippingMethodId:
+    type: integer
+    description: Usage replenishment shipping method ID
+    format: int64
+    example: 1345
+  pricelistName:
+    type: string
+    description: Order item price list name
+    example: 001-PriceList
+    maxLength: 100
+  quoteReasonId:
+    type: integer
+    description: Order quote reason code id
+    format: int64
+    example: 1289
+  quoteReasonRationale:
+    type: string
+    description: Order quote reason rationale
+    example: Honoring discounted pricing provided by the rep.
+    maxLength: 240
+  orderFreight:
+    type: number
+    description: Order Freight
+    example: 1234.55
+  orderAroReference:
+    type: string
+    description: Order Aro reference
+    example: This is the content for Order Aro Reference
+    maxLength: 500
+  orderItemAroReference:
+    type: string
+    description: Order Item Aro reference
+    example: This is the content for Order Item Aro Reference
+    maxLength: 1000
+  dnr:
+    type: boolean
+    description: Do Not Replenish
+    example: false
+  dns:
+    type: boolean
+    description: Do Not Ship
+    example: false
+  capChargeCode:
+    type: string
+    description: Order item cap charge code
+    example: CMC102
+  capUpchargeCode:
+    type: string
+    description: Order item cap upcharge code
+    example: CMC2156
+  shippingPriorityName:
+    type: string
+    description: Shipping Priority Name
+    example: EAST COAST
+    enum:
+      - NONE
+      - EAST COAST
+      - MUST SHIP
+      - NEWNAN FG
+      - NEWNAN FGPOR
+      - NEWNAN HOLD
+      - REGULAR
+      - WEST COAST       

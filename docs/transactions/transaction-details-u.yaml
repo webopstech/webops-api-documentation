@@ -1,0 +1,9 @@
+title: Transaction Details
+type: object
+properties:
+  includeTransactionItems:
+    type: boolean
+    description: 'Include transaction items in response - (Yes = true, No = false)'
+    default: false
+    example: true
+x-internal: true

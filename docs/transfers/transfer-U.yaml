@@ -1,0 +1,194 @@
+title: Transfer
+type: object
+properties:
+  code:
+    type: integer
+    description: Response code
+    example: 1000
+  message:
+    type: string
+    description: Success/failure message
+    example: Success
+  id:
+    type: integer
+    description: Transfer ID
+    format: int64
+    example: 731873281
+  transferStatus:
+    type: string
+    enum:
+      - All
+      - New
+      - In Transit
+      - Delivered
+      - Closed
+    description: Transfer status.
+    example: New
+  originBranch:
+    type: integer
+    format: int64
+    description: Origin Branch ID
+    example: 115
+  originBranchErpCode:
+    type: string
+    description: Origin Branch ERP Code
+    example: ERP123
+    maxLength: 50
+  originInventoryLocationId:
+    type: integer
+    format: int64
+    description: Origin Inventory Location ID
+    example: 11453
+  originAddressId:
+    type: integer
+    format: int64
+    description: Origin Address ID (required for integrated shipping)
+    example: 1133
+  destinationBranch:
+    type: integer
+    format: int64
+    description: Destination Branch ID
+    example: 116
+  destinationBranchErpCode:
+    type: string
+    description: Destination Branch ERP Code
+    example: ERP123
+    maxLength: 50
+  destinationInventoryLocationId:
+    type: integer
+    format: int64
+    description: Destination Inventory Location ID
+    example: 11454
+  destinationAddressId:
+    type: integer
+    format: int64
+    description: Destination Address ID (required for integrated shipping)
+    example: 1133
+  recipientPhoneNumber:
+    type: string
+    format: string
+    description: Recipient Phone Number (required for integrated shipping)
+    maxLength: 25
+    example: 777-888-9999
+  shippingMethodId:
+    type: integer
+    format: int64
+    description: Shipping method ID for transfer
+    example: 11453
+  pickUpDate:
+    type: string
+    format: date-time
+    description: Ship date in YYYY-MM-DD format
+    example: '2018-01-01'
+  arrivalDate:
+    type: string
+    description: Arrival date in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-05'
+  cost:
+    type: integer
+    format: int64
+    description: Cost
+    example: 1
+  currencyCode:
+    type: string
+    format: string
+    description: Currency Code
+    maxLength: 3
+    example: USD
+  trackingNumber:
+    type: string
+    format: string
+    description: Tracking Number of transfer
+    maxLength: 200
+    example: x1478054
+  weight:
+    type: integer
+    format: int64
+    description: Weight of transfer. Default 1 (required for integrated shipping)
+    example: 1
+  weightMeasurementType:
+    type: string
+    enum:
+      - lb
+      - kg
+    description: Weight measurement type. Default is lb
+    example: lb
+  numberOfPackages:
+    type: integer
+    format: int64
+    description: Number of packages. Default = 1 (required for integrated shipping)
+    example: 1
+  invoiceNumber:
+    type: string
+    format: string
+    description: Invoice Number for transfer
+    maxLength: 40
+    example: 123XYZ
+  poNumber:
+    type: string
+    format: string
+    description: PO Number for transfer
+    maxLength: 40
+    example: 1122RUU
+  referenceNumber:
+    type: string
+    format: string
+    description: Reference Number for transfer
+    maxLength: 40
+    example: 123XYZ
+  instructions:
+    type: string
+    format: string
+    description: Transfer instructions
+    maxLength: 2000
+    example: This is a sample instructional text
+  rma:
+    type: boolean
+    description: True if it is a return transfer. Default = false
+    example: false
+  rmaNumber:
+    type: string
+    description: RMA number
+    format: string
+    maxLength: 200
+    example: RMA text
+  receivedBy:
+    type: string
+    format: string
+    description: 'User that received transfer in First Name, Last Name format'
+    maxLength: 101
+    example: Test User
+  saturdayDelivery:
+    type: boolean
+    description: True if allows Saturday Delivery
+    example: true
+  numberOfItems:
+    type: integer
+    description: Number of inventory items in the transfer
+    example: 143523
+  sumOfItems:
+    type: integer
+    format: double
+    description: Sum of the inventory item price for the transfer
+    example: 143523
+  changedDate:
+    type: string
+    description: Last changed date and time in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T13:15:30Z'
+  scannedItemStatus:
+    type: string
+    description: Item status for transferred items
+    format: string
+    example: Shelf Stock
+    maxLength: 40
+  transferItems:
+    type: array
+    items:
+      $ref: transfer-item-U.yaml
+required:
+  - code
+  - message
+  - id
+  - transferStatus

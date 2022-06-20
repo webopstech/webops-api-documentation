@@ -40,4 +40,4 @@ properties:
     type: string
     description: Success
     example: Message
-x-internal: true
+x-internal: false

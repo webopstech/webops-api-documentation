@@ -1,6 +1,6 @@
 title: Inventory Identifiers
 type: object
-x-internal: true
+x-internal: false
 properties:
   manufacturerId:
     type: integer
@@ -71,7 +71,23 @@ properties:
     items:
       type: string
     description: RFID Tag Ids
-    example: ["1234567890123456789012345678901234567890","0987654321098765432109876543210987654321"]
+    example:
+      - '1234567890123456789012345678901234567890'
+      - '0987654321098765432109876543210987654321'
     maxLength: 40
 required:
   - manufacturerId
+examples:
+  - manufacturerId: 1234
+    branchId: 12
+    branchErpCode: ERP123
+    inventoryLocationId: 12
+    ids: '123, 456, 789, 0123'
+    description: 10-4567 description
+    kitName: Kit ABC-01
+    kitId: 1234
+    globalTradeItemNumber: 12345678901234
+    status: 'Shelf Stock, Kitted, Used'
+    rfidTagIds:
+      - '1234567890123456789012345678901234567890'
+      - '0987654321098765432109876543210987654321'

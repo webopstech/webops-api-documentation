@@ -3,7 +3,7 @@ type: object
 required:
   - originBranchId
   - destinationBranchId
-  - destinationInventoryLocationid
+  - destinationInventoryLocationId
   - originInventoryLocationId
   - shippingMethodId
   - pickUpDate

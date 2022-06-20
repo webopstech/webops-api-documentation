@@ -15,7 +15,30 @@ paths:
     post:
       operationId: orders
       summary: Get Orders
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added companyId (8.1.0)\r\n- Added orderHold (8.1.0)\r\n\r\n#### Response\r\n- Added companyId (8.1.0)\r\n- Added hospitalErpCode (8.1.0)\r\n- Added hospitalSystemErpCode (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n- Added aliases to caseInfo physician (8.2.0)\r\n- Added nationalProviderIdentifier to caseInfo physician (8.2.0)\r\n- Added aliases to caseInfo salesRep (8.2.0)\r\n- Added hospitalAliases to caseInfo (8.2.0)\r\n- Added priceDiscrepancyCode to orderItems (8.2.0)\r\n- Added capItemType to orderItems (8.2.0)\r\n- Added changedDate (8.2.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added companyId (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added 'Open' as accepted value for orderStatus (8.3.0)
+        - Added usagePricingComplete (8.4.0)
+
+        #### Response
+        - Added companyId (8.1.0)
+        - Added hospitalErpCode (8.1.0)
+        - Added hospitalSystemErpCode (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added aliases to caseInfo physician (8.2.0)
+        - Added nationalProviderIdentifier to caseInfo physician (8.2.0)
+        - Added aliases to caseInfo salesRep (8.2.0)
+        - Added hospitalAliases to caseInfo (8.2.0)
+        - Added priceDiscrepancyCode to orderItems (8.2.0)
+        - Added capItemType to orderItems (8.2.0)
+        - Added changedDate (8.2.0)
+        - Added rfidTagId(8.4.0)
+        - Added usagePricingComplete (8.4.0)
       consumes:
         - application/json
       produces:
@@ -25,10 +48,10 @@ paths:
           in: body
           schema:
             allOf:
-              - $ref: '#/definitions/message-data'
-              - $ref: '#/definitions/order-identifiers-u'
-              - $ref: '#/definitions/updated'
-              - $ref: '#/definitions/paging'
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/orders/order-identifiers-U.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
             description: Orders
       responses:
         '200':
@@ -48,7 +71,7 @@ paths:
               orders:
                 type: array
                 items:
-                  $ref: '#/definitions/order-u'
+                  $ref: ../../docs/orders/order-U.yaml
             required:
               - messageId
               - timestamp
@@ -56,7 +79,17 @@ paths:
     post:
       operationId: orders_count
       summary: Get total number of orders per defined parameters. Must be used in conjunction with /physicians
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added companyId (8.1.0)\r\n- Added orderHold (8.1.0)\r\n\r\n#### Response\r\n- No Changes"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added companyId (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added 'Open' as accepted value for orderStatus (8.3.0)
+        - Added usagePricingComplete (8.4.0)
+
+        #### Response
+        - No Changes
       consumes:
         - application/json
       produces:
@@ -66,15 +99,15 @@ paths:
           in: body
           schema:
             allOf:
-              - $ref: '#/definitions/message-data'
-              - $ref: '#/definitions/order-identifiers-u'
-              - $ref: '#/definitions/updated'
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/orders/order-identifiers-U.yaml
+              - $ref: ../../common/updated.yaml
             description: Orders
       responses:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/count'
+            $ref: ../../common/responses/count.yaml
   '/order/{WebOpsOrderId}':
     parameters:
       - name: WebOpsOrderId
@@ -84,7 +117,27 @@ paths:
     put:
       operationId: 'order/{WebOpsOrderId}'
       summary: Edit an Order
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n\r\n#### Response\r\n- Added companyId (8.1.0)\r\n- Added hospitalErpCode (8.1.0)\r\n- Added hospitalSystemErpCode (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n- Added aliases to caseInfo physician (8.2.0)\r\n- Added nationalProviderIdentifier to caseInfo physician (8.2.0)\r\n- Added aliases to caseInfo salesRep (8.2.0)\r\n- Added hospitalAliases to caseInfo (8.2.0)\r\n- Added priceDiscrepancyCode to orderItems (8.2.0)\r\n- Added capItemType to orderItems (8.2.0)\r\n- Added changedDate (8.2.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+
+        #### Response
+        - Added companyId (8.1.0)
+        - Added hospitalErpCode (8.1.0)
+        - Added hospitalSystemErpCode (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added aliases to caseInfo physician (8.2.0)
+        - Added nationalProviderIdentifier to caseInfo physician (8.2.0)
+        - Added aliases to caseInfo salesRep (8.2.0)
+        - Added hospitalAliases to caseInfo (8.2.0)
+        - Added priceDiscrepancyCode to orderItems (8.2.0)
+        - Added capItemType to orderItems (8.2.0)
+        - Added changedDate (8.2.0)
+        - Added rfidTagId(8.4.0)
       consumes:
         - application/json
       produces:
@@ -94,17 +147,14 @@ paths:
           in: body
           schema:
             allOf:
-              - $ref: '#/definitions/message-data'
-              - $ref: '#/definitions/order-edit-u'
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/orders/order-edit-U.yaml
             description: Orders
       responses:
         '200':
           description: ''
           schema:
             type: object
-            required:
-              - messageId
-              - timestamp
             properties:
               messageId:
                 type: string
@@ -118,7 +168,10 @@ paths:
               orders:
                 type: array
                 items:
-                  $ref: '#/definitions/order-u'
+                  $ref: ../../docs/orders/order-U.yaml
+            required:
+              - messageId
+              - timestamp
   '/order/{WebOpsOrderId}/savePO':
     parameters:
       - name: WebOpsOrderId
@@ -128,7 +181,26 @@ paths:
     put:
       operationId: 'order/{WebOpsOrderId}/savePO'
       summary: Save PO for an Order
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- Added companyId (8.1.0)\r\n- Added hospitalErpCode (8.1.0)\r\n- Added hospitalSystemErpCode (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n- Added aliases to caseInfo physician (8.2.0)\r\n- Added nationalProviderIdentifier to caseInfo physician (8.2.0)\r\n- Added aliases to caseInfo salesRep (8.2.0)\r\n- Added hospitalAliases to caseInfo (8.2.0)\r\n- Added priceDiscrepancyCode to orderItems (8.2.0)\r\n- Added capItemType to orderItems (8.2.0)\r\n- Added changedDate (8.2.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - No changes
+
+        #### Response
+        - Added companyId (8.1.0)
+        - Added hospitalErpCode (8.1.0)
+        - Added hospitalSystemErpCode (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added aliases to caseInfo physician (8.2.0)
+        - Added nationalProviderIdentifier to caseInfo physician (8.2.0)
+        - Added aliases to caseInfo salesRep (8.2.0)
+        - Added hospitalAliases to caseInfo (8.2.0)
+        - Added priceDiscrepancyCode to orderItems (8.2.0)
+        - Added capItemType to orderItems (8.2.0)
+        - Added changedDate (8.2.0)
+        - Added rfidTagId(8.4.0)
       consumes:
         - application/json
       produces:
@@ -138,17 +210,14 @@ paths:
           in: body
           schema:
             allOf:
-              - $ref: '#/definitions/message-data'
-              - $ref: '#/definitions/order-save-po-1'
+              - $ref: ../../common/message-data.yaml
+              - $ref: ../../docs/orders/order-save-po-1.yaml
             description: Orders
       responses:
         '200':
           description: ''
           schema:
             type: object
-            required:
-              - messageId
-              - timestamp
             properties:
               messageId:
                 type: string
@@ -162,7 +231,10 @@ paths:
               orders:
                 type: array
                 items:
-                  $ref: '#/definitions/order-u'
+                  $ref: ../../docs/orders/order-U.yaml
+            required:
+              - messageId
+              - timestamp
 parameters:
   'trait:messageHeaders:Authorization':
     name: Authorization
@@ -298,1011 +370,6 @@ definitions:
         format: date-time
         example: '2018-11-05T13:15:30Z'
         description: Current date/time in ISO-8601 Z format
-    x-internal: true
-  order-u:
-    title: Order
-    type: object
-    properties:
-      id:
-        type: integer
-        description: WebOps Order ID
-        format: int64
-        example: 123
-      status:
-        type: string
-        description: Order status
-        enum:
-          - Open
-          - Submitted
-          - Pre-Valid
-          - Errors
-          - BilledOrderNo
-          - ReplenNo
-          - Booked
-          - Invoiced
-      companyId:
-        type: integer
-        description: Company ID associated with the Order
-        format: int64
-        example: 9
-      replenishmentNumber:
-        type: string
-        description: Replenishment order number
-        example: 12345-RO
-        maxLength: 50
-      billOrderNumber:
-        type: string
-        description: Bill to order number
-        example: 12345-BO
-        maxLength: 50
-      freightPrice:
-        type: number
-        format: float
-        description: Order freight value
-        example: 100
-      notes:
-        type: string
-        description: Order invoice comments
-        example: Please handle it carefully
-        maxLength: 4000
-      purchaseOrderNumber:
-        type: string
-        description: Purchase order number
-        example: 12345-PO
-        maxLength: 50
-      purchaseOrderSubmissionDate:
-        type: string
-        description: Purchase order submission date and time in ISO 8601 Z format
-        format: date-time
-        example: '2018-11-05T13:15:30Z'
-      message:
-        type: string
-        description: Order message
-        example: Message
-        maxLength: 5000
-      active:
-        type: boolean
-        description: 'Is the order active? (Yes = true, No = false)'
-        example: true
-      currencyCode:
-        type: string
-        description: Order currency code - ISO 4217
-        example: USD
-      quoteInfo:
-        type: object
-        required:
-          - quoteIndicator
-        properties:
-          quoteIndicator:
-            type: boolean
-            description: 'Is the order active? (Yes = true, No = false)'
-            example: true
-          quoteReasonCode:
-            type: string
-            description: Quote reason code
-            example: Negotiated Set Sale
-            maxLength: 50
-          quoteRationale:
-            type: string
-            description: Quote rationale
-            example: Quote Rationale
-            maxLength: 5000
-      caseInfo:
-        type: object
-        required:
-          - surgeryDate
-          - caseType
-          - caseStatus
-          - primaryInvoiceType
-          - branch
-          - physician
-          - salesRep
-        properties:
-          id:
-            type: integer
-            description: WebOps Case ID
-            format: int64
-            example: 123
-          externalCaseId:
-            type: string
-            description: Customer ID of surgical case
-            format: string
-            example: EX123
-            maxLength: 32
-          surgeryDate:
-            type: string
-            description: Surgery date in 24 hour format
-            format: date-time
-            example: '2018-11-05 13:15'
-          caseType:
-            type: string
-            description: Type of the case
-            enum:
-              - Standard
-              - Add On
-            example: Standard
-          hospitalErpCode:
-            type: string
-            description: External ERP Code of the hospital
-            example: ERP123
-            maxLength: 50
-          hospitalAliases:
-            type: array
-            items:
-              type: object
-              properties:
-                companyId:
-                  type: integer
-                  description: Company ID associated with the hospital alias
-                  format: int64
-                  example: 123
-                alias:
-                  type: string
-                  description: Case Hospital Company specific alias
-                  example: Hospital Alias
-                  maxLength: 100
-                erpCode:
-                  type: string
-                  description: Case Hospital Company specific erp code
-                  example: ID123
-                  maxLength: 50
-              required:
-                - companyId
-                - erpCode
-          hospitalSystemErpCode:
-            type: string
-            description: External ERP Code of the hospital system
-            example: ERP123
-            maxLength: 50
-          caseStatus:
-            type: string
-            description: Case status
-            enum:
-              - New
-              - Kits Assigned
-              - Assembled
-              - Shipped
-              - Returned
-              - Checked-In
-              - Reconciled
-              - Closed
-              - Cancelled
-            example: New
-          revisionSurgery:
-            type: boolean
-            description: 'Is this a revision surgery? (Yes = true, No = false)'
-            example: true
-          primaryInvoiceType:
-            type: string
-            description: Case primary invoice type
-            enum:
-              - Hospital
-              - Insurance
-              - COD
-            example: Hospital
-          cashOnDeliveryNumber:
-            type: string
-            description: Cash On delivery Number for the case
-            example: COD 5890
-            maxLength: 150
-          caseIdentitifer:
-            type: string
-            description: string for Rep to differentiate case from other similar cases.
-            format: string
-            example: CS-123
-          branch:
-            type: object
-            required:
-              - branchId
-              - name
-              - erpCode
-            properties:
-              branchId:
-                type: integer
-                description: Branch ID
-                format: int64
-                example: 123
-              name:
-                type: string
-                description: Branch Name
-                example: Name 123
-                maxLength: 100
-              erpCode:
-                type: string
-                description: Branch ERP Code
-                example: ERP123
-                maxLength: 50
-          physician:
-            type: object
-            required:
-              - id
-              - erpCode
-              - firstName
-              - lastName
-            properties:
-              id:
-                type: integer
-                description: ID of the physician
-                format: int64
-                example: 123
-              erpCode:
-                type: string
-                description: External ERP Code of the physician
-                example: ERP123
-                maxLength: 50
-              firstName:
-                type: string
-                description: First name of the physician
-                example: John
-                maxLength: 50
-              lastName:
-                type: string
-                description: Last name of the physician
-                example: Doe
-                maxLength: 50
-              nationalProviderIdentifier:
-                type: string
-                description: National Provider Identifier of the physician
-                example: NPI-123
-                maxLength: 20
-              aliases:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    companyId:
-                      type: integer
-                      description: Company ID associated with the physician alias
-                      format: int64
-                      example: 123
-                    alias:
-                      type: string
-                      description: Case Physician Company specific alias
-                      example: Physician Alias
-                      maxLength: 101
-                    erpCode:
-                      type: string
-                      description: Case Physician Company specific erp code
-                      example: ID123
-                      maxLength: 50
-                  required:
-                    - companyId
-                    - erpCode
-          salesRep:
-            type: object
-            required:
-              - id
-              - firstName
-              - lastName
-              - email
-              - phoneNumber
-            properties:
-              id:
-                type: integer
-                description: ID of the sales rep
-                format: int64
-                example: 123
-              firstName:
-                type: string
-                description: First name of the sales rep
-                example: John
-                maxLength: 50
-              lastName:
-                type: string
-                description: Last name of the sales rep
-                example: Doe
-                maxLength: 50
-              email:
-                type: object
-                required:
-                  - email
-                  - emailType
-                properties:
-                  email:
-                    type: string
-                    description: Sales rep email address
-                    example: John.Doe@gmail.com
-                    maxLength: 50
-                  emailType:
-                    type: string
-                    description: Email type
-                    enum:
-                      - Standard
-                      - PhoneEmail
-                    example: Standard
-              phoneNumber:
-                type: object
-                required:
-                  - phoneNumber
-                  - phoneType
-                properties:
-                  phoneNumber:
-                    type: string
-                    description: Sales rep phone number
-                    example: 123-456-7890
-                    maxLength: 50
-                  phoneType:
-                    type: string
-                    description: Sales rep phone number type
-                    enum:
-                      - Main
-                      - Cellular
-                      - Fax
-                    example: Main
-              erpCode:
-                type: string
-                description: External ERP Code of the sales rep
-                example: ERP123
-                maxLength: 50
-              aliases:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    companyId:
-                      type: integer
-                      description: Company ID associated with the sales rep alias
-                      format: int64
-                      example: 123
-                    alias:
-                      type: string
-                      description: Case Sales Rep Company specific alias
-                      example: Salesrep Alias
-                      maxLength: 101
-                    erpCode:
-                      type: string
-                      description: Case Sales Rep Company specific erp code
-                      example: ID123
-                      maxLength: 50
-                  required:
-                    - companyId
-                    - erpCode
-          caseCoverageRep:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: User ID of the coverage rep
-                format: int64
-                example: 123
-              firstName:
-                type: string
-                description: First name of the coverage rep
-                example: John
-                maxLength: 50
-              lastName:
-                type: string
-                description: Last name of the coverage rep
-                example: Doe
-                maxLength: 50
-              email:
-                type: object
-                required:
-                  - email
-                  - emailType
-                properties:
-                  email:
-                    type: string
-                    description: Coverage rep email address
-                    example: John.Doe@gmail.com
-                    maxLength: 50
-                  emailType:
-                    type: string
-                    description: Coverage rep email type
-                    enum:
-                      - Standard
-                      - PhoneEmail
-                    example: Standard
-              phoneNumber:
-                type: object
-                required:
-                  - phoneNumber
-                  - phoneType
-                properties:
-                  phoneNumber:
-                    type: string
-                    description: Coverage rep phone number
-                    example: 123-456-7890
-                    maxLength: 50
-                  phoneType:
-                    type: string
-                    description: Coverage rep phone number type
-                    enum:
-                      - Main
-                      - Cellular
-                      - Fax
-                    example: Main
-            required:
-              - id
-              - firstName
-              - lastName
-              - email
-              - phoneNumber
-          insurance:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: ID of the insurance company
-                format: int64
-                example: 123
-              name:
-                type: string
-                description: Name of the insurance company
-                example: AAA Insurance Company
-                maxLength: 50
-              erpCode:
-                type: string
-                description: External ERP Code of the insurance company
-                example: ERP123
-                maxLength: 50
-            required:
-              - id
-              - name
-              - erpCode
-      submittedByUserInfo:
-        type: object
-        properties:
-          userName:
-            type: string
-            description: Name of the submitting user
-            example: John Doe
-            maxLength: 101
-          submissionDate:
-            type: string
-            description: Submitted date/time in ISO-8601 Z format
-            format: date-time
-            example: '2018-11-05T13:15:30Z'
-        required:
-          - userName
-          - submissionDate
-      orderAttributes:
-        type: array
-        items:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Order attribute name
-              enum:
-                - Oracle User Id
-                - Print Detail
-                - ARO Reference
-                - Tax
-              example: Oracle User Id
-            value:
-              type: string
-              description: Order attribute value
-              example: ID123
-              maxLength: 1024
-          required:
-            - name
-            - value
-      statusTimelines:
-        type: array
-        items:
-          type: object
-          properties:
-            status:
-              type: string
-              description: Order status
-              enum:
-                - Open
-                - Submitted
-                - Pre-Valid
-                - Errors
-                - BilledOrderNo
-                - ReplenNo
-                - Booked
-                - Invoiced
-            statusDate:
-              type: string
-              description: Status date/time in ISO-8601 Z format
-              format: date-time
-              example: '2018-11-05T13:15:30Z'
-          required:
-            - status
-            - statusDate
-      orderItems:
-        type: array
-        items:
-          type: object
-          properties:
-            orderItemId:
-              type: integer
-              description: WebOps Order Item ID
-              format: int64
-              example: 123
-            usageItemId:
-              type: integer
-              description: WebOps Case Usage Item ID
-              format: int64
-              example: 123
-            lineNumber:
-              type: integer
-              description: Order item line number
-              format: int64
-              example: 123
-            catalogNumber:
-              type: string
-              description: Order item catalog number
-              example: CATNUM123
-              maxLength: 20
-            lotCode:
-              type: string
-              description: Order item lot code
-              example: LOT123
-              maxLength: 50
-            quantity:
-              type: integer
-              description: Order item quantity
-              format: int64
-              example: 1
-            shipPriority:
-              type: string
-              description: Order item ship priority
-              maxLength: 50
-              example: None
-            shipMethod:
-              type: object
-              required:
-                - shipMethodId
-                - shipMethodName
-              properties:
-                shipMethodId:
-                  type: integer
-                  description: WebOps order item shipping method ID
-                  format: int64
-                  example: 123
-                shipMethodName:
-                  type: string
-                  description: Order item shipping method name
-                  maxLength: 50
-                  example: Standard
-                erpCode:
-                  type: string
-                  description: Order item shipping method erp code
-                  maxLength: 50
-                  example: ERP123
-            notes:
-              type: string
-              description: Order item notes
-              maxLength: 1000
-              example: Order item notes
-            price:
-              type: number
-              format: float
-              description: Order item price
-              example: 100
-            priceDiscrepancyCode:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  description: Price Discrepancy code ID
-                  format: int64
-                  example: 731873281
-                name:
-                  type: string
-                  description: Price Discrepancy code name
-                  example: Hospital Contract
-                  maxLength: 50
-            capItemType:
-              type: string
-              description: Order item cap type
-              maxLength: 50
-              example: Cap A
-            requiresReplenishment:
-              type: boolean
-              description: 'Does the order item require replenishment? (Yes = true, No = false)'
-              example: true
-            requiresShipment:
-              type: boolean
-              description: 'Does the order item require a shipment? (Yes = true, No = false)'
-              example: true
-            requiresQuote:
-              type: boolean
-              description: 'Does the order item require a quote? (Yes = true, No = false)'
-              example: true
-            message:
-              type: string
-              description: Order message
-              example: Message
-              maxLength: 5000
-            priceList:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: Order item price list name
-                  example: PL-123
-                  maxLength: 100
-                description:
-                  type: string
-                  description: Order item price list description
-                  example: PL-123 Description
-                  maxLength: 4000
-              required:
-                - name
-            capCharge:
-              type: object
-              properties:
-                code:
-                  type: string
-                  description: Order item cap charge code
-                  example: CAP-123
-                  maxLength: 100
-                description:
-                  type: string
-                  description: Order item cap charge description
-                  example: CAP-123 Description
-                  maxLength: 100
-                marketDivision:
-                  type: string
-                  description: Order item cap charge market division
-                  example: CAP-123 Market Division
-                  maxLength: 40
-                demandLevel:
-                  type: string
-                  description: Order item cap charge demand level
-                  example: CAP-123 Demand Level
-                  maxLength: 100
-              required:
-                - code
-                - marketDivision
-            capUpCharge:
-              type: object
-              properties:
-                code:
-                  type: string
-                  description: Order item cap upcharge code
-                  example: UPCHARGE-123
-                  maxLength: 100
-                description:
-                  type: string
-                  description: Order item cap upcharge description
-                  example: UPCHARGE-123 Description
-                  maxLength: 100
-                marketDivision:
-                  type: string
-                  description: Order item cap upcharge market division
-                  example: UPCHARGE-123 Market Division
-                  maxLength: 40
-                upcharge:
-                  type: string
-                  description: Order item cap upcharge
-                  example: UPCHARGE-123 Upcharge
-                  maxLength: 100
-              required:
-                - code
-                - description
-                - marketDivision
-                - upcharge
-            consignedInventoryLocation:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  description: Order item consigned inventory location id
-                  format: int64
-                  example: 123
-                name:
-                  type: string
-                  description: Order item consigned inventory location name
-                  example: Inventory Location
-                  maxLength: 101
-                erpCode:
-                  type: string
-                  description: Order item consigned inventory location erp code
-                  example: ERP123
-                  maxLength: 50
-              required:
-                - id
-                - name
-                - erpCode
-            replenishmentInventoryLocation:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  description: Order item replenishment inventory location id
-                  format: int64
-                  example: 123
-                name:
-                  type: string
-                  description: Order item replenishment inventory location name
-                  example: Inventory Location
-                  maxLength: 101
-                erpCode:
-                  type: string
-                  description: Order item replenishment inventory location erp code
-                  example: ERP123
-                  maxLength: 50
-              required:
-                - id
-                - name
-                - erpCode
-            replenishmentAddress:
-              type: object
-              properties:
-                addressId:
-                  type: integer
-                  description: Order item replenishment location address id
-                  format: int64
-                  example: 123
-                erpCode:
-                  type: string
-                  description: Order item replenishment location address erp code
-                  example: ERP123
-                  maxLength: 50
-                street1:
-                  type: string
-                  description: Order item replenishment location address street 1
-                  example: 123 Street St.
-                  maxLength: 50
-                street2:
-                  type: string
-                  description: Order item replenishment location address street 2
-                  example: Suite 123
-                  maxLength: 50
-                city:
-                  type: string
-                  description: Order item replenishment location address city
-                  example: Atlanta
-                  maxLength: 50
-                state:
-                  type: string
-                  description: Order item replenishment location address state
-                  example: US-GA
-                  maxLength: 50
-                stateDescription:
-                  type: string
-                  description: Order item replenishment location address state description
-                  example: Georgia
-                  maxLength: 255
-                postalCode:
-                  type: string
-                  description: Order item replenishment location address postal code
-                  example: 30040
-                  maxLength: 50
-                country:
-                  type: string
-                  description: Order item replenishment location address country
-                  example: US
-                  maxLength: 50
-                description:
-                  type: string
-                  description: Order item replenishment location address description
-                  example: Inventory location description
-                  maxLength: 100
-              required:
-                - addressId
-                - erpCode
-                - street1
-          required:
-            - orderItemId
-            - usageItemId
-            - lineNumber
-            - catalogNumber
-            - quantity
-            - shipPriority
-            - shipMethod
-            - price
-            - requiresReplenishment
-            - requiresShipment
-            - requiresQuote
-      orderHold:
-        type: boolean
-        description: 'Order hold for the case? (Yes = true, No = false)'
-        example: true
-      orderHoldReason:
-        type: string
-        description: Reason for order hold
-        example: Hospital Hold
-        maxLength: 50
-      changedDate:
-        type: string
-        description: Last changed date and time in ISO 8601 Z format
-        format: date-time
-        example: '2018-11-05T13:15:30Z'
-    required:
-      - id
-      - status
-      - freightPrice
-      - active
-      - currencyCode
-      - quoteInfo
-      - caseInfo
-    x-internal: true
-  order-edit-u:
-    title: Order - Edit
-    type: object
-    required:
-      - messageId
-      - timestamp
-      - manufacturerId
-      - branchId
-      - status
-      - orderItems
-    properties:
-      messageId:
-        type: string
-        description: Message ID
-        format: string
-        example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
-      timestamp:
-        type: string
-        description: Current date/time in ISO-8601 Z format
-        format: date-time
-        example: '2018-11-05T13:15:30Z'
-      manufacturerId:
-        type: integer
-        description: Designated Manufacturer ID
-        format: int64
-        example: 1234
-      branchId:
-        type: integer
-        description: Designated Branch ID
-        format: int64
-        example: 9
-      status:
-        type: string
-        description: Order status
-        enum:
-          - Submitted
-          - Pre-Valid
-          - Errors
-          - BilledOrderNo
-          - ReplenNo
-          - Booked
-          - Invoiced
-        example: Submitted
-      replenishmentNumber:
-        type: string
-        description: Replenishment order number
-        example: 12345-RO
-        maxLength: 50
-      billOrderNumber:
-        type: string
-        description: Bill to order number
-        example: 12345-BO
-        maxLength: 50
-      message:
-        type: string
-        description: Order message
-        example: Message
-        maxLength: 5000
-      tax:
-        type: number
-        format: float
-        description: Order tax
-        example: '100.00'
-      orderHold:
-        type: boolean
-        description: 'Order hold? (Yes = true, No = false)'
-        example: true
-      orderHoldReason:
-        type: string
-        description: Reason for order hold
-        example: Hospital Hold
-        maxLength: 50
-      orderItems:
-        type: array
-        items:
-          type: object
-          required:
-            - orderItemId
-            - lineNumber
-          properties:
-            orderItemId:
-              type: integer
-              description: 'WebOps Order Item ID. '
-              format: int64
-              example: 123
-            lineNumber:
-              type: integer
-              description: Order item line number
-              format: int64
-              example: 123
-            message:
-              type: string
-              description: Order item message
-              example: Message
-              maxLength: 5000
-            price:
-              type: number
-              format: float
-              description: Order item price
-              example: '100.00'
-    x-internal: true
-  order-identifiers-u:
-    title: Order Identifiers
-    type: object
-    properties:
-      manufacturerId:
-        type: integer
-        description: Designated manufacturer ID
-        format: int64
-        example: 1234
-      branchId:
-        type: integer
-        description: Designated branch ID
-        format: int64
-        example: 9
-      ids:
-        type: string
-        description: Comma-separated list of order IDs; max length of 100 IDs
-        example: '98765,43210,999999'
-      caseIds:
-        type: string
-        description: Comma-separated list of WebOps case IDs
-        example: '12346,45678,123453'
-        maxLength: 500
-      externalCaseIds:
-        type: string
-        description: Comma-separated list of external case IDs
-        example: '12346,45678,123453'
-        maxLength: 500
-      orderStatus:
-        type: string
-        description: Order status
-        enum:
-          - Submitted
-          - Pre-Valid
-          - Errors
-          - BilledOrderNo
-          - ReplenNo
-          - Booked
-          - Invoiced
-        example: Submitted
-      billOrderNumberReceived:
-        type: boolean
-        description: 'Bill order number received (Yes = true, No = false)'
-        example: true
-      replenishmentNumberReceived:
-        type: boolean
-        description: 'Replenishment order number received (Yes = true, No = false)'
-        example: true
-      purchaseOrderNumberReceived:
-        type: boolean
-        description: 'Purchase order number received (Yes = true, No = false)'
-        example: true
-      active:
-        type: boolean
-        description: 'Is order active? (Yes = true, No = false)'
-        default: true
-        example: true
-      salesRepIds:
-        type: string
-        description: Comma-separated list of sales rep IDs
-        example: '12346,45678,123453'
-        maxLength: 500
-      physicianIds:
-        type: string
-        description: Comma-separated list of physician IDs
-        example: '12346,45678,123453'
-        maxLength: 500
-      hospitalIds:
-        type: string
-        description: Comma-separated list of hospital IDs
-        example: '12346,45678,123453'
-        maxLength: 500
-      hospitalSystemIds:
-        type: string
-        description: Comma-separated list of hospital system IDs
-        example: '12346,45678,123453'
-        maxLength: 500
-      companyId:
-        type: integer
-        description: Company ID associated with the Order
-        format: int64
-        example: 9
-      orderHold:
-        type: boolean
-        description: 'Order hold for the case? (Yes = true, No = false)'
-        example: true
-    required:
-      - manufacturerId
     x-internal: true
   paging:
     title: Paging

@@ -1,0 +1,125 @@
+title: Case - Post Loaner Usage
+type: object
+description: ''
+required:
+  - catalogNumber
+  - externalCaseUsageId
+properties:
+  externalCaseUsageId:
+    type: string
+    description: Customer ID of case usage
+    format: string
+    example: EX123
+    maxLength: 32
+  catalogNumber:
+    type: string
+    description: Usage catalog number
+    example: 02-354-TEMP
+  lotCode:
+    type: string
+    description: Usage lot code
+    example: LotCode1
+  kitId:
+    type: integer
+    description: Kit ID against which the loaner usage was recorded
+    format: int64
+    example: 34088
+  inventoryItemPartId:
+    type: integer
+    description: Inventory item part ID against which the loaner usage was recorded
+    format: int64
+    example: 34088
+  price:
+    type: integer
+    format: double
+    description: Usage price
+    example: 12.89
+  priceCurrency:
+    type: string
+    description: Usage price currency code - ISO 4217
+    example: USD
+  priceDiscrepancyCodeId:
+    type: integer
+    description: Usage price discrepancy code ID
+    format: int64
+    example: 34088
+  shipToAddressId:
+    type: integer
+    description: Address ID where item part will be shipped to
+    format: int64
+    example: 1289
+  replenToAddressId:
+    type: integer
+    description: Replenishment shipment address ID
+    format: int64
+    example: 1345
+  replenishmentShippingMethodId:
+    type: integer
+    description: Usage replenishment shipping method ID
+    format: int64
+    example: 1345
+  pricelistName:
+    type: string
+    description: Order item price list name
+    example: 001-PriceList
+    maxLength: 100
+  quoteReasonId:
+    type: integer
+    description: Order quote reason code id
+    format: int64
+    example: 1289
+  quoteReasonRationale:
+    type: string
+    description: Order quote reason rationale
+    example: Honoring discounted pricing provided by the rep.
+    maxLength: 240
+  rfidTagId:
+    type: string
+    description: RFID Tag ID for the item
+    example: 1234567890123456789012345678901234567890 or 0x3A0C92075C0DBF3B8ACBC5F96CE3F0AD2
+    maxLength: 40
+  orderFreight:
+    type: number
+    description: Order Freight
+    example: 1234.55
+  orderAroReference:
+    type: string
+    description: Order Aro reference
+    example: This is the content for Order Aro Reference
+    maxLength: 500
+  orderItemAroReference:
+    type: string
+    description: Order Item Aro reference
+    example: This is the content for Order Item Aro Reference
+    maxLength: 1000
+  dnr:
+    type: boolean
+    description: Do Not Replenish
+    example: false
+  dns:
+    type: boolean
+    description: Do Not Ship
+    example: false
+  capChargeCode:
+    type: string
+    description: Order item cap charge code
+    example: CMC102
+  capUpchargeCode:
+    type: string
+    description: Order item cap upcharge code
+    example: CMC2156
+  shippingPriorityName:
+    type: string
+    description: Shipping Priority Name
+    example: EAST COAST
+    enum:
+      - NONE
+      - EAST COAST
+      - MUST SHIP
+      - NEWNAN FG
+      - NEWNAN FGPOR
+      - NEWNAN HOLD
+      - REGULAR
+      - WEST COAST    
+    
+    

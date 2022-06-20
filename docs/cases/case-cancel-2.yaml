@@ -50,4 +50,4 @@ properties:
     description: User name for history records
     example: John Doe
     maxLength: 50
-x-internal: true
+x-internal: false

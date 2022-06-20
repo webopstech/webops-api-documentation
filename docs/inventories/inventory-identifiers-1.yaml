@@ -32,12 +32,12 @@ properties:
     maxLength: 150
   kitName:
     type: string
-    description: Kit Name. If Kit Name is provided and Inventory is not in Kitted status, the request will be rejected.
+    description: 'Kit Name. If Kit Name is provided and Inventory is not in Kitted status, the request will be rejected.'
     example: Kit ABC-01
     maxLength: 100
   kitId:
     type: integer
-    description: Kit ID. If Kit ID is provided and Inventory is not in Kitted status, the request will be rejected.
+    description: 'Kit ID. If Kit ID is provided and Inventory is not in Kitted status, the request will be rejected.'
     example: 1234
     format: int64
   globalTradeItemNumber:
@@ -68,4 +68,4 @@ properties:
 required:
   - manufacturerId
   - branchId
-x-internal: true
+x-internal: false

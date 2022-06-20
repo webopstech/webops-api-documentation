@@ -1,4 +1,4 @@
-## Username and Password CHANGED AGAIN
+## Username and Password
 
 WebOps Admin shall provide the following for each client setup:
 

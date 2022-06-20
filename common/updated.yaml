@@ -15,4 +15,4 @@ properties:
     format: date-time
     example: '2018-11-05T13:15:30Z'
     description: Get updated results before this date. All date times must be provided in ISO 8601 Z format
-x-internal: true
+x-internal: false

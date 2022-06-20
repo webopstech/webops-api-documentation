@@ -1,10 +1,23 @@
 title: Inventory
 type: object
-required:
-  - inventoryItemPartId
-  - inventoryLocationId
-  - catalogNumber
-  - status
+x-internal: false
+examples:
+  '0':
+    inventoryItemId: 100098
+    inventoryItemPartId: 100098
+    inventoryLocationId: 34563456
+    branchId: 9
+    catalogNumber: 10-4567
+    lotCode: SADF4564
+    rfidTagId: '1234567890123456789012345678901234567890'
+    status: Shelf Stock
+    kitName: Kit ABC-01
+    kitId: 1234
+    quantity: 1
+    createdDate: '2018-11-05T13:15:30Z'
+    changedDate: '2018-11-05T13:15:30Z'
+    lostDate: '2018-11-05T13:15:30Z'
+    expirationDate: '2018-11-05T00:00:00Z'
 properties:
   inventoryItemId:
     type: integer
@@ -21,6 +34,10 @@ properties:
     example: 34563456
     description: Part inventory location ID
     format: int64
+  branchId:
+    type: integer
+    description: ID of the branch associated to the inventory item
+    example: 9
   catalogNumber:
     type: string
     description: Catalog number
@@ -32,8 +49,8 @@ properties:
     example: SADF4564
   rfidTagId:
     type: string
-    description: RFID Tag Id
-    example: "1234567890123456789012345678901234567890"
+    description: RFID Tag ID for the item
+    example: '1234567890123456789012345678901234567890'
     maxLength: 40
   status:
     type: string
@@ -84,4 +101,14 @@ properties:
     description: date and time when the item was lost (ISO 8601 Z format) if the status is LOST
     format: date-time
     example: '2018-11-05T13:15:30Z'
-x-internal: true
+  expirationDate:
+    type: string
+    description: Inventory expiration date in ISO 8601 Z format
+    format: date-time
+    example: '2018-11-05T00:00:00Z'
+required:
+  - inventoryItemPartId
+  - inventoryLocationId
+  - branchId
+  - catalogNumber
+  - status

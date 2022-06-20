@@ -1,0 +1,59 @@
+title: Transaction Items - Update (Upcoming)
+type: object
+description: ''
+required:
+  - messageId
+  - timestamp
+  - manufacturerId
+  - transactionItems
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1234
+  userName:
+    type: string
+    description: User name for history records
+    format: string
+    example: John Doe
+  transactionItems:
+    type: array
+    items:
+      type: object
+      required:
+        - transactionItemId
+      properties:
+        transactionItemId:
+          type: integer
+          description: WebOps transaction item ID
+          format: int64
+          example: 34088
+        lotCode:
+          type: string
+          description: Transaction item lot code
+          example: LotCode1
+        expirationDate:
+          type: string
+          format: date-time
+          example: '2018-01-31'
+          description: Date the item is set to expire. Must be in YYYY-MM-DD format
+        unitPrice:
+          type: integer
+          format: double
+          description: Transaction item price
+          example: 12.89
+        quantity:
+          type: integer
+          description: 'Total quantity of specified transaction item (default: 1)'
+          example: 1
+        currencyCode:
+          type: string
+          description: Transaction item price currency code - ISO 4217
+          example: USD
+        discrepancyCodeId:
+          type: integer
+          description: Transaction item price discrepancy code ID
+          format: int64
+          example: 34088
+x-internal: true

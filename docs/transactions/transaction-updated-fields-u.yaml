@@ -1,0 +1,14 @@
+title: Transaction Updated Fields (Upcoming)
+type: object
+properties:
+  transactionDateMin:
+    type: string
+    description: Get transactions after this transaction date (in 24 hour format)
+    format: date-time
+    example: '2017-11-05 13:15'
+  transactionDateMax:
+    type: string
+    description: Get transactions before this transaction date (in 24 hour format)
+    format: date-time
+    example: '2018-11-05 13:15'
+x-internal: true    

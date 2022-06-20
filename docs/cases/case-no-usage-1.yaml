@@ -405,4 +405,4 @@ required:
   - physicianId
   - hospitalId
   - procedureId
-x-internal: true
+x-internal: false

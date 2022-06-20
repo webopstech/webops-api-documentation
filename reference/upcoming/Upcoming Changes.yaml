@@ -17,7 +17,25 @@ paths:
       summary: Get Cases
       tags:
         - Cases (2.0)
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added companyId (8.1.0)\r\n- Added orderHold (8.1.0)\r\n\r\n#### Response\r\n- Added procedureCompanyId (8.1.0)\r\n- Added companyId to productSystems (8.1.0)\r\n- Added companyId to loanerUsage (8.1.0)\r\n- Added companyId to consignmentUsage (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n- Added kitAssignedDate (8.1.0)\r\n- Added reroutedFrom (8.1.0)\r\n- Added reroutedTo (8.1.0)\r\n- Added kitCheckInDate (8.1.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added companyId (8.1.0)
+        - Added orderHold (8.1.0)
+
+        #### Response
+        - Added procedureCompanyId (8.1.0)
+        - Added companyId to productSystems (8.1.0)
+        - Added companyId to loanerUsage (8.1.0)
+        - Added companyId to consignmentUsage (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added kitAssignedDate (8.1.0)
+        - Added reroutedFrom (8.1.0)
+        - Added reroutedTo (8.1.0)
+        - Added kitCheckInDate (8.1.0)
+        - Added rfidTagId (8.4.0)
       consumes:
         - application/json
       produces:
@@ -158,7 +176,21 @@ paths:
       summary: Update Case
       tags:
         - Cases (2.0)
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n\r\n#### Response\r\n- Added procedureCompanyId (8.1.0)\r\n- Added companyId to productSystems (8.1.0)\r\n- Added companyId to loanerUsage (8.1.0)\r\n- Added companyId to consignmentUsage (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+
+        #### Response
+        - Added procedureCompanyId (8.1.0)
+        - Added companyId to productSystems (8.1.0)
+        - Added companyId to loanerUsage (8.1.0)
+        - Added companyId to consignmentUsage (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added rfidTagId (8.4.0)
       consumes:
         - application/json
       produces:
@@ -212,7 +244,18 @@ paths:
       summary: Cancel Case
       tags:
         - Cases (2.0)
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- Added procedureCompanyId (8.1.0)\r\n- Added companyId to productSystems (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - No changes
+
+        #### Response
+        - Added procedureCompanyId (8.1.0)
+        - Added companyId to productSystems (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added rfidTagId (8.4.0)
       consumes:
         - application/json
       produces:
@@ -494,13 +537,16 @@ paths:
               - messageId
               - timestamp
               - checkInSummary
-  /kits:
+  kitItems/bulk:
     post:
-      operationId: get-kits
-      summary: Get Kits
-      tags:
-        - Kits (2.0)
-      description: "## New Endpoint (7.7.0)\r\n\r\n### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- No changes"
+      operationId: create-kit-items-u
+      summary: Create Kit Items in Bulk
+      description: |-
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - Added rfidTagId (8.4.0)
       consumes:
         - application/json
       produces:
@@ -511,7 +557,7 @@ paths:
           schema:
             allOf:
               - $ref: '#/definitions/message-data'
-              - $ref: '#/definitions/kit-identifiers-2'
+              - $ref: ../../docs/kitItems/kit-item-bulk-post-identifiers-U.yaml
               - $ref: '#/definitions/updated'
               - $ref: '#/definitions/paging'
               - type: object
@@ -532,9 +578,6 @@ paths:
           description: ''
           schema:
             type: object
-            required:
-              - messageId
-              - timestamp
             properties:
               messageId:
                 type: string
@@ -545,23 +588,98 @@ paths:
                 format: date-time
                 example: '2018-11-05T13:15:30Z'
                 description: Current date/time in ISO-8601 Z format
-              kits:
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
                 type: array
+                description: Status of individual kit items from the request.
                 items:
-                  $ref: '#/definitions/kit-2'
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the kit item. If an error occurred during save, the ID will not be returned.'
+                      format: int64
+                      example: 123
+                    kitId:
+                      type: integer
+                      description: ID of the kit to the item was added to.
+                      format: int64
+                      example: 10
+                    catalogNumber:
+                      type: string
+                      description: Catalog Number of the item
+                      example: 123CAT
+                      maxLength: 20
+                    rfidTagId:
+                      type: string
+                      description: RFID Tag ID for the item
+                      example: '1234567890123456789012345678901234567890'
+                      maxLength: 40
+                    code:
+                      type: integer
+                      description: One of the defined response codes
+                      example: 1010
+                    message:
+                      type: string
+                      description: Status Message
+                      example: Success
+                  required:
+                    - id
+                    - kitId
+                    - catalogNumber
+                    - code
+                    - message
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
         '403':
           $ref: '#/responses/trait:errorResponses:403'
         '422':
           $ref: '#/responses/trait:errorResponses:422'
         '500':
           $ref: '#/responses/trait:errorResponses:500'
+      x-internal: false
+      tags:
+        - kititems(1.0)
+    parameters: []
   /orders:
     post:
       operationId: orders
       summary: Get Orders
       tags:
         - Orders (1.0)
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added companyId (8.1.0)\r\n- Added orderHold (8.1.0)\r\n\r\n#### Response\r\n- Added companyId (8.1.0)\r\n- Added hospitalErpCode (8.1.0)\r\n- Added hospitalSystemErpCode (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n- Added aliases to caseInfo physician (8.2.0)\r\n- Added nationalProviderIdentifier to caseInfo physician (8.2.0)\r\n- Added aliases to caseInfo salesRep (8.2.0)\r\n- Added hospitalAliases to caseInfo (8.2.0)\r\n- Added priceDiscrepancyCode to orderItems (8.2.0)\r\n- Added capItemType to orderItems (8.2.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added companyId (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added usagePricingComplete (8.4.0)
+
+        #### Response
+        - Added companyId (8.1.0)
+        - Added hospitalErpCode (8.1.0)
+        - Added hospitalSystemErpCode (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added aliases to caseInfo physician (8.2.0)
+        - Added nationalProviderIdentifier to caseInfo physician (8.2.0)
+        - Added aliases to caseInfo salesRep (8.2.0)
+        - Added hospitalAliases to caseInfo (8.2.0)
+        - Added priceDiscrepancyCode to orderItems (8.2.0)
+        - Added capItemType to orderItems (8.2.0)
+        - Added rfidTagId (8.4.0)
+        - Added usagePricingComplete (8.4.0)
       consumes:
         - application/json
       produces:
@@ -634,7 +752,26 @@ paths:
       summary: Edit an Order
       tags:
         - Orders (1.0)
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n\r\n#### Response\r\n- Added companyId (8.1.0)\r\n- Added hospitalErpCode (8.1.0)\r\n- Added hospitalSystemErpCode (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n- Added aliases to caseInfo physician (8.2.0)\r\n- Added nationalProviderIdentifier to caseInfo physician (8.2.0)\r\n- Added aliases to caseInfo salesRep (8.2.0)\r\n- Added hospitalAliases to caseInfo (8.2.0)\r\n- Added priceDiscrepancyCode to orderItems (8.2.0)\r\n- Added capItemType to orderItems (8.2.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+
+        #### Response
+        - Added companyId (8.1.0)
+        - Added hospitalErpCode (8.1.0)
+        - Added hospitalSystemErpCode (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added aliases to caseInfo physician (8.2.0)
+        - Added nationalProviderIdentifier to caseInfo physician (8.2.0)
+        - Added aliases to caseInfo salesRep (8.2.0)
+        - Added hospitalAliases to caseInfo (8.2.0)
+        - Added priceDiscrepancyCode to orderItems (8.2.0)
+        - Added capItemType to orderItems (8.2.0)
+        - Added rfidTagId to orderItems (8.4.0)
       consumes:
         - application/json
       produces:
@@ -680,7 +817,25 @@ paths:
       summary: Save PO for an Order
       tags:
         - Orders (1.0)
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- Added companyId (8.1.0)\r\n- Added hospitalErpCode (8.1.0)\r\n- Added hospitalSystemErpCode (8.1.0)\r\n- Added orderHold (8.1.0)\r\n- Added orderHoldReason (8.1.0)\r\n- Added aliases to caseInfo physician (8.2.0)\r\n- Added nationalProviderIdentifier to caseInfo physician (8.2.0)\r\n- Added aliases to caseInfo salesRep (8.2.0)\r\n- Added hospitalAliases to caseInfo (8.2.0)\r\n- Added priceDiscrepancyCode to orderItems (8.2.0)\r\n- Added capItemType to orderItems (8.2.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - No changes
+
+        #### Response
+        - Added companyId (8.1.0)
+        - Added hospitalErpCode (8.1.0)
+        - Added hospitalSystemErpCode (8.1.0)
+        - Added orderHold (8.1.0)
+        - Added orderHoldReason (8.1.0)
+        - Added aliases to caseInfo physician (8.2.0)
+        - Added nationalProviderIdentifier to caseInfo physician (8.2.0)
+        - Added aliases to caseInfo salesRep (8.2.0)
+        - Added hospitalAliases to caseInfo (8.2.0)
+        - Added priceDiscrepancyCode to orderItems (8.2.0)
+        - Added capItemType to orderItems (8.2.0)
+        - Added rfidTagId to orderItems (8.4.0)
       consumes:
         - application/json
       produces:
@@ -1523,7 +1678,17 @@ paths:
       summary: Get Shipments
       tags:
         - Shipments (1.0)
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- Added shippingMethodId (8.1.0)\r\n\r\n#### Response\r\n- Added shipmentExternalKits (8.1.0)\r\n- Changed datatype to string for numberOfTubs (8.1.0)\r\n- Changed datatype to string for numberOfTrays (8.1.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - Added shippingMethodId (8.1.0)
+
+        #### Response
+        - Added shipmentExternalKits (8.1.0)
+        - Changed datatype to string for numberOfTubs (8.1.0)
+        - Changed datatype to string for numberOfTrays (8.1.0)
+        - Added rfidTagId (8.4.0)
       consumes:
         - application/json
       produces:
@@ -1622,7 +1787,17 @@ paths:
       summary: Update Shipment
       tags:
         - Shipments (1.0)
-      description: "### Endpoint Changes\r\n\r\n#### Request\r\n- No changes\r\n\r\n#### Response\r\n- Added shipmentExternalKits (8.1.0)\r\n- Changed datatype to string for numberOfTubs (8.1.0)\r\n- Changed datatype to string for numberOfTrays (8.1.0)"
+      description: |-
+        ### Endpoint Changes
+
+        #### Request
+        - No changes
+
+        #### Response
+        - Added shipmentExternalKits (8.1.0)
+        - Changed datatype to string for numberOfTubs (8.1.0)
+        - Changed datatype to string for numberOfTrays (8.1.0)
+        - Added rfidTagId (8.4.0)
       consumes:
         - application/json
       produces:
@@ -2292,6 +2467,593 @@ paths:
                       type: string
                       description: Status Message
                       example: Success
+  '/case/{WebOpsCaseId}/usage':
+    parameters:
+      - type: string
+        name: WebOpsCaseId
+        in: path
+        required: true
+    post:
+      operationId: create-case-usage
+      summary: Create Usage items
+      description: |-
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - No changes
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/usage/case-post-usage-U.yaml
+            description: Usage Items
+          x-examples:
+            example-1:
+              messageId: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp: '2018-11-05T13:15:30Z'
+              externalCaseUsageId: EX123
+              catalogNumber: 02-354-TEMP
+              lotCode: LotCode1
+              price: 12.89
+              priceCurrency: USD
+              priceDiscrepancyCodeId: 34088
+              shipToAddressId: 1289
+              replenToAddressId: 1345
+              replenishmentShippingMethodId: 1345
+              pricelistName: 001-PriceList
+              quoteReasonId: 1289
+              quoteReasonRationale: Honoring discounted pricing provided by the rep.
+              rfidTagId: 1234567890123456789012345678901234567890 or 0x3A0C92075C0DBF3B8ACBC5F96CE3F0AD2
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+      tags:
+        - Case Usage (1.0)
+  '/case/{WebOpsCaseId}/usage/erp':
+    parameters:
+      - type: string
+        name: WebOpsCaseId
+        in: path
+        required: true
+    post:
+      operationId: create-case-usage-erp
+      summary: Create Usage items
+      description: |-
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - No changes
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/usage/case-post-usage-erp-U.yaml
+            description: Usage Items
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+      tags:
+        - Case Usage (1.0)
+  '/case/{WebOpsCaseId}/loanerUsage':
+    parameters:
+      - type: string
+        name: WebOpsCaseId
+        in: path
+        required: true
+    post:
+      operationId: create-case-loaner-usage
+      summary: Create Usage items
+      tags:
+        - Case Usage (1.0)
+      description: |-
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - No changes
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/usage/case-post-loaner-usage-U.yaml
+            description: Usage Items
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+  '/case/{WebOpsCaseId}/loanerUsage/erp':
+    parameters:
+      - type: string
+        name: WebOpsCaseId
+        in: path
+        required: true
+    post:
+      operationId: usage_loaner_items_erp_create
+      summary: Create Usage items
+      description: |-
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - No changes
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/usage/case-post-loaner-usage-erp-U.yaml
+            description: Usage Items
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+      tags:
+        - Case Usage (1.0)
+  '/case/{WebOpsCaseId}/consignmentUsage':
+    parameters:
+      - type: string
+        name: WebOpsCaseId
+        in: path
+        required: true
+    post:
+      operationId: usage_consignment_items_create
+      summary: Create Usage items
+      description: |-
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - No changes
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/usage/case-post-consignment-usage-U.yaml
+            description: Usage Items
+          description: ''
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+      tags:
+        - Case Usage (1.0)
+  '/case/{WebOpsCaseId}/consignmentUsage/erp':
+    parameters:
+      - type: string
+        name: WebOpsCaseId
+        in: path
+        required: true
+    post:
+      operationId: usage_consignment_items_erp_create
+      summary: Create Usage items
+      description: |-
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - No changes
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/usage/case-post-consignment-usage-erp-U.yaml
+            description: Usage Items
+          description: ''
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/usage/usage-1.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+      tags:
+        - Case Usage (1.0))
+  /transfers:
+    parameters: []
+    post:
+      operationId: usage_items_create
+      summary: Get Transfers
+      tags:
+        - Case Usage (1.0)
+      description: |
+        #### Request
+        - No changes
+
+        #### Response
+        - Added rfidTagId (8.4.0)
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/transfers/transfer-identifiers-1.yaml
+              - $ref: ../../common/updated.yaml
+              - $ref: ../../common/paging.yaml
+            description: Usage Items
+          description: ''
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/transfers/transfer-U.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+  '/transfer/{WebopsTransferId}/transferItems':
+    parameters:
+      - type: string
+        name: WebopsTransferId
+        in: path
+        required: true
+    put:
+      operationId: usage_items_create
+      summary: Add a New Transfer Item on a Saved Transfer
+      description: |
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - Added rfidTagId (8.4.0)
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/transfers/transfer-identifiers-update-1.yaml
+            description: Usage Items
+          description: ''
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/transfers/transfer-U.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+      tags:
+        - Transfers (1.0)
+  '/transfers/{WebopsTransferId}':
+    parameters:
+      - type: string
+        name: WebopsTransferId
+        in: path
+        required: true
+    put:
+      operationId: usage_items_create
+      summary: Update a Specific Transfer
+      description: |
+        #### Request
+        - Added rfidTagId (8.4.0)
+
+        #### Response
+        - Added rfidTagId (8.4.0)
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/message-data'
+              - $ref: ../../docs/transfers/transfer-item-add-U.yaml
+            description: Usage Items
+          description: ''
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              messageId:
+                type: string
+                description: Message ID of the request
+                example: 2d648c64-3eee-4fc7-9e19-df6f14c3fefd
+              timestamp:
+                type: string
+                description: Current date/time in ISO-8601 Z format
+                format: date-time
+                example: '2018-11-05T13:15:30Z'
+              code:
+                type: integer
+                description: One the defined response codes
+                example: 1010
+              message:
+                type: string
+                description: Text description
+                example: Partial Success
+              details:
+                type: array
+                description: Status of individual transaction items from the request.
+                items:
+                  $ref: ../../docs/transfers/transfer-U.yaml
+            required:
+              - messageId
+              - timestamp
+              - code
+              - message
+              - details
+      tags:
+        - Transfers (1.0)
 parameters:
   'trait:messageHeaders:Authorization':
     name: Authorization
@@ -3696,11 +4458,7 @@ definitions:
         example: 123
       usePhysicianPref:
         type: boolean
-        description: (Yes = true, No = false)
-          <hr>
-          If preference doesn't exist, preference will be created.<br/>
-          If preference exists and product systems are selected, preference will be updated to those product systems.<br/>
-          If preference exists and no product systems are selected, the preference will be deleted.
+        description: '(Yes = true, No = false) <hr> If preference doesn''t exist, preference will be created.<br/> If preference exists and product systems are selected, preference will be updated to those product systems.<br/> If preference exists and no product systems are selected, the preference will be deleted.'
         example: true
       userName:
         type: string
@@ -4249,6 +5007,11 @@ definitions:
               description: Inventory item part ID against which the loaner usage was recorded
               format: int64
               example: 34088
+            rfidTagId:
+              type: string
+              description: RFID Tag ID for the item
+              example: '1234567890123456789012345678901234567890'
+              maxLength: 40
             catalogNumber:
               type: string
               description: Usage catalog number
@@ -4347,6 +5110,11 @@ definitions:
               description: Inventory item part ID against which the consignment usage was recorded
               format: int64
               example: 34088
+            rfidTagId:
+              type: string
+              description: RFID Tag ID for the itemd
+              example: '1234567890123456789012345678901234567890'
+              maxLength: 40
             catalogNumber:
               type: string
               description: Usage catalog number
@@ -5107,6 +5875,11 @@ definitions:
               description: Inventory item part ID against which the loaner usage was recorded
               format: int64
               example: 34088
+            rfidTagId:
+              type: string
+              description: RFID Tag ID for the item
+              example: '1234567890123456789012345678901234567890'
+              maxLength: 40
             catalogNumber:
               type: string
               description: Usage catalog number
@@ -5205,6 +5978,11 @@ definitions:
               description: Inventory item part ID against which the consignment usage was recorded
               format: int64
               example: 34088
+            rfidTagId:
+              type: string
+              description: RFID Tag ID for the item
+              example: '1234567890123456789012345678901234567890'
+              maxLength: 40
             catalogNumber:
               type: string
               description: Usage catalog number
@@ -6712,6 +7490,11 @@ definitions:
               description: Order item lot code
               example: LOT123
               maxLength: 50
+            rfidTagId:
+              type: string
+              description: RFID Tag ID for the item
+              maxLength: 40
+              example: '1234567890123456789012345678901234567890'
             quantity:
               type: integer
               description: Order item quantity
@@ -8196,7 +8979,7 @@ definitions:
         example: true
       companyId:
         type: integer
-        description: 'Company ID linked to Procedure'
+        description: Company ID linked to Procedure
         format: int64
         example: 9
       manufacturerGlobal:

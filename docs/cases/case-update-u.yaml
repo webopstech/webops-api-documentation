@@ -232,4 +232,4 @@ properties:
     description: Reason for order hold
     example: Hospital Hold
     maxLength: 50
-x-internal: true
+x-internal: false

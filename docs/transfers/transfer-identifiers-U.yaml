@@ -1,0 +1,87 @@
+title: Transfer Identifiers
+type: object
+properties:
+  manufacturerId:
+    type: integer
+    description: Designated manufacturer ID
+    format: int64
+    example: 1000
+  ids:
+    type: string
+    description: Comma-separated list of transfer IDs
+    format: string
+    example: '123,456,789'
+  catalogNumber:
+    type: string
+    description: Catalog number of the item contained within a transfer
+    format: string
+    maxLength: 20
+    example: 100A
+  lotCode:
+    type: string
+    description: Lot code of the item contained within a transfer
+    format: string
+    maxLength: 20
+    example: '100'
+  kitName:
+    type: string
+    description: Name of the kit contained within a transfer
+    format: string
+    maxLength: 100
+    example: Kit name
+  trackingNumber:
+    type: string
+    description: Tracking number of shipment
+    format: string
+    maxLength: 200
+    example: Ex12345
+  originBranchId:
+    type: integer
+    description: ID of the origin branch
+    format: int64
+    example: 188888
+  originBranchErpCode:
+    type: string
+    description: ' Origin Branch ERP Code. Either originBranchId or originBranchErpCode is required. If both originBranchErpCode and originBranchId are provided, originBranchId will be used'
+    format: string
+    maxLength: 50
+    example: ERP123
+  destinationBranchId:
+    type: integer
+    description: ID of the destination branch
+    format: int64
+    example: 188888
+  destinationBranchErpCode:
+    type: string
+    description: ' Destination Branch ERP Code. Either destinationBranchId or destinationBranchErpCode is required. If both destinationBranchErpCode and destinationBranchId are provided, destinationBranchId will be used'
+    format: string
+    maxLength: 50
+    example: ERP123
+  transferStatuses:
+    type: string
+    enum:
+      - New
+      - In Transit
+      - Delivered
+      - Closed
+    description: 'Transfer status. Comma-separated list of case statuses. New = Saved transfer but items not transfered.  In Transit = Items transfered but waiting on destination to receive items.  Delivered = Some items have been received, but not all items.  Closed = All items have been received.'
+    example: New
+  shipDateMin:
+    type: string
+    description: Show transfers shipped after this date. All date times must be provided in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-01'
+  shipDateMax:
+    type: string
+    description: Show transfers shipped before this date. All date times must be provided in YYYY-MM-DD format
+    format: date-time
+    example: '2018-01-01'
+  shippingMethodId:
+    type: integer
+    description: ID of the shipping method
+    format: int64
+    example: 11453
+  includeTransferItems:
+    type: boolean
+    description: 'Include Transfer Item Details in response.  Default is false (Yes = true, No = False)'
+    example: false
